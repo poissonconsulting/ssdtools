@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9004</span>
       </span>
     </div>
 
@@ -146,6 +146,21 @@
       <small>Source: <a href='https://github.com/bcgov/ssdtools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="ssdtools-0209004" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0.9004">
+<a href="#ssdtools-0209004" class="anchor"></a>ssdtools 0.2.0.9004<small> Unreleased </small>
+</h1>
+<ul>
+<li>Rolled back to original implementation of burrIII3</li>
+<li>Reparamaterize burrIII2 in terms of locationlog and scalelog.</li>
+<li>llogis distribution parameterised in terms of locationlog and scalelog</li>
+<li>rdist() functions now use length of n if length(n) &gt; 1.</li>
+<li>Added slnorm() to get starting values for log-normal distribution.</li>
+<li>Soft-deprecated pareto distribution as unsuitable for SSD data.</li>
+<li>Switched d, p, q and r functions for gumbel distribution from VGAM::lgumbel to using C++ lgumbel.</li>
+<li>Switched to C++ for dburrXII</li>
+</ul>
+</div>
     <div id="ssdtools-0209003" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0.9003">
 <a href="#ssdtools-0209003" class="anchor"></a>ssdtools 0.2.0.9003<small> Unreleased </small>
