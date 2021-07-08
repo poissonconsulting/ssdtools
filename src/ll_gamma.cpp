@@ -1,6 +1,5 @@
-// Compute the negative log-likelihood of the Burr III 3-parameter distribution
-
-//  Y ~ BurrIII3 (shape1, shape2, scale) 
+// Compute the negative log-likelihood of the gamma distribution
+//  Y ~ Gamma (shape, scale) 
 // 
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where 
@@ -20,26 +19,18 @@
 //          3       Inf     3 < concentration.
 //
 // Parameters are
-//    log_shape1  - log(shape1)
-//    log_shape2  - log(shape2)
-//    log_scale   - log(scale)
-
+//    log_shape  - log(shape)
+//    log_scale  - log(scale)
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-#ifndef ll_burrIII3_hpp
-#define ll_burrIII3_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_burrIII3(objective_function<Type>* obj) // normal with parameters mu and log(sigma)
+Type objective_function<Type>::operator() ()
 {
-  feraiseexcept(FE_INVALID | FE_OVERFLOW | FE_DIVBYZERO | FE_UNDERFLOW); // Extra line needed for over/underflow detection
-  
   // Data
   DATA_VECTOR( left  );  // left and right values
   DATA_VECTOR( right );
@@ -47,13 +38,13 @@ Type ll_burrIII3(objective_function<Type>* obj) // normal with parameters mu and
 
   // The order of these parameter statements determines the order of the estimates in the vector of parameters
    // Parameters
-  PARAMETER( log_shape1 );
-  PARAMETER( log_shape2 );
+  PARAMETER( log_shape );
   PARAMETER( log_scale );
   
-  Type shape1 = exp(log_shape1);
-  Type shape2 = exp(log_shape2);
-  Type scale  = exp(log_scale);  // notice we have scale on top of X; actuar::burrIII has scale on bottom. Hence take -log_scale here
+  Type shape;
+  Type scale;
+  shape = exp(log_shape);
+  scale = exp(log_scale);
 
   Type nll = 0;
   int n_data    = left.size(); // number of data values
@@ -63,35 +54,21 @@ Type ll_burrIII3(objective_function<Type>* obj) // normal with parameters mu and
    // pdf of weibull distribution is avaialble in TMB directly
   for( int i=0; i<n_data; i++){
      if(left(i) == right(i)){  // uncensored data
-        nll -= weight(i)*(log_shape1 + log_shape2 - log_scale + (shape2-1)*log(1/(scale*left(i)))
-              -2*log(left(i)) - (shape1+1)*log(1+ pow(1/(scale*left(i)),shape2))   );
+        nll -= weight(i)*(dgamma( left(i), shape, scale, true ));   // log likelihood for uncensored values
      };
      if(left(i) < right(i)){   // censored data
         pleft = 0;
-        if(left(i)>0){ pleft=1/pow(1+pow(1/(scale*left(i)),shape2),shape1);};
-        pright = 1/pow(1+pow(1/(scale*right(i)),shape2),shape1);
+        if(left(i)>0){ pleft=pgamma( left(i), shape, scale );};
+        pright = pgamma( right(i), shape, scale);
         nll -= weight(i)*log(pright-pleft);  // contribution to log-likelihood for censored values
      };
      
   };
 
-  ADREPORT(shape1);
-  REPORT  (shape1);
-  ADREPORT(shape2);
-  REPORT  (shape2);
+  ADREPORT(shape);
+  REPORT  (shape);
   ADREPORT(scale);
   REPORT  (scale);
   
   return nll;
-};
-
-  // Probability of data conditional on parameter values for right censored data i.e. value > given valu
-  //for( int i=0; i<n_data_rightcen; i++){
-  //   jnll -= log(1-pweibull( y_rightcen(i), location, scale )); 
-  //};
-
-  
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-  
-#endif
+}

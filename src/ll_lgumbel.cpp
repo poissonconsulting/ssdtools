@@ -1,5 +1,6 @@
-// Compute the negative log-likelihood of the log-logistic distribution
-// If Y ~ log-logistic( locationlog, scalelog) then log(Y) ~ logisitic(locationlog, scalelog)
+// Compute the negative log-likelihood of the log-gumbel distribution
+// If Y follows a Gumbel (locationlog scalelog), then log(Y) follows a Gumbel (locationlog, scalelog) distribution
+
 // 
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where 
@@ -19,52 +20,56 @@
 //          3       Inf     3 < concentration.
 //
 // Parameters are
-//    locationlog - location on the log(Concentration) scale
-//    log_scalelog    - log(scalelog)    on the log(Concentration) scale, i.e. scalelog=exp(log_scalelog)
+//    locationlog     - location       on the log(Concentration) scale, 
+//    log_scalelog    - log(scale)     on the log(Concentration) scale
 
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-/// @file ll_llogis.hpp
-
-#ifndef ll_llogis_hpp
-#define ll_llogis_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_llogis(objective_function<Type>* obj) {
+Type objective_function<Type>::operator() ()
+{
   // Data
   DATA_VECTOR( left  );  // left and right values
   DATA_VECTOR( right );
   DATA_VECTOR( weight);  // weight
 
   // The order of these parameter statements determines the order of the estimates in the vector of parameters
+  // Parameters
   PARAMETER( locationlog );
   PARAMETER( log_scalelog    );
-
-  Type scalelog;
-  scalelog = exp(log_scalelog);  // convert to [0,Inf] scale
   
+  Type scalelog;
+  scalelog    = exp(log_scalelog);
+
   Type nll = 0;  // negative log-likelihood
+  Type z;        // intermediate value
+  Type logden;   // intermediate value
+  
   int n_data    = left.size(); // number of data values
   Type pleft;    // probability that concentration < left(i)  used for censored data
   Type pright;   // probability that concentration < right(i) used for censored data
  
-  // Probability of data conditional on parameter values for uncensored data
-  // pdf of log(normal) obtained from pdf(normal) using the standard transformation theory
+   // pdf of log(gumber) obtained from pdf(gumbel) using the standard transformation theory
   for( int i=0; i<n_data; i++){
-     if(left(i) == right(i)){   // uncensored values
-        nll -= weight(i)*(dlogis( log(left(i)), locationlog, scalelog, true ) - log(left(i)));   // log likelihood for uncensored values
+     if(left(i) == right(i)){  // uncensored data
+        z = (log(left(i))-locationlog)/scalelog;
+        logden = -log(scalelog) - (z+exp(-z)) - log(left(i));
+        nll -= weight(i)*(logden);      // log likelihood for uncensored values
      };
-     if(left(i) < right(i)){    // censored values; no builtin function so we code the cdf directly
+     if(left(i) < right(i)){   // censored data
         pleft = 0;
-        if(left(i)>0){ pleft=1/(1+exp(-(log(left(i))-locationlog)/scalelog));};
-        pright =1/(1+exp(-(log(right(i))-locationlog)/scalelog));
-        nll -= weight(i)*log(pright-pleft);
+        if(left(i)>0){ 
+          z = (log(left(i))-locationlog)/scalelog;
+          pleft= exp(-exp(-z));
+        };
+        z=(log(right(i))-locationlog)/scalelog;
+        pright = exp(-exp(-z));
+        nll -= weight(i)*log(pright-pleft);  // contribution to log-likelihood for censored values
      };
      
   };
@@ -74,8 +79,3 @@ Type ll_llogis(objective_function<Type>* obj) {
   
   return nll;
 }
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-
-#endif

@@ -1,6 +1,11 @@
-// Compute the negative log-likelihood of the log-normal distribution
-//  If Y ~ logNormal (meanlog, sdlog) then log(Y) ~ Normal (meanlog, sdlog)
-// 
+// Compute the negative log-likelihood of the gompertz distribution
+//   Y ~ Gompertz(location, shape)  Y is non-negative; location and shape both > 0
+
+// **** THERE ARE MANY DEFINITIONS of the parameters for the gompertz in different packages. So be careful.
+// Here the CDF is   P(Y<y) = 1 - exp(-location/shape * (exp(q * shape) - 1));
+//
+// Refer to https://github.com/bcgov/ssdtools/blob/master/src/gompertz.cpp for actual C code defintions.
+
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where 
 //    n = sample size (inferred from the vectors)
@@ -19,66 +24,56 @@
 //          3       Inf     3 < concentration.
 //
 // Parameters are
-//    meanlog     - mean      on the log(Concentration) scale
-//    log_sdlog   - log(sd)   on the log(Concentration) scale, i.e. sdlog=exp(log_sdlog)
-//                  This make optimization on log_sdlog unbounded without any constraints
+//    log_location  - log(location)
+//    log_shape     - log(shape)
 
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-/// @file ll_lnorm.hpp
-
-#ifndef ll_lnorm_hpp
-#define ll_lnorm_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_lnorm(objective_function<Type>* obj) {
+Type objective_function<Type>::operator() ()
+{
   // Data
   DATA_VECTOR( left  );  // left and right values
   DATA_VECTOR( right );
   DATA_VECTOR( weight);  // weight
 
   // The order of these parameter statements determines the order of the estimates in the vector of parameters
-  // Parameters
-  PARAMETER( meanlog );
-  PARAMETER( log_sdlog );
+   // Parameters
+  PARAMETER( log_location );
+  PARAMETER( log_shape    );
   
-  Type sdlog;
-  sdlog = exp(log_sdlog);  // convert to [0, Inf] scale
+  Type shape;
+  Type location;
+  shape    = exp(log_shape);
+  location = exp(log_location);
 
-  Type nll = 0;  // negative log-likelihood
+  Type nll = 0;
   int n_data    = left.size(); // number of data values
   Type pleft;    // probability that concentration < left(i)  used for censored data
   Type pright;   // probability that concentration < right(i) used for censored data
  
-   // pdf of log(normal) obtained from pdf(normal) using the standard transformation theory
   for( int i=0; i<n_data; i++){
      if(left(i) == right(i)){  // uncensored data
-        nll -= weight(i)*(dnorm( log(left(i)), meanlog, sdlog, true ) - log(left(i)));   // log likelihood for uncensored values
+        nll -= weight(i)*(log(location) + left(i) * shape - (location/shape) * (exp(left(i) * shape) - 1));   // log likelihood for uncensored values
      };
      if(left(i) < right(i)){   // censored data
         pleft = 0;
-        if(left(i)>0){ pleft=pnorm(log(left(i)), meanlog, sdlog);};
-        pright = pnorm(log(right(i)), meanlog, sdlog);
+        if(left(i)>0){ pleft=1 - exp(-location/shape * (exp(left(i) * shape) - 1));};
+        pright =1 - exp(-location/shape * (exp(right(i) * shape) - 1));
         nll -= weight(i)*log(pright-pleft);  // contribution to log-likelihood for censored values
      };
      
   };
 
-  ADREPORT(sdlog);  // return this transformed parameter in the summary reports
-  REPORT  (sdlog);
-
-  return nll;
+  ADREPORT(shape);
+  REPORT  (shape);
+  ADREPORT(location);
+  REPORT  (location);
   
-
-};
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-
-#endif
+  return nll;
+}

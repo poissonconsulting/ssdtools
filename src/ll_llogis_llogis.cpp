@@ -31,14 +31,10 @@
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-#ifndef ll_llogis_llogis_hpp
-#define ll_llogis_llogis_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_llogis_llogis(objective_function<Type>* obj) // normal with parameters mu and log(sigma)
+Type objective_function<Type>::operator() ()
 {
   // Data
   DATA_VECTOR( left  );  // left and right values
@@ -95,8 +91,3 @@ Type ll_llogis_llogis(objective_function<Type>* obj) // normal with parameters m
   //REPORT( mynll);  //for debugging
   return nll;
 }
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-
-#endif

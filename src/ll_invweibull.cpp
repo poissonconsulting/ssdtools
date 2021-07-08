@@ -1,6 +1,5 @@
-// Compute the negative log-likelihood of the log-gumbel distribution
-// If Y follows a Gumbel (locationlog scalelog), then log(Y) follows a Gumbel (locationlog, scalelog) distribution
-
+// Compute the negative log-likelihood of the inverse weibull distribution
+// If Y ~ weibull (shape, scale) then 1/Y is inverse weibull (shape scale)
 // 
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where 
@@ -20,22 +19,18 @@
 //          3       Inf     3 < concentration.
 //
 // Parameters are
-//    locationlog     - location       on the log(Concentration) scale, 
-//    log_scalelog    - log(scale)     on the log(Concentration) scale
+//    log_shape  - log(shape)
+//    log_scale  - log(scale)
 
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-#ifndef ll_lgumbel_hpp
-#define ll_lgumbel_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_lgumbel(objective_function<Type>* obj) // normal with parameters mu and log(sigma)
+Type objective_function<Type>::operator() ()
 {
   // Data
   DATA_VECTOR( left  );  // left and right values
@@ -43,48 +38,38 @@ Type ll_lgumbel(objective_function<Type>* obj) // normal with parameters mu and 
   DATA_VECTOR( weight);  // weight
 
   // The order of these parameter statements determines the order of the estimates in the vector of parameters
-  // Parameters
-  PARAMETER( locationlog );
-  PARAMETER( log_scalelog    );
+   // Parameters
+  PARAMETER( log_shape );
+  PARAMETER( log_scale );
   
-  Type scalelog;
-  scalelog    = exp(log_scalelog);
+  Type shape;
+  Type scale;
+  shape = exp(log_shape);
+  scale = exp(log_scale);
 
-  Type nll = 0;  // negative log-likelihood
-  Type z;        // intermediate value
-  Type logden;   // intermediate value
-  
+  Type nll = 0;
   int n_data    = left.size(); // number of data values
   Type pleft;    // probability that concentration < left(i)  used for censored data
   Type pright;   // probability that concentration < right(i) used for censored data
  
-   // pdf of log(gumber) obtained from pdf(gumbel) using the standard transformation theory
+   // pdf of weibull distribution is available in TMB directly. Use standard transformation theory to get pdf of inverse
   for( int i=0; i<n_data; i++){
      if(left(i) == right(i)){  // uncensored data
-        z = (log(left(i))-locationlog)/scalelog;
-        logden = -log(scalelog) - (z+exp(-z)) - log(left(i));
-        nll -= weight(i)*(logden);      // log likelihood for uncensored values
+        nll -= weight(i)*(dweibull( 1/left(i), shape, scale, true )- 2*log(left(i)));   // log likelihood for uncensored values
      };
      if(left(i) < right(i)){   // censored data
         pleft = 0;
-        if(left(i)>0){ 
-          z = (log(left(i))-locationlog)/scalelog;
-          pleft= exp(-exp(-z));
-        };
-        z=(log(right(i))-locationlog)/scalelog;
-        pright = exp(-exp(-z));
+        if(left(i)>0){ pleft=1-pweibull( 1/left(i), shape, scale );};  // need the other tail for the inverse
+        pright = 1-pweibull( 1/right(i), shape, scale);
         nll -= weight(i)*log(pright-pleft);  // contribution to log-likelihood for censored values
      };
      
   };
 
-  ADREPORT(scalelog);
-  REPORT  (scalelog);
+  ADREPORT(shape);
+  REPORT  (shape);
+  ADREPORT(scale);
+  REPORT  (scale);
   
   return nll;
-};
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-
-#endif
+}

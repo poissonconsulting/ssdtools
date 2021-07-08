@@ -1,11 +1,6 @@
-// Compute the negative log-likelihood of the gompertz distribution
-//   Y ~ Gompertz(location, shape)  Y is non-negative; location and shape both > 0
-
-// **** THERE ARE MANY DEFINITIONS of the parameters for the gompertz in different packages. So be careful.
-// Here the CDF is   P(Y<y) = 1 - exp(-location/shape * (exp(q * shape) - 1));
-//
-// Refer to https://github.com/bcgov/ssdtools/blob/master/src/gompertz.cpp for actual C code defintions.
-
+// Compute the negative log-likelihood of the log-logistic distribution
+// If Y ~ log-logistic( locationlog, scalelog) then log(Y) ~ logisitic(locationlog, scalelog)
+// 
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where 
 //    n = sample size (inferred from the vectors)
@@ -24,22 +19,18 @@
 //          3       Inf     3 < concentration.
 //
 // Parameters are
-//    log_location  - log(location)
-//    log_shape     - log(shape)
+//    locationlog - location on the log(Concentration) scale
+//    log_scalelog    - log(scalelog)    on the log(Concentration) scale, i.e. scalelog=exp(log_scalelog)
 
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-#ifndef ll_gompertz_hpp
-#define ll_gompertz_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_gompertz(objective_function<Type>* obj) // normal with parameters mu and log(sigma)
+Type objective_function<Type>::operator() ()
 {
   // Data
   DATA_VECTOR( left  );  // left and right values
@@ -47,42 +38,34 @@ Type ll_gompertz(objective_function<Type>* obj) // normal with parameters mu and
   DATA_VECTOR( weight);  // weight
 
   // The order of these parameter statements determines the order of the estimates in the vector of parameters
-   // Parameters
-  PARAMETER( log_location );
-  PARAMETER( log_shape    );
-  
-  Type shape;
-  Type location;
-  shape    = exp(log_shape);
-  location = exp(log_location);
+  PARAMETER( locationlog );
+  PARAMETER( log_scalelog    );
 
-  Type nll = 0;
+  Type scalelog;
+  scalelog = exp(log_scalelog);  // convert to [0,Inf] scale
+  
+  Type nll = 0;  // negative log-likelihood
   int n_data    = left.size(); // number of data values
   Type pleft;    // probability that concentration < left(i)  used for censored data
   Type pright;   // probability that concentration < right(i) used for censored data
  
+  // Probability of data conditional on parameter values for uncensored data
+  // pdf of log(normal) obtained from pdf(normal) using the standard transformation theory
   for( int i=0; i<n_data; i++){
-     if(left(i) == right(i)){  // uncensored data
-        nll -= weight(i)*(log(location) + left(i) * shape - (location/shape) * (exp(left(i) * shape) - 1));   // log likelihood for uncensored values
+     if(left(i) == right(i)){   // uncensored values
+        nll -= weight(i)*(dlogis( log(left(i)), locationlog, scalelog, true ) - log(left(i)));   // log likelihood for uncensored values
      };
-     if(left(i) < right(i)){   // censored data
+     if(left(i) < right(i)){    // censored values; no builtin function so we code the cdf directly
         pleft = 0;
-        if(left(i)>0){ pleft=1 - exp(-location/shape * (exp(left(i) * shape) - 1));};
-        pright =1 - exp(-location/shape * (exp(right(i) * shape) - 1));
-        nll -= weight(i)*log(pright-pleft);  // contribution to log-likelihood for censored values
+        if(left(i)>0){ pleft=1/(1+exp(-(log(left(i))-locationlog)/scalelog));};
+        pright =1/(1+exp(-(log(right(i))-locationlog)/scalelog));
+        nll -= weight(i)*log(pright-pleft);
      };
      
   };
 
-  ADREPORT(shape);
-  REPORT  (shape);
-  ADREPORT(location);
-  REPORT  (location);
+  ADREPORT(scalelog);
+  REPORT  (scalelog);
   
   return nll;
-};
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-
-#endif
+}

@@ -1,6 +1,5 @@
-// Compute the negative log-likelihood of the weibull distribution
-
-//  Y ~ Weibull (shape, scale) 
+// Compute the negative log-likelihood of the log-normal distribution
+//  If Y ~ logNormal (meanlog, sdlog) then log(Y) ~ Normal (meanlog, sdlog)
 // 
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where 
@@ -20,22 +19,19 @@
 //          3       Inf     3 < concentration.
 //
 // Parameters are
-//    log_shape  - log(shape)
-//    log_scale  - log(scale)
+//    meanlog     - mean      on the log(Concentration) scale
+//    log_sdlog   - log(sd)   on the log(Concentration) scale, i.e. sdlog=exp(log_sdlog)
+//                  This make optimization on log_sdlog unbounded without any constraints
 
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
 // Refer to https://github.com/kaskr/adcomp/wiki/Development
 // on instructions for including TMB code in an R package
 
-#ifndef ll_weibull_hpp
-#define ll_weibull_hpp
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR obj
+#include <TMB.hpp>                                // Links in the TMB libraries
 
 template<class Type>
-Type ll_weibull(objective_function<Type>* obj) // normal with parameters mu and log(sigma)
+Type objective_function<Type>::operator() ()
 {
   // Data
   DATA_VECTOR( left  );  // left and right values
@@ -43,43 +39,34 @@ Type ll_weibull(objective_function<Type>* obj) // normal with parameters mu and 
   DATA_VECTOR( weight);  // weight
 
   // The order of these parameter statements determines the order of the estimates in the vector of parameters
-   // Parameters
-  PARAMETER( log_shape );
-  PARAMETER( log_scale );
+  // Parameters
+  PARAMETER( meanlog );
+  PARAMETER( log_sdlog );
   
-  Type shape;
-  Type scale;
-  shape = exp(log_shape);
-  scale = exp(log_scale);
+  Type sdlog;
+  sdlog = exp(log_sdlog);  // convert to [0, Inf] scale
 
-  Type nll = 0;
+  Type nll = 0;  // negative log-likelihood
   int n_data    = left.size(); // number of data values
   Type pleft;    // probability that concentration < left(i)  used for censored data
   Type pright;   // probability that concentration < right(i) used for censored data
  
-   // pdf of weibull distribution is avaialble in TMB directly
+   // pdf of log(normal) obtained from pdf(normal) using the standard transformation theory
   for( int i=0; i<n_data; i++){
      if(left(i) == right(i)){  // uncensored data
-        nll -= weight(i)*(dweibull( left(i), shape, scale, true ));   // log likelihood for uncensored values
+        nll -= weight(i)*(dnorm( log(left(i)), meanlog, sdlog, true ) - log(left(i)));   // log likelihood for uncensored values
      };
      if(left(i) < right(i)){   // censored data
         pleft = 0;
-        if(left(i)>0){ pleft=pweibull( left(i), shape, scale );};
-        pright =pweibull( right(i), shape, scale);
+        if(left(i)>0){ pleft=pnorm(log(left(i)), meanlog, sdlog);};
+        pright = pnorm(log(right(i)), meanlog, sdlog);
         nll -= weight(i)*log(pright-pleft);  // contribution to log-likelihood for censored values
      };
      
   };
 
-  ADREPORT(shape);
-  REPORT  (shape);
-  ADREPORT(scale);
-  REPORT  (scale);
-  
+  ADREPORT(sdlog);  // return this transformed parameter in the summary reports
+  REPORT  (sdlog);
+
   return nll;
-};
-
-#undef TMB_OBJECTIVE_PTR
-#define TMB_OBJECTIVE_PTR this
-
-#endif
+}
