@@ -99,10 +99,9 @@ Suggests:
     tidyr,
     tidyverse,
     withr
-Remotes:
-    poissonconsulting/chk
 LinkingTo: 
     Rcpp,
+    RcppEigen,
     TMB
 VignetteBuilder: 
     knitr,

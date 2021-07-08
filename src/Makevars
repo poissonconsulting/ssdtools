@@ -1,26 +1,31 @@
-# --- TMB-specific Makevars file ---
-#
-# In principle, TMB model compilation is a completely separate process from
-# that of the remainder of 'src'.
-# Therefore, other Makevars flags can be added here, e.g.,
-#
-## CXX_STD = CXX14 # uncomment this line to enable C++14 support
-#
-# Flags specifically for the TMB compilation can also be set
-# through the 'TMB_FLAGS' argument below, e.g.,
-#
-## TMB_FLAGS = -I"../../inst/include" # add include directory inst/include
-#
-# --- TMB-specific compiling directives below ---
+all: ll_gamma.so ll_gompertz.so ll_invpareto.so ll_invweibull.so ll_lgumbel.so ll_llogis_llogis.so ll_llogis.so ll_lnorm.so ll_weibull.so
 
-.PHONY: all tmblib
+ll_gamma.so: ll_gamma.cpp
+    Rscript --vanilla -e "TMB::compile('ll_gamma.cpp')"
+    
+ll_gompertz.so: ll_gompertz.cpp
+    Rscript --vanilla -e "TMB::compile('ll_gompertz.cpp')"
+    
+ll_invpareto.so: ll_invpareto.cpp
+    Rscript --vanilla -e "TMB::compile('ll_invpareto.cpp')"
+    
+ll_invweibull.so: ll_invweibull.cpp
+    Rscript --vanilla -e "TMB::compile('ll_invweibull.cpp')"
+    
+ll_lgumbel.so: ll_lgumbel.cpp
+    Rscript --vanilla -e "TMB::compile('ll_lgumbel.cpp')"
+    
+ll_llogis_llogis.so: ll_llogis_llogis.cpp
+    Rscript --vanilla -e "TMB::compile('ll_llogis_llogis.cpp')"
 
-all: $(SHLIB)
-$(SHLIB): tmblib
-
-tmblib: 
-	(cd TMB; $(R_HOME)/bin$(R_ARCH_BIN)/Rscript \
-	--no-save --no-restore compile.R '$(TMB_FLAGS)')
+ll_llogis.so: ll_llogis.cpp
+    Rscript --vanilla -e "TMB::compile('ll_llogis.cpp')"
+    
+ll_lnorm.so: ll_lnorm.cpp
+    Rscript --vanilla -e "TMB::compile('ll_lnorm.cpp')"
+    
+ll_weibull.so: ll_weibull.cpp
+    Rscript --vanilla -e "TMB::compile('ll_weibull.cpp')"
 
 clean:
-	rm -rf *.so *.o TMB/*.so TMB/*.o
+	rm -rf *.so *.o
