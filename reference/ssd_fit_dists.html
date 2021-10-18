@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -84,7 +84,8 @@
   silent <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
       <td><p>A data frame.</p></td>
     </tr><tr><th>left</th>
@@ -99,11 +100,14 @@
       <td><p>A flag specifying whether to only return fits with numerically computable standard errors.</p></td>
     </tr><tr><th>silent</th>
       <td><p>A flag indicating whether fits should fail silently.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value</h2>
     <p>An object of class fitdists (a list of <code><a href="https://rdrr.io/pkg/fitdistrplus/man/fitdist.html">fitdistrplus::fitdist()</a></code> objects).</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>By default the 'llogis', 'gamma' and 'lnorm'
 distributions are fitted to the data.
 The ssd_fit_dists function has also been
@@ -120,8 +124,10 @@ which means that numerical optimization is carried out in
 unless finite bounds are supplied in the (lower and upper) in which
 it is carried out using <code><a href="https://rdrr.io/r/stats/constrOptim.html">stats::constrOptim()</a></code>.
 In both cases the "Nelder-Mead" method is used.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">ssd_fit_dists</span><span class="op">(</span><span class="va">boron_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting of the distribution ' llogis ' by maximum likelihood </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
@@ -156,6 +162,7 @@ In both cases the "Nelder-Mead" method is used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meanlog 4.977584</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sdlog   2.687571</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

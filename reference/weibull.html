@@ -18,7 +18,7 @@ the weibull distribution with parameters shape and scale."><meta property="og:im
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -84,7 +84,8 @@ the weibull distribution with parameters shape and scale.</p>
 
 <span class="fu">rweibull</span><span class="op">(</span><span class="va">n</span>, shape <span class="op">=</span> <span class="fl">1</span>, scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A numeric vector of values.</p></td>
     </tr><tr><th>shape</th>
@@ -103,18 +104,24 @@ the weibull distribution with parameters shape and scale.</p>
       <td><p>vector of probabilities.</p></td>
     </tr><tr><th>n</th>
       <td><p>number of observations.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value</h2>
     <p>A numeric vector.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/Weibull.html">stats::dweibull()</a></code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">5</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu">dweibull</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></span>
 <span class="r-plt"><img src="weibull-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

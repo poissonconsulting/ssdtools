@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -81,7 +81,8 @@
   nsim <span class="op">=</span> <span class="fl">1e+05</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>dists</th>
       <td><p>A character vector of the distribution names.</p></td>
     </tr><tr><th>meanlog</th>
@@ -90,15 +91,20 @@
       <td><p>A number of the standard deviation on the log scale.</p></td>
     </tr><tr><th>nsim</th>
       <td><p>A positive whole number of the number of simulations to generate.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value</h2>
     <p>A named list of the parameter values that produce a distribution
 with moments closest to the meanlog and sdlog.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p><code><a href="ssd_plot_cdf.html">ssd_plot_cdf()</a></code>.</p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">ssd_match_moments</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $llogis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> locationlog    scalelog </span>
@@ -113,6 +119,7 @@ with moments closest to the meanlog and sdlog.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.091455 1.004492 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

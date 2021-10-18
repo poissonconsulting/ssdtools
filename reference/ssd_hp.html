@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -128,7 +128,8 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>The object.</p></td>
     </tr><tr><th>...</th>
@@ -149,17 +150,23 @@
       <td><p>A flag specifying whether to model average the estimates.</p></td>
     </tr><tr><th>ic</th>
       <td><p>A string specifying which information-theoretic criterion ('aic', 'aicc' or 'bic') to use for model averaging .</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value</h2>
     <p>A data frame of the conc and percent.</p>
-    <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
-
+    </div>
+    <div id="methods-by-class-">
+    <h2>Methods (by class)</h2>
     
 <ul><li><p><code>fitdist</code>: Hazard Percent fitdist</p></li>
 <li><p><code>fitdistcens</code>: Hazard Percent fitdistcens</p></li>
 <li><p><code>fitdists</code>: Hazard Percent fitdists</p></li>
 <li><p><code>fitdistscens</code>: Hazard Percent fitdistcens</p></li>
-</ul><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+</ul></div>
+
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">ssd_hp</span><span class="op">(</span><span class="va">boron_lnorm</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">30</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    conc    est    se   lcl   ucl dist     wt</span>
@@ -193,6 +200,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    30  27.3     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> average     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>   <span style="color: #BB0000;">Inf</span> 100       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> average     1</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

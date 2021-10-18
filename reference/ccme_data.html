@@ -20,7 +20,7 @@ Plants includes freshwater algae."><meta property="og:image" content="/logo.png"
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -83,11 +83,12 @@ Plants includes freshwater algae.</p>
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">ccme_data</span></code></pre></div>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
+    <div id="format">
+    <h2>Format</h2>
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 144 rows and 5 columns.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>Additional information on each of the chemicals is available from the
 CCME website.</p><dl><dt>Boron</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/324/">http://ceqg-rcqe.ccme.ca/download/en/324/</a></p></dd>
 <dt>Cadmium</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/148/">http://ceqg-rcqe.ccme.ca/download/en/148/</a></p></dd>
@@ -103,7 +104,10 @@ CCME website.</p><dl><dt>Boron</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/down
 <dt>Group</dt><dd><p>The taxonomic group (fctr).</p></dd>
 <dt>Units</dt><dd><p>The units (chr).</p></dd>
 
-</dl><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+</dl></div>
+
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ccme_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Chemical Species                Conc Group Units</span>
@@ -115,6 +119,7 @@ CCME website.</p><dl><dt>Boron</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/down
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Boron    Carassius auratus      15.6 Fish  mg/L </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Boron    Pimephales promelas    18.3 Fish  mg/L </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

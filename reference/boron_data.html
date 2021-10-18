@@ -18,7 +18,7 @@ the Canadian Council of Ministers of the Environment."><meta property="og:image"
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -79,11 +79,12 @@ the Canadian Council of Ministers of the Environment.</p>
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">boron_data</span></code></pre></div>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
+    <div id="format">
+    <h2>Format</h2>
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 28 rows and 5 columns.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>Additional information is available from <a href="http://ceqg-rcqe.ccme.ca/download/en/324/">http://ceqg-rcqe.ccme.ca/download/en/324/</a>.</p>
 <p>The columns are as follows</p>
 <dl><dt>Chemical</dt><dd><p>The chemical (chr).</p></dd>
@@ -92,16 +93,19 @@ the Canadian Council of Ministers of the Environment.</p>
 <dt>Units</dt><dd><p>The units (chr).</p></dd>
 <dt>Group</dt><dd><p>The taxonomic group (fctr).</p></dd>
 
-</dl><h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+</dl></div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p><a href="ccme_data.html">ccme_data</a></p>
 <p>Other boron: 
 <code><a href="boron_dists.html">boron_dists</a></code>,
 <code><a href="boron_hc5.html">boron_hc5</a></code>,
 <code><a href="boron_lnorm.html">boron_lnorm</a></code>,
 <code><a href="boron_pred.html">boron_pred</a></code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ccme_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Chemical Species                Conc Group Units</span>
@@ -113,6 +117,7 @@ the Canadian Council of Ministers of the Environment.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Boron    Carassius auratus      15.6 Fish  mg/L </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Boron    Pimephales promelas    18.3 Fish  mg/L </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
