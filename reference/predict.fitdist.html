@@ -51,7 +51,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/bcgov/ssdtools/">
+  <a href="https://github.com/bcgov/ssdtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -66,7 +66,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Predict</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/master/R/predict.R"><code>R/predict.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/R/predict.R" class="external-link"><code>R/predict.R</code></a></small>
     <div class="hidden name"><code>predict.fitdist.Rd</code></div>
     </div>
 
@@ -75,7 +75,7 @@
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for fitdist</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span>
   <span class="va">object</span>,
   percent <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">99</span>,
   ci <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -87,7 +87,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for fitdistcens</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span>
   <span class="va">object</span>,
   percent <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">99</span>,
   ci <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -99,7 +99,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for fitdists</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span>
   <span class="va">object</span>,
   percent <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">99</span>,
   ci <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -113,7 +113,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for fitdistscens</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span>
   <span class="va">object</span>,
   percent <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">99</span>,
   ci <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -126,38 +126,39 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
-      <td><p>The object.</p></td>
-    </tr><tr><th>percent</th>
-      <td><p>A numeric vector of percentages.</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>A flag specifying whether to estimate confidence intervals (by parametric bootstrapping).</p></td>
-    </tr><tr><th>level</th>
-      <td><p>A number between 0 and 1 of the confidence level.</p></td>
-    </tr><tr><th>nboot</th>
-      <td><p>A count of the number of bootstrap samples to use to estimate the se and confidence limits.</p></td>
-    </tr><tr><th>parallel</th>
-      <td><p>A string specifying the type of parallel operation to be used ('no', 'snow' or 'multicore').</p></td>
-    </tr><tr><th>ncpus</th>
-      <td><p>A count of the number of parallel processes to use.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Unused.</p></td>
-    </tr><tr><th>average</th>
-      <td><p>A flag specifying whether to model average the estimates.</p></td>
-    </tr><tr><th>ic</th>
-      <td><p>A string specifying which information-theoretic criterion ('aic', 'aicc' or 'bic') to use for model averaging .</p></td>
-    </tr></table></div>
-
+    <dl><dt>object</dt>
+<dd><p>The object.</p></dd>
+<dt>percent</dt>
+<dd><p>A numeric vector of percentages.</p></dd>
+<dt>ci</dt>
+<dd><p>A flag specifying whether to estimate confidence intervals (by parametric bootstrapping).</p></dd>
+<dt>level</dt>
+<dd><p>A number between 0 and 1 of the confidence level.</p></dd>
+<dt>nboot</dt>
+<dd><p>A count of the number of bootstrap samples to use to estimate the se and confidence limits.</p></dd>
+<dt>parallel</dt>
+<dd><p>A string specifying the type of parallel operation to be used ('no', 'snow' or 'multicore').</p></dd>
+<dt>ncpus</dt>
+<dd><p>A count of the number of parallel processes to use.</p></dd>
+<dt>...</dt>
+<dd><p>Unused.</p></dd>
+<dt>average</dt>
+<dd><p>A flag specifying whether to model average the estimates.</p></dd>
+<dt>ic</dt>
+<dd><p>A string specifying which information-theoretic criterion ('aic', 'aicc' or 'bic') to use for model averaging .</p></dd>
+</dl></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/predict.html">stats::predict()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">stats::predict()</a></code></p></div>
+    </div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">boron_lnorm</span>, percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5L</span>, <span class="fl">50L</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">boron_lnorm</span>, percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5L</span>, <span class="fl">50L</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `ci` argument of `predict()` is deprecated as of ssdtools 0.1.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> In particular, the `ci` has been switched from TRUE to FALSE. To retain the previous behaviour of calculating confidence intervals set `ci = TRUE`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 7</span></span>
@@ -165,7 +166,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>       5  1.68    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> lnorm     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      50 13.0     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> lnorm     1</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fluazinam_lnorm</span>, percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5L</span>, <span class="fl">50L</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fluazinam_lnorm</span>, percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5L</span>, <span class="fl">50L</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `ci` argument of `predict()` is deprecated as of ssdtools 0.1.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> In particular, the `ci` has been switched from TRUE to FALSE. To retain the previous behaviour of calculating confidence intervals set `ci = TRUE`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 7</span></span>
@@ -173,7 +174,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>       5   1.75    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> lnorm     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      50 145.      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> lnorm     1</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">boron_dists</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">boron_dists</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `ci` argument of `predict()` is deprecated as of ssdtools 0.1.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> In particular, the `ci` has been switched from TRUE to FALSE. To retain the previous behaviour of calculating confidence intervals set `ci = TRUE`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 99 × 7</span></span>
@@ -190,7 +191,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       9 2.21     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> average     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>      10 2.44     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> average     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 89 more rows</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fluazinam_dists</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fluazinam_dists</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `ci` argument of `predict()` is deprecated as of ssdtools 0.1.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> In particular, the `ci` has been switched from TRUE to FALSE. To retain the previous behaviour of calculating confidence intervals set `ci = TRUE`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 99 × 7</span></span>

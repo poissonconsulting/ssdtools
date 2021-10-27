@@ -51,7 +51,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/bcgov/ssdtools/">
+  <a href="https://github.com/bcgov/ssdtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -66,7 +66,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Model Averaged Predictions for CCME Boron Data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/master/R/data.R"><code>R/data.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/R/data.R" class="external-link"><code>R/data.R</code></a></small>
     <div class="hidden name"><code>boron_pred.Rd</code></div>
     </div>
 
@@ -76,7 +76,7 @@
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">boron_pred</span></code></pre></div>
 
-
+    <div id="ref-sections">
     <div id="format">
     <h2>Format</h2>
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 99 rows and 6 columns.</p>
@@ -84,12 +84,24 @@
     <div id="details">
     <h2>Details</h2>
     
-<dl><dt>percent</dt><dd><p>The percent of species affected (int).</p></dd>
-<dt>est</dt><dd><p>The estimated concentration (dbl).</p></dd>
-<dt>se</dt><dd><p>The standard error of the estimate (dbl).</p></dd>
-<dt>lcl</dt><dd><p>The lower confidence limit (dbl).</p></dd>
-<dt>se</dt><dd><p>The upper confidence limit (dbl).</p></dd>
-<dt>dist</dt><dd><p>The distribution (chr).</p></dd>
+<dl><dt>percent</dt>
+<dd><p>The percent of species affected (int).</p></dd>
+
+<dt>est</dt>
+<dd><p>The estimated concentration (dbl).</p></dd>
+
+<dt>se</dt>
+<dd><p>The standard error of the estimate (dbl).</p></dd>
+
+<dt>lcl</dt>
+<dd><p>The lower confidence limit (dbl).</p></dd>
+
+<dt>se</dt>
+<dd><p>The upper confidence limit (dbl).</p></dd>
+
+<dt>dist</dt>
+<dd><p>The distribution (chr).</p></dd>
+
 
 </dl></div>
     <div id="see-also">
@@ -100,10 +112,11 @@
 <code><a href="boron_hc5.html">boron_hc5</a></code>,
 <code><a href="boron_lnorm.html">boron_lnorm</a></code></p></div>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">boron_pred</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">boron_pred</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   percent   est    se   lcl   ucl dist   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>

@@ -54,7 +54,7 @@ Plants includes freshwater algae."><meta property="og:image" content="/logo.png"
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/bcgov/ssdtools/">
+  <a href="https://github.com/bcgov/ssdtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -69,7 +69,7 @@ Plants includes freshwater algae."><meta property="og:image" content="/logo.png"
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>CCME Species Sensitivity Data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/master/R/data.R"><code>R/data.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/R/data.R" class="external-link"><code>R/data.R</code></a></small>
     <div class="hidden name"><code>ccme_data.Rd</code></div>
     </div>
 
@@ -82,7 +82,7 @@ Plants includes freshwater algae.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">ccme_data</span></code></pre></div>
 
-
+    <div id="ref-sections">
     <div id="format">
     <h2>Format</h2>
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 144 rows and 5 columns.</p>
@@ -90,25 +90,50 @@ Plants includes freshwater algae.</p>
     <div id="details">
     <h2>Details</h2>
     <p>Additional information on each of the chemicals is available from the
-CCME website.</p><dl><dt>Boron</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/324/">http://ceqg-rcqe.ccme.ca/download/en/324/</a></p></dd>
-<dt>Cadmium</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/148/">http://ceqg-rcqe.ccme.ca/download/en/148/</a></p></dd>
-<dt>Chloride</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/337/">http://ceqg-rcqe.ccme.ca/download/en/337/</a></p></dd>
-<dt>Endosulfan</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/327/">http://ceqg-rcqe.ccme.ca/download/en/327/</a></p></dd>
-<dt>Glyphosate</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/182/">http://ceqg-rcqe.ccme.ca/download/en/182/</a></p></dd>
-<dt>Uranium</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/328/">http://ceqg-rcqe.ccme.ca/download/en/328/</a></p></dd>
-<dt>Silver</dt><dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/355/">http://ceqg-rcqe.ccme.ca/download/en/355/</a></p></dd>
+CCME website.</p><dl><dt>Boron</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/324/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/324/</a></p></dd>
 
-</dl><dl><dt>Chemical</dt><dd><p>The chemical (chr).</p></dd>
-<dt>Species</dt><dd><p>The species binomial name (chr).</p></dd>
-<dt>Conc</dt><dd><p>The chemical concentration (dbl).</p></dd>
-<dt>Group</dt><dd><p>The taxonomic group (fctr).</p></dd>
-<dt>Units</dt><dd><p>The units (chr).</p></dd>
+<dt>Cadmium</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/148/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/148/</a></p></dd>
+
+<dt>Chloride</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/337/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/337/</a></p></dd>
+
+<dt>Endosulfan</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/327/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/327/</a></p></dd>
+
+<dt>Glyphosate</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/182/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/182/</a></p></dd>
+
+<dt>Uranium</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/328/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/328/</a></p></dd>
+
+<dt>Silver</dt>
+<dd><p><a href="http://ceqg-rcqe.ccme.ca/download/en/355/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/355/</a></p></dd>
+
+
+</dl><dl><dt>Chemical</dt>
+<dd><p>The chemical (chr).</p></dd>
+
+<dt>Species</dt>
+<dd><p>The species binomial name (chr).</p></dd>
+
+<dt>Conc</dt>
+<dd><p>The chemical concentration (dbl).</p></dd>
+
+<dt>Group</dt>
+<dd><p>The taxonomic group (fctr).</p></dd>
+
+<dt>Units</dt>
+<dd><p>The units (chr).</p></dd>
+
 
 </dl></div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ccme_data</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ccme_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Chemical Species                Conc Group Units</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>

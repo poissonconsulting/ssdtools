@@ -51,7 +51,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/bcgov/ssdtools/">
+  <a href="https://github.com/bcgov/ssdtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -66,7 +66,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>SSD Plot</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/master/R/ssd-plot.R"><code>R/ssd-plot.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/R/ssd-plot.R" class="external-link"><code>R/ssd-plot.R</code></a></small>
     <div class="hidden name"><code>ssd_plot.Rd</code></div>
     </div>
 
@@ -91,38 +91,39 @@
   shift_x <span class="op">=</span> <span class="fl">3</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
-      <td><p>A data frame.</p></td>
-    </tr><tr><th>pred</th>
-      <td><p>A data frame of the predictions.</p></td>
-    </tr><tr><th>left</th>
-      <td><p>A string of the column in data with the concentrations.</p></td>
-    </tr><tr><th>right</th>
-      <td><p>A string of the column in data with the right concentration values.</p></td>
-    </tr><tr><th>label</th>
-      <td><p>A string of the column in data with the labels.</p></td>
-    </tr><tr><th>shape</th>
-      <td><p>A string of the column in data for the shape aesthetic.</p></td>
-    </tr><tr><th>color</th>
-      <td><p>A string of the column in data for the color aesthetic.</p></td>
-    </tr><tr><th>size</th>
-      <td><p>A number for the size of the labels.</p></td>
-    </tr><tr><th>xlab</th>
-      <td><p>A string of the x-axis label.</p></td>
-    </tr><tr><th>ylab</th>
-      <td><p>A string of the x-axis label.</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>A flag specifying whether to estimate confidence intervals (by parametric bootstrapping).</p></td>
-    </tr><tr><th>ribbon</th>
-      <td><p>A flag indicating whether to plot the confidence interval as a grey ribbon as opposed to green solid lines.</p></td>
-    </tr><tr><th>hc</th>
-      <td><p>A count between 1 and 99 indicating the percent hazard concentration (or NULL).</p></td>
-    </tr><tr><th>shift_x</th>
-      <td><p>The value to multiply the label x values by.</p></td>
-    </tr></table></div>
-
+    <dl><dt>data</dt>
+<dd><p>A data frame.</p></dd>
+<dt>pred</dt>
+<dd><p>A data frame of the predictions.</p></dd>
+<dt>left</dt>
+<dd><p>A string of the column in data with the concentrations.</p></dd>
+<dt>right</dt>
+<dd><p>A string of the column in data with the right concentration values.</p></dd>
+<dt>label</dt>
+<dd><p>A string of the column in data with the labels.</p></dd>
+<dt>shape</dt>
+<dd><p>A string of the column in data for the shape aesthetic.</p></dd>
+<dt>color</dt>
+<dd><p>A string of the column in data for the color aesthetic.</p></dd>
+<dt>size</dt>
+<dd><p>A number for the size of the labels.</p></dd>
+<dt>xlab</dt>
+<dd><p>A string of the x-axis label.</p></dd>
+<dt>ylab</dt>
+<dd><p>A string of the x-axis label.</p></dd>
+<dt>ci</dt>
+<dd><p>A flag specifying whether to estimate confidence intervals (by parametric bootstrapping).</p></dd>
+<dt>ribbon</dt>
+<dd><p>A flag indicating whether to plot the confidence interval as a grey ribbon as opposed to green solid lines.</p></dd>
+<dt>hc</dt>
+<dd><p>A count between 1 and 99 indicating the percent hazard concentration (or NULL).</p></dd>
+<dt>shift_x</dt>
+<dd><p>The value to multiply the label x values by.</p></dd>
+</dl></div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>

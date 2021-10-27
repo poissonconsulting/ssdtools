@@ -52,7 +52,7 @@ the Canadian Council of Ministers of the Environment."><meta property="og:image"
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/bcgov/ssdtools/">
+  <a href="https://github.com/bcgov/ssdtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -67,7 +67,7 @@ the Canadian Council of Ministers of the Environment."><meta property="og:image"
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>CCME Species Sensitivity Data for Boron</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/master/R/data.R"><code>R/data.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/R/data.R" class="external-link"><code>R/data.R</code></a></small>
     <div class="hidden name"><code>boron_data.Rd</code></div>
     </div>
 
@@ -78,20 +78,30 @@ the Canadian Council of Ministers of the Environment.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">boron_data</span></code></pre></div>
 
-
+    <div id="ref-sections">
     <div id="format">
     <h2>Format</h2>
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 28 rows and 5 columns.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Additional information is available from <a href="http://ceqg-rcqe.ccme.ca/download/en/324/">http://ceqg-rcqe.ccme.ca/download/en/324/</a>.</p>
+    <p>Additional information is available from <a href="http://ceqg-rcqe.ccme.ca/download/en/324/" class="external-link">http://ceqg-rcqe.ccme.ca/download/en/324/</a>.</p>
 <p>The columns are as follows</p>
-<dl><dt>Chemical</dt><dd><p>The chemical (chr).</p></dd>
-<dt>Species</dt><dd><p>The species binomial name (chr).</p></dd>
-<dt>Concentration</dt><dd><p>The chemical concentration (dbl).</p></dd>
-<dt>Units</dt><dd><p>The units (chr).</p></dd>
-<dt>Group</dt><dd><p>The taxonomic group (fctr).</p></dd>
+<dl><dt>Chemical</dt>
+<dd><p>The chemical (chr).</p></dd>
+
+<dt>Species</dt>
+<dd><p>The species binomial name (chr).</p></dd>
+
+<dt>Concentration</dt>
+<dd><p>The chemical concentration (dbl).</p></dd>
+
+<dt>Units</dt>
+<dd><p>The units (chr).</p></dd>
+
+<dt>Group</dt>
+<dd><p>The taxonomic group (fctr).</p></dd>
+
 
 </dl></div>
     <div id="see-also">
@@ -103,10 +113,11 @@ the Canadian Council of Ministers of the Environment.</p>
 <code><a href="boron_lnorm.html">boron_lnorm</a></code>,
 <code><a href="boron_pred.html">boron_pred</a></code></p></div>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ccme_data</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ccme_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Chemical Species                Conc Group Units</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>

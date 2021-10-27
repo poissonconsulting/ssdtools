@@ -51,7 +51,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/bcgov/ssdtools/">
+  <a href="https://github.com/bcgov/ssdtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -66,7 +66,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Match Moments</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/master/R/match-moments.R"><code>R/match-moments.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/R/match-moments.R" class="external-link"><code>R/match-moments.R</code></a></small>
     <div class="hidden name"><code>ssd_match_moments.Rd</code></div>
     </div>
 
@@ -75,24 +75,24 @@
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ssd_match_moments</span><span class="op">(</span>
-  dists <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"llogis"</span>, <span class="st">"gamma"</span>, <span class="st">"lnorm"</span><span class="op">)</span>,
+  dists <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"llogis"</span>, <span class="st">"gamma"</span>, <span class="st">"lnorm"</span><span class="op">)</span>,
   meanlog <span class="op">=</span> <span class="fl">1</span>,
   sdlog <span class="op">=</span> <span class="fl">1</span>,
   nsim <span class="op">=</span> <span class="fl">1e+05</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>dists</th>
-      <td><p>A character vector of the distribution names.</p></td>
-    </tr><tr><th>meanlog</th>
-      <td><p>A number of the mean on the log scale.</p></td>
-    </tr><tr><th>sdlog</th>
-      <td><p>A number of the standard deviation on the log scale.</p></td>
-    </tr><tr><th>nsim</th>
-      <td><p>A positive whole number of the number of simulations to generate.</p></td>
-    </tr></table></div>
-
+    <dl><dt>dists</dt>
+<dd><p>A character vector of the distribution names.</p></dd>
+<dt>meanlog</dt>
+<dd><p>A number of the mean on the log scale.</p></dd>
+<dt>sdlog</dt>
+<dd><p>A number of the standard deviation on the log scale.</p></dd>
+<dt>nsim</dt>
+<dd><p>A positive whole number of the number of simulations to generate.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A named list of the parameter values that produce a distribution
@@ -101,6 +101,7 @@ with moments closest to the meanlog and sdlog.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="ssd_plot_cdf.html">ssd_plot_cdf()</a></code>.</p></div>
+    </div>
     </div>
 
     <div id="examples">
