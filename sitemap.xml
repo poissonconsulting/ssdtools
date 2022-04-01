@@ -67,7 +67,13 @@
     <loc>/reference/comma_signif.html</loc>
   </url>
   <url>
+    <loc>/reference/dgompertz.html</loc>
+  </url>
+  <url>
     <loc>/reference/dist_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dlgumbel.html</loc>
   </url>
   <url>
     <loc>/reference/estimates.fitdists.html</loc>

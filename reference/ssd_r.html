@@ -81,9 +81,13 @@
 
 <span class="fu">ssd_rgompertz</span><span class="op">(</span><span class="va">n</span>, location <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, chk <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
+<span class="fu">rgompertz</span><span class="op">(</span><span class="va">n</span>, llocation <span class="op">=</span> <span class="fl">0</span>, lshape <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+
 <span class="fu">ssd_rinvpareto</span><span class="op">(</span><span class="va">n</span>, shape <span class="op">=</span> <span class="fl">3</span>, scale <span class="op">=</span> <span class="fl">1</span>, chk <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu">ssd_rlgumbel</span><span class="op">(</span><span class="va">n</span>, locationlog <span class="op">=</span> <span class="fl">0</span>, scalelog <span class="op">=</span> <span class="fl">1</span>, chk <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="fu">rlgumbel</span><span class="op">(</span><span class="va">n</span>, locationlog <span class="op">=</span> <span class="fl">0</span>, scalelog <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
 <span class="fu">ssd_rllogis_llogis</span><span class="op">(</span>
   <span class="va">n</span>,
@@ -128,6 +132,10 @@
 <dd><p>A string of the column in data for the shape aesthetic.</p></dd>
 <dt>location</dt>
 <dd><p>location parameter.</p></dd>
+<dt>llocation</dt>
+<dd><p>location parameter on the log scale.</p></dd>
+<dt>lshape</dt>
+<dd><p>shape parameter on the log scale.</p></dd>
 <dt>locationlog</dt>
 <dd><p>location on log scale parameter.</p></dd>
 <dt>scalelog</dt>
@@ -161,8 +169,12 @@
 <ul><li><p><code>ssd_rburrIII3</code>: Random Generation for BurrIII Distribution</p></li>
 <li><p><code>ssd_rgamma</code>: Random Generation for Gamma Distribution</p></li>
 <li><p><code>ssd_rgompertz</code>: Random Generation for Gompertz Distribution</p></li>
+<li><p><code>rgompertz</code>: Random Generation for Gompertz Distribution
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></li>
 <li><p><code>ssd_rinvpareto</code>: Random Generation for Inverse Pareto Distribution</p></li>
 <li><p><code>ssd_rlgumbel</code>: Random Generation for log-Gumbel Distribution</p></li>
+<li><p><code>rlgumbel</code>: Random Generation for log-Gumbel Distribution
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></li>
 <li><p><code>ssd_rllogis_llogis</code>: Random Generation for Log-Logistic/Log-Logistic Mixture Distribution</p></li>
 <li><p><code>ssd_rllogis</code>: Random Generation for Log-Logistic Distribution</p></li>
 <li><p><code>ssd_rlnorm_lnorm</code>: Random Generation for Log-Normal/Log-Normal Mixture Distribution</p></li>

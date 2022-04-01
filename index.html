@@ -158,12 +158,15 @@
 <p>The goodness of fit can be assessed using <code>ssd_gof</code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/ssd_gof.html">ssd_gof</a></span><span class="op">(</span><span class="va">fits</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 × 9</span>
-<span class="co">#&gt;   dist      ad     ks    cvm   aic  aicc   bic delta weight</span>
-<span class="co">#&gt;   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 gamma  0.440 0.117  0.0554  238.  238.  240.  0     0.595</span>
-<span class="co">#&gt; 2 llogis 0.487 0.0994 0.0595  241.  241.  244.  3.38  0.11 </span>
-<span class="co">#&gt; 3 lnorm  0.507 0.107  0.0703  239.  240.  242.  1.40  0.296</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 6 × 9</span>
+<span class="co">#&gt;   dist           ad     ks    cvm   aic  aicc   bic delta weight</span>
+<span class="co">#&gt;   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 gamma       0.440 0.117  0.0554  238.  238.  240. 0.005  0.357</span>
+<span class="co">#&gt; 2 lgumbel     0.829 0.158  0.134   244.  245.  247. 6.56   0.013</span>
+<span class="co">#&gt; 3 llogis      0.487 0.0994 0.0595  241.  241.  244. 3.39   0.066</span>
+<span class="co">#&gt; 4 lnorm       0.507 0.107  0.0703  239.  240.  242. 1.40   0.177</span>
+<span class="co">#&gt; 5 lnorm_lnorm 0.320 0.116  0.0414  240.  243.  247. 4.98   0.03 </span>
+<span class="co">#&gt; 6 weibull     0.434 0.117  0.0542  238.  238.  240. 0      0.357</span></code></pre></div>
 <p>and the model-averaged 5% hazard concentration estimated by parametric bootstrapping using <code>ssd_hc</code></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">99</span><span class="op">)</span>
@@ -172,7 +175,7 @@
 <span class="co">#&gt; # A tibble: 1 × 10</span>
 <span class="co">#&gt;   dist    percent   est    se   lcl   ucl    wt method     nboot pboot</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 average       5  1.31 0.780 0.543  3.58     1 parametric   100     1</span></code></pre></div>
+<span class="co">#&gt; 1 average       5  1.24 0.741 0.510  3.35     1 parametric   100     1</span></code></pre></div>
 <p>Model-averaged predictions complete with confidence intervals can also be estimated by parametric bootstrapping using the <code>stats</code> generic <code>predict</code>. To perform bootstrapping for each distribution in parallel register the future backend and then select the evaluation strategy.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">doFuture</span><span class="fu">::</span><span class="fu"><a href="https://doFuture.futureverse.org/reference/registerDoFuture.html" class="external-link">registerDoFuture</a></span><span class="op">(</span><span class="op">)</span>
@@ -228,7 +231,7 @@
 <p>The ssdtools package was developed as a result of earlier drafts of:</p>
 <p><em>Schwarz, C., and Tillmanns, A. 2019. Improving Statistical Methods for Modeling Species Sensitivity Distributions. Province of British Columbia, Victoria, BC.</em></p>
 <p>For recent developments in SSD modeling including a review of existing software see:</p>
-<p><em>Fox, D.R., et al. 2021. Recent Developments in Species Sensitivity Distribution Modeling. Environ Toxicol Chem 40(2): 293–308. <a href="https://onlinelibrary.wiley.com/doi/10.1002/etc.4925" class="external-link uri">https://onlinelibrary.wiley.com/doi/10.1002/etc.4925</a>.</em></p>
+<p><em>Fox, D.R., et al. 2021. Recent Developments in Species Sensitivity Distribution Modeling. Environ Toxicol Chem 40(2): 293–308. <a href="https://setac.onlinelibrary.wiley.com/doi/10.1002/etc.4925" class="external-link uri">https://setac.onlinelibrary.wiley.com/doi/10.1002/etc.4925</a>.</em></p>
 <p>The CCME <code>data.csv</code> data file is derived from a factsheet prepared by the <a href="http://ceqg-rcqe.ccme.ca/en/index.html" class="external-link">Canadian Council of Ministers of the Environment</a>. See the <a href="https://github.com/bcgov/ssdtools/tree/master/data-raw" class="external-link"><code>data-raw</code></a> folder for more information.</p>
 </div>
 <div class="section level2">

@@ -88,6 +88,8 @@
 
 <span class="fu">ssd_pgompertz</span><span class="op">(</span><span class="va">q</span>, location <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
+<span class="fu">pgompertz</span><span class="op">(</span><span class="va">q</span>, llocation <span class="op">=</span> <span class="fl">0</span>, lshape <span class="op">=</span> <span class="fl">0</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
 <span class="fu">ssd_pinvpareto</span><span class="op">(</span><span class="va">q</span>, shape <span class="op">=</span> <span class="fl">3</span>, scale <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu">ssd_plgumbel</span><span class="op">(</span>
@@ -97,6 +99,8 @@
   lower.tail <span class="op">=</span> <span class="cn">TRUE</span>,
   log.p <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
+
+<span class="fu">plgumbel</span><span class="op">(</span><span class="va">q</span>, locationlog <span class="op">=</span> <span class="fl">0</span>, scalelog <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu">ssd_pllogis_llogis</span><span class="op">(</span>
   <span class="va">q</span>,
@@ -145,6 +149,10 @@
 <dd><p>A string of the column in data for the shape aesthetic.</p></dd>
 <dt>location</dt>
 <dd><p>location parameter.</p></dd>
+<dt>llocation</dt>
+<dd><p>location parameter on the log scale.</p></dd>
+<dt>lshape</dt>
+<dd><p>shape parameter on the log scale.</p></dd>
 <dt>locationlog</dt>
 <dd><p>location on log scale parameter.</p></dd>
 <dt>scalelog</dt>
@@ -178,8 +186,12 @@
 <ul><li><p><code>ssd_pburrIII3</code>: Cumulative Distribution Function for BurrIII Distribution</p></li>
 <li><p><code>ssd_pgamma</code>: Cumulative Distribution Function for Gamma Distribution</p></li>
 <li><p><code>ssd_pgompertz</code>: Cumulative Distribution Function for Gompertz Distribution</p></li>
+<li><p><code>pgompertz</code>: Cumulative Distribution Function for Gompertz Distribution
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></li>
 <li><p><code>ssd_pinvpareto</code>: Cumulative Distribution Function for Inverse Pareto Distribution</p></li>
 <li><p><code>ssd_plgumbel</code>: Cumulative Distribution Function for Log-Gumbel Distribution</p></li>
+<li><p><code>plgumbel</code>: Cumulative Distribution Function for Log-Gumbel Distribution
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></li>
 <li><p><code>ssd_pllogis_llogis</code>: Cumulative Distribution Function for Log-Logistic/Log-Logistic Mixture Distribution</p></li>
 <li><p><code>ssd_pllogis</code>: Cumulative Distribution Function for Log-Logistic Distribution</p></li>
 <li><p><code>ssd_plnorm_lnorm</code>: Cumulative Distribution Function for Log-Normal/Log-Normal Mixture Distribution</p></li>
