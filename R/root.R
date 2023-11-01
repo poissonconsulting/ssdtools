@@ -1,4 +1,4 @@
-#    Copyright 2023 Australian Government Department of 
+#    Copyright 2023 Australian Government Department of
 #    Climate Change, Energy, the Environment and Water
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,11 +12,28 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
+.ssd_estimates <- function(x, nboot,
+                           data, rescale, weighted, censoring, min_pmix = min_pmix,
+                           range_shape1, range_shape2, parametric, control) {
+  dist <- .dist_tmbfit(x)
+
+  censoring <- censoring / rescale
+  fun <- safely(fit_tmb)
+  estimates <- boot_estimates(x,
+    fun = fun, nboot = nboot, data = data, weighted = weighted,
+    censoring = censoring, min_pmix = min_pmix,
+    range_shape1 = range_shape1,
+    range_shape2 = range_shape2,
+    parametric = parametric,
+    control = control
+  )
+  return(estimates)
+}
 
 wt_est_nest <- function(x) {
   glance <- glance(x)
   tidy <- tidy(x)
-  
+
   wt <- dplyr::select(glance, "dist", "weight")
   est <- dplyr::select(tidy, "dist", "term", "est", "se")
   est_nest <- tidyr::nest(est, .by = "dist")
@@ -32,8 +49,8 @@ ma_fun <- function(wt_est_nest, fun = "p") {
   wts <- wt_est_nest$weight
   args <- purrr::map_chr(wt_est_nest$data, est_args)
   fun_args <- paste0(wts, " * ", funs, "(x, ", args, ")", collapse = " + ")
-  
-  func <- paste0("function(x, ", fun ,") {(", fun_args, ") - ", fun, "}")
+
+  func <- paste0("function(x, ", fun, ") {(", fun_args, ") - ", fun, "}")
   eval(parse(text = func))
 }
 
@@ -46,12 +63,11 @@ hc_upper <- function(p, data) {
 .ssd_hp_root <- function(conc, wt_est_nest, ci, level, nboot, min_pboot,
                          data, rescale, weighted, censoring, min_pmix,
                          range_shape1, range_shape2, parametric, control) {
-  
-  q <- conc/rescale
-  
+  q <- conc / rescale
+
   f <- ma_fun(wt_est_nest, fun = "q")
   root <- uniroot(f = f, q = q, lower = 0, upper = 1)$root
-  
+
   tibble(
     est = root * 100,
     se = NA_real_,
@@ -64,11 +80,10 @@ hc_upper <- function(p, data) {
 .ssd_hc_root <- function(proportion, wt_est_nest, ci, level, nboot, min_pboot,
                          data, rescale, weighted, censoring, min_pmix,
                          range_shape1, range_shape2, parametric, control) {
-  
   f <- ma_fun(wt_est_nest, fun = "p")
   hc_upper <- hc_upper(proportion, data)
   hc <- uniroot(f = f, p = proportion, lower = 0, upper = hc_upper)$root
-  
+
   tibble(
     est = hc * rescale,
     se = NA_real_,

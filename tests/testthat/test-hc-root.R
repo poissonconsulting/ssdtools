@@ -1,4 +1,4 @@
-#    Copyright 2023 Australian Government Department of 
+#    Copyright 2023 Australian Government Department of
 #    Climate Change, Energy, the Environment and Water
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,14 +38,14 @@ test_that("hc root lnorm", {
   expect_equal(hc_root, hc_average, tolerance = 1e-6)
   expect_equal(hc_average$est, 1.6811748398812, tolerance = 1e-6)
   expect_equal(hc_root$est, 1.68117469404437, tolerance = 1e-6)
-  
+
   testthat::expect_snapshot({
     hc_root
   })
 })
 
 test_that("hc root all", {
-  skip_on_os("linux") 
+  skip_on_os("linux")
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   set.seed(102)
   hc_average <- ssd_hc(fits, average = TRUE)

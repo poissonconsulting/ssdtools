@@ -1,4 +1,4 @@
-#    Copyright 2023 Australian Government Department of 
+#    Copyright 2023 Australian Government Department of
 #    Climate Change, Energy, the Environment and Water
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,14 +38,14 @@ test_that("hp root lnorm", {
   expect_equal(hp_root, hp_average, tolerance = 1e-3)
   expect_equal(hp_average$est, 1.9543030195088, tolerance = 1e-6)
   expect_equal(hp_root$est, 1.95476926846743, tolerance = 1e-6)
-  
+
   testthat::expect_snapshot({
     hp_root
   })
 })
 
 test_that("hp root all", {
-  skip_on_os("linux") 
+  skip_on_os("linux")
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   set.seed(102)
   hp_average <- ssd_hp(fits, average = TRUE)
@@ -59,13 +59,13 @@ test_that("hp root all", {
 })
 
 test_that("hp is hc", {
-  skip_on_os("linux") 
+  skip_on_os("linux")
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   conc <- 1
   hp_root <- ssd_hp(fits, conc = conc, average = TRUE, root = TRUE)
   hc_root <- ssd_hc(fits, percent = hp_root$est, average = TRUE, root = TRUE)
   expect_equal(hc_root$est, conc, tolerance = 1e-2)
-  for(i in 1:100) {
+  for (i in 1:100) {
     hp_root <- ssd_hp(fits, conc = hc_root$est, average = TRUE, root = TRUE)
     hc_root <- ssd_hc(fits, percent = hp_root$est, average = TRUE, root = TRUE)
   }
@@ -74,13 +74,13 @@ test_that("hp is hc", {
 })
 
 test_that("hp is hc 10", {
-  skip_on_os("linux") 
+  skip_on_os("linux")
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   conc <- 10
   hp_root <- ssd_hp(fits, conc = conc, average = TRUE, root = TRUE)
   hc_root <- ssd_hc(fits, percent = hp_root$est, average = TRUE, root = TRUE)
   expect_equal(hc_root$est, conc, tolerance = 1e-2)
-  for(i in 1:100) {
+  for (i in 1:100) {
     hp_root <- ssd_hp(fits, conc = hc_root$est, average = TRUE, root = TRUE)
     hc_root <- ssd_hc(fits, percent = hp_root$est, average = TRUE, root = TRUE)
   }
