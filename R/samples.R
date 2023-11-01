@@ -14,6 +14,7 @@
 #    limitations under the License.
 
 xsample_estimates <- function(x, args, what) {
+
   if (grepl("^ssd_p", what)) {
     args$q <- x
   } else {
