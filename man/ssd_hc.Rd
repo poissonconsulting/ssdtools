@@ -21,7 +21,7 @@ ssd_hc(x, ...)
   delta = 7,
   min_pboot = 0.99,
   parametric = TRUE,
-  root = FALSE,
+  averaging_method = "arithmetic",
   control = NULL,
   ...
 )
@@ -58,8 +58,6 @@ ssd_hc(x, ...)
 fit in the sense of returning a likelihood.}
 
 \item{parametric}{A flag specifying whether to perform parametric as opposed to non-parametric bootstrapping.}
-
-\item{root}{A flag specifying whether to calculate the value by finding the root.}
 
 \item{control}{A list of control parameters passed to \code{\link[stats:optim]{stats::optim()}}.}
 }
