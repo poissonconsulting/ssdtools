@@ -22,6 +22,7 @@ ssd_hc(x, ...)
   min_pboot = 0.99,
   parametric = TRUE,
   averaging_method = "arithmetic",
+  keep_samples = FALSE,
   control = NULL,
   ...
 )

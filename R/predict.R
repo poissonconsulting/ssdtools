@@ -33,6 +33,8 @@ predict.fitdists <- function(object, percent = 1:99, ci = FALSE,
                              average = TRUE, delta = 7,
                              min_pboot = 0.99,
                              parametric = TRUE,
+                             averaging_method = "arithmetic",
+                             keep_samples = FALSE,
                              root = FALSE,
                              control = NULL,
                              ...) {
@@ -41,7 +43,8 @@ predict.fitdists <- function(object, percent = 1:99, ci = FALSE,
     percent = percent, ci = ci, level = level,
     nboot = nboot, min_pboot = min_pboot,
     average = average, delta = delta, parametric = parametric,
-    root = root, control = control
+    averaging_method = averaging_method, keep_samples,
+    control = control
   )
 }
 

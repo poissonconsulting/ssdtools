@@ -14,6 +14,8 @@
   delta = 7,
   min_pboot = 0.99,
   parametric = TRUE,
+  averaging_method = "arithmetic",
+  keep_samples = FALSE,
   root = FALSE,
   control = NULL,
   ...
