@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ssdtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,7 @@
 <span>  min_pboot <span class="op">=</span> <span class="fl">0.99</span>,</span>
 <span>  parametric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  multi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  fix_weights <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  control <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  save_to <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -144,6 +145,10 @@ fit in the sense of returning a likelihood.</p></dd>
 
 <dt>multi</dt>
 <dd><p>A flag specifying whether to treat the distributions as constituting a single distribution.</p></dd>
+
+
+<dt>fix_weights</dt>
+<dd><p>A flag specifying whether to fix the model weights when performing <code>multi</code> bootstrapping.</p></dd>
 
 
 <dt>control</dt>
