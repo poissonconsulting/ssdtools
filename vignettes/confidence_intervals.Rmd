@@ -1,0 +1,53 @@
+---
+title: "Distributions in ssdtools"
+author: "ssdtools Team"
+date: "`r Sys.Date()`"
+bibliography: references.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Selecting Distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.height = 4,
+  fig.width = 6
+)
+```
+
+## Boot strap confidence intervals
+
+[Some basic information on bootstrapping and recommendations of the number of bootstrap samples that should be used]
+
+## Parametric versus non-parametric bootstrapping
+
+[A description of parametric versus non-parametric bootstrapping (ssdtools currently does both, as far as I am aware although I have not tested that recently). This would also include a justification for the default parametric bootstrapping, with citations (possible even replication of some graphics) to the simulation study in the previous report.]
+
+## Bootstrapping model averaged SSDs
+
+[A description of the three parametric bootstrapping methods implemented in ssdtools, what they are doing and notes on if they should/should not be used.]
+
+### Weighted arithmetic mean 
+
+calcualted as a weighted arithmetic mean of the CI and se values estimated as a quantile() and sd() from bootstrap (parametric or non-parametric) simulation from each of the individual candidate distributions (original, should not be used, kept for legacy reasons)
+
+### Weighted mixture distribution
+
+CI and se values estimated as a quantile() and sd() from bootstrap (parametric or non-parametric) simulation from a AICc weighted mixture distribution, with and without fixed weights (arguable technically correct, some philosophical issues to discuss, can be used, is slower)
+
+### Weighted bootstrap sample 
+
+CI and se values estimated as a quantile() and sd() from bootstrap (parametric or non-parametric) simulation from each of the individual candidate distributions, pooled across nboot in proportion to the AICc weights of each (arguable technically less correct, some philosophical issues to discuss, can be used, is faster, is default)
+
+
+## References
+
+<div id="refs"></div>
+
+```{r, results = "asis", echo = FALSE}
+cat(licensing_md())
+```

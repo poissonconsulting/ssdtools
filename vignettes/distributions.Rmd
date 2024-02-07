@@ -1,5 +1,5 @@
 ---
-title: "Selecting Distributions"
+title: "Distributions in ssdtools"
 author: "ssdtools Team"
 date: "`r Sys.Date()`"
 bibliography: references.bib
@@ -19,21 +19,166 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Model selection
+## Available distributions
 
-It can be difficult to select a 'best fitting' distribution when modeling species sensitivity data with low sample sizes.
-In these situations, model averaging can be used to fit multiple distributions and calculate a weighted average HCx and confidence limits [@schwarz_improving_2019].
+Many authors have noted that there is no guiding theory in ecotoxicology to justify any particular
+distributional form for the SSD other than that its domain be restricted to the positive real line
+(Newman et al. 2000, Zajdlik 2005, Chapman PF & Tarazona J 2007, Fox 2016).
+
 Distributions selected to use in model averaging must be bounded by zero given that effect concentrations cannot be negative.
 Furthermore, the selected distributions should provide a variety of shapes to capture the diversity of shapes in empirical species sensitivity distributions.
 
-By default, the ssdtools uses Akaike Information Criterion corrected for small sample size (AICc) as a measure of relative quality of fit for different distributions and as the basis for calculating the model-averaged HCx.  
-However, if two or more similar models fit the data well then the support for this type of shape will be over-inflated [@burnham_model_2002].  
+There are a wide range of distributions that have been implemented in ssdtools, although not all distributions are among the recommended default set. Here we provide a detailed account of all the implemented distributions, and recommendations on their appropriate use.
+
+
+### Log-normal, Log-logistic and Gamma distributions
+
+The log-normal, log-logistic and Gamma distributions have been widely used in SSD modelling, and were part of the original distribution set for early releases of ssdtools as developed by [Thorley and Schwarz 2018](https://joss.theoj.org/papers/10.21105/joss.01082.pdf), and were adopted as the default set of three distributions in early updates of ssdtools and the associated ShinyApp [@dalgarno_shinyssdtools_2021].
+
+#### Log-normal
+
+The [log-normal](https://en.wikipedia.org/wiki/Log-normal_distribution) distribution was selected as the starting distribution given the data are for effect concentrations. The log-normal distribution can be fit using ssdtools supplying the string "lnorm" to the *dists* argument in the *ssd_fit_dists* call.
+
+The log-normal distribution does have a couple of limitations to consider when fitting species sensitivity data.
+First, on the logarithmic scale, the normal distribution is symmetrical.
+Second, the log-normal distribution decays too quickly in the tails giving narrow tails which may not adequately fit the data.
+Additional distributions were selected to compensate for these deficiencies.  
+
+#### Log-logistic distribution
+
+The [log-logistic](https://en.wikipedia.org/wiki/Log-logistic_distribution) distribution is often used as a candidate SSD primarily because of its analytic tractability [@aldenberg_confidence_1993].
+We included it because it has wider tails than the log-normal and because it is a specific case of the more general Burr family of distributions [@shao_estimation_2000, @burr_cumulative_1942]. The log-logistic distribution can be fit using ssdtools by supplying the string "lnorm" to the *dists* argument in the *ssd_fit_dists* call.
+
+#### Gamma distribution
+
+The [gamma](https://en.wikipedia.org/wiki/Gamma_distribution) distribution is a two-parameter distribution commonly used to model failure times or time to events.
+
+For use in modeling species sensitivity data, the gamma distribution has two key features that provide additional flexibility relative to the log-normal distribution: 1) it is non-symmetrical on the logarithmic scale; and 2) it has wider tails.
+
+The gamma distribution can be fit using ssdtools by supplying the string  "gamma"  to the *dists* argument in the *ssd_fit_dists* call.  
+
+### Log-gumbel, Gompertz and Weibull distributions 
+
+In addition to the log-normal, log-logistic and Gamma distributions, the original version of ssdtools as developed by [Thorley and Schwarz 2018](https://joss.theoj.org/papers/10.21105/joss.01082.pdf) also included three additional distributions in the candidate model set, including the log-normal, log-gumbel and Gompertz. 
+
+#### Log-gumbel (inverse Weibull) distribution
+
+The [log-gumbel](https://en.wikipedia.org/wiki/Gamma_distribution) distribution is a two-parameter distribution commonly used to model extreme values.
+
+The Log-gumbel distribution can be fit using ssdtools by supplying the string  "lgumbel"  to the *dists* argument in the *ssd_fit_dists* call.  
+
+#### Gompertz distribution
+
+
+The gompertz distribution can be fit using ssdtools by supplying the string  "gompertz"  to the *dists* argument in the *ssd_fit_dists* call.  
+
+#### Weibull distribution
+
+The Weibull distribution can be fit using ssdtools by supplying the string  "weibull"  to the *dists* argument in the *ssd_fit_dists* call.  
+
+### Burrlioz distributions (Burr Type 3, inverse Pareto and inverse Weibull)
+
+In the mid to late 1990s, Professor Barry Hart of the Water Studies Centre at Monash University
+chaired a working group established by the Australian Government to oversee the revision of the 1992
+ANZECC Water Quality Guidelines. A fundamental shift reflected in the resulting ANZECC/ARMCANZ
+(2000) Guidelines was the adoption of a risk-based approach to the establishment of DGVs. The kernel
+of this risk-based approach was the SSD and in particular the use of the Burr III distribution. While the
+three parameter Burr III distribution provided for a greater variety of distributional shapes than the more commonly
+used log-logistic and log-normal distributions, this came at the expense of computational simplicity.
+Recognising that this increased complexity would severely limit the adoption and utility of the newly
+advocated approach, the Australian government commissioned CSIRO’s Division of Mathematical and
+Information Sciences (CMIS) to develop user-friendly software to perform the necessary and complex
+calculations associated with fitting Burr III distributions to toxicity data. Version 1.0 of the resulting
+software tool known as Burrlioz was made available in binary (compiled) form to coincide with the
+release of the ANZECC/ARMCANZ (2000) Guideline documents.
+
+CSIRO was re-engaged by the Commonwealth government in 2014 to revise and update the
+Burrlioz software and, most notably, re-write the core statistical routines using the open-source R
+statistical computing language. Although R is extraordinarily powerful, it has a very steep learning7
+curve and, for many people, it is not an intuitive language. Burrlioz 2.0 removed the need for
+end-users to learn how to use R as it is effectively a compiled GUI that serves as a front-end to the R
+environment. Elements of the R-code used by Burrlioz 2.0 to fit SSDs can be accessed by users,
+however the Burrlioz package would not be classed as completely open-source.
+
+Burrlioz 2.0 has been the required software for default guideline value estimation in Australia (REF). Burrlioz fits a log-logistic (described in detail above) distribution when there are less than 8 data available, and a Burr Type 3 distribution when there are more than 8 data points available for fitting. 
+
+It is well known (e.g., Tadikamalla (1980)) that the Burr III distribution is related to several other
+theoretical distributions. These include the Lomax distribution, the compound Weibull, the Weibull, exponential,
+the logistic, the log-logistic, the Weibull, and the Kappa family of distributions. Some of
+these relationships only exist as limiting cases of the Burr III, i.e., as one or more of the Burr III
+parameters approaches either zero or infinity. The Burrlioz software incorporates logic that aims
+to identify situations where parameter estimates are trying to converge to either very large or very
+small values. In such cases, fitting a Burr III distribution is abandoned and one of the limiting
+distributions is fitted instead. In addition to describing these rules, the following advice provided in
+the Burrlioz documentation also reveals the conditions under which the inverse Weibull and
+inverse Pareto distributions are fitted: As
+k tends to infinity the Burr III distribution tends to the reciprocal Weibull distribution. As c
+tends to infinity the Burr III distribution tends to the reciprocal Pareto distribution. In
+practical terms, if the Burr III distribution is fitted and k is estimated to be greater than 100, the estimation procedure is carried out again with a reciprocal Weibull distribution fitted.
+Similarly for the reciprocal Pareto distribution, if c is greater than 80. This is necessary to
+ensure numerical stability and does not have significant impacts on the results.
+
+As the Burr type 3, inverse Pareto and inverse Weibull distributions are all critical distributions within the Australian Burrlioz software, these have all been implemented in ssdtools.
+
+#### Burr Type III distribution
+
+The Burr Type 3 distribution can be fit using ssdtools by supplying the string  "burrIII3"  to the *dists* argument in the *ssd_fit_dists* call.
+
+The use of the Burr family of distributions has been central
+to the derivation of guideline values in Australia and New
+Zealand for over 20 yr [@fox_recent_2021]. While offering a high degree of ﬂexibility,
+experience with these distributions during that time has
+repeatedly highlighted numerical stability and convergence
+issues when parameters are estimated using maximum likelihood [@fox_recent_2021].
+This is thought to be due to the high degree of collinearity
+between parameter estimates and/or relatively ﬂat
+likelihood proﬁles [@fox_recent_2021].
+
+#### Inverse Pareto distribution
+
+The Inverse Pareto distribution can be fit using ssdtools by supplying the string  "invpareto"  to the *dists* argument in the *ssd_fit_dists* call.  
+
+#### Inverse Weibull distribution (see log-gumbel, above)
+
+ 
+### Bimodal distribtions
+
+The use of statistical mixture-models was promoted by Fox as a convenient and more realistic way of
+modelling bimodal toxicity data (Fisher et al. 2019). Although parameter heavy, statistical mixture models
+provide a better conceptual match to the inherent underlying data generating process since
+they directly model bimodality as a mixture of 2 underlying univariate distributions that represent, for
+example, different modes of action (Fox et al. 2021). It has been postulated that a mixture-model
+would only be selected in a model-averaging context when the fit afforded by the mixture is
+demonstrably better than the fit afforded by any single distribution. This is a consequence of the high
+penalty in AICc associated with the increased number of parameters (p in Equation 7 of Fox et al.
+(2021)) and will be most pronounced for relatively small sample sizes.
+
+The TMB version of ssdtools now includes the option of fitting two mixture distributions,
+individually or as part of a model average set. These can be fit using ssdtools by supplying the strings "llogis_llogis" and/or "lnorm_lnorm" to the *dists* argument in the *ssd_fit_dists* call.
+
+The underlying code for these mixtures has three components: the likelihood function
+required for TMB; exported R functions to allow the usual methods for a distribution to be called (p, q
+and r); and a set of supporting R functions (see Appendix D for more details). Both mixtures have five
+parameters - two parameters for each of the component distributions and a mixing parameter (pmix)
+that defines the weighting of the two distributions in the ‘mixture.’
+
 
 ## Default Distributions
 
-To avoid such model redundancy [@burnham_model_2002], ssdtools and the accompanying Shiny app [@dalgarno_shinyssdtools_2021] fit three different shape distributions by default: the log-normal, log-logistic and gamma.
+While there are a large range of distributions available in ssdtools, not all of these are recommended to be used simultaneously for estimating a model averaged SSD.
 
-The three distributions are plotted below with a mean of 2 and standard deviation of 2 on the (natural) log concentration scale or around 7.4 on the concentration scale.
+By default, the ssdtools uses Akaike Information Criterion corrected for small sample size (AICc) as a measure of relative quality of fit for different distributions and as the basis for calculating the model-averaged HCx.
+However, if two or more similar models fit the data well then the support for this type of shape will be over-inflated (Burnham and Anderson 2002), So some care around the use of very similar/identical distributions within a single dataset should be considered. 
+
+
+
+### Recommended default distributions
+
+The default list of candidate distributions in ssdtools should be comprised of the
+following: log-normal; log-logistic; gamma; inverse Weibull (log-Gumbel); Weibull; mixture
+of two log-normal distributions
+
+The default distributions are plotted below with a mean of 2 and standard deviation of 2 on the (natural) log concentration scale or around 7.4 on the concentration scale.
 ```{r, message=FALSE}
 library(ssdtools)
 library(ggplot2)
@@ -42,36 +187,6 @@ theme_set(theme_bw())
 
 set.seed(7)
 ssd_plot_cdf(ssd_match_moments(meanlog = 2, sdlog = 2)) +
-  scale_color_ssd()
-```
-
-### Log-normal distribution
-
-The [log-normal](https://en.wikipedia.org/wiki/Log-normal_distribution) distribution was selected as the starting distribution given the data are for effect concentrations.
-
-The log-normal distribution does have a couple limitations to consider when fitting species sensitivity data.
-First, on the logarithmic scale, the normal distribution is symmetrical.
-Second, the log-normal distribution decays too quickly in the tails giving narrow tails which may not adequately fit the data.
-Additional distributions were selected to compensate for these deficiencies.  
-
-### Log-logistic distribution
-
-The [log-logistic](https://en.wikipedia.org/wiki/Log-logistic_distribution) distribution is often used as a candidate SSD primarily because of its analytic tractability [@aldenberg_confidence_1993].
-We included it because it has wider tails than the log-normal and because it is a specific case of the more general Burr family of distributions [@shao_estimation_2000, @burr_cumulative_1942].
-
-### Gamma distribution
-
-The [gamma](https://en.wikipedia.org/wiki/Gamma_distribution) distribution is a two-parameter distribution commonly used to model failure times or time to events.
-For use in modeling species sensitivity data, the gamma distribution has two key features that provide additional flexibility relative to the log-normal distribution: 1) it is non-symmetrical on the logarithmic scale; and 2) it has wider tails.
-The Weibull distribution was considered as an alternative but the Gamma distribution is generally more flexible.  
-
-## All Distributions
-
-For completeness the hazard concentrations for the other stable distributions provided by `ssdtools` are plotted below with a mean of 2 and standard deviation of 2 on the (natural) log concentration scale.
-```{r,fig.height=5}
-set.seed(7)
-ssd_plot_cdf(ssd_match_moments(dists = ssd_dists_all(), meanlog = 2, sdlog = 2)) +
-  theme(legend.position = "bottom") +
   scale_color_ssd()
 ```
 

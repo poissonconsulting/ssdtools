@@ -1,0 +1,41 @@
+---
+title: "Additional technical details"
+author: "sstools Team"
+date: '`r format(Sys.time(), "%Y-%m-%d")`'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Additional technical details}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 6,
+  fig.height = 6
+)
+```
+
+## Small sample bias
+
+The ssdtools package uses the method of Maximum Likelihood (ML) to estimate parameters for each distribution
+that is fit to the data. Statistical theory says that maximum likelihood estimators are asymptotically
+unbiased, but does not guarantee performance in small samples. A detailed account of the issue of small sample bias in estimates can be found in the following[pdf](https://github.com/bcgov/ssdtools/blob/master/vignettes/small-sample-bias.pdf).
+
+## Numerical instability of the Burr III
+
+## Numerical properties of the inverse Pareto distribution
+
+## Parameter estimates using L-moments (Burr III)
+
+## Closed form estimation (Burr III)
+
+## The ssd_fit_burrlioz function in ssdtools
+
+
+
+
+```{r, results = "asis", echo = FALSE}
+cat(ssdtools::licensing_md())
+```

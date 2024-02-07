@@ -1,5 +1,5 @@
 ---
-title: "Embellishing Plots with an Exposure Distribution"
+title: "Embellishing Plots"
 author: "ssdtools Team"
 date: '`r format(Sys.time(), "%Y-%m-%d")`'
 bibliography: references.bib
@@ -32,6 +32,56 @@ print(gp)
 ```
 
 This graphic is a [ggplot](https://ggplot2.tidyverse.org) object and so can be saved and embellished in the usual way.
+
+## Customising the cumulative distribution plot
+
+### Plot the model averaged fit with individual fits
+
+```{r, fig.width = 5, fig.height = 5}
+library(ssddata)
+library(ssdtools)
+library(ggplot2)
+
+dist <- ssdtools::ssd_fit_dists(ssddata::ccme_boron)
+pred <- predict(dist, ci = FALSE)
+
+ssdtools::ssd_plot_cdf(dist) +
+  geom_line(data = pred, aes(x = est, y = proportion))
+```
+
+### Other customisations
+
+[to complete]
+
+## Fitting and plotting distributions to multiple groups such taxa and/or chemicals?
+
+An elegant approach using some tidyverse packages is demonstrated below.
+
+```{r, message=FALSE}
+library(ssddata)
+library(ssdtools)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(purrr)
+
+boron_preds <- nest(ccme_boron, data = c(Chemical, Species, Conc, Units)) %>%
+  mutate(
+    Fit = map(data, ssd_fit_dists, dists = "lnorm"),
+    Prediction = map(Fit, predict)
+  ) %>%
+  unnest(Prediction)
+```
+
+The resultant data and predictions can then be plotted as follows.
+```{r, fig.width = 5, fig.height = 5}
+ssd_plot(ccme_boron, boron_preds, xlab = "Concentration (mg/L)", ci = FALSE) +
+  facet_wrap(~Group)
+```
+
+
+## Embellishing Plots with an Exposure Distribution
+
 For example, suppose we want to superimpose an environmental concentration cumulative distribution and compute the exposure risk as outlined in @verdonck_limitations_2003.
 
 ```{r echo=FALSE}
@@ -86,9 +136,6 @@ gp +
   )
 ```
 
-## Other embellishments
-
-Other embellishments can be added in a similar fashion using the features of [*ggplot*](https://ggplot2.tidyverse.org) and are not discussed here.
 
 ## References
 
