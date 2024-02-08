@@ -11,6 +11,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(ssdtools)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,13 +20,35 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Boot strap confidence intervals
+## Bootstrap confidence intervals
 
 [Some basic information on bootstrapping and recommendations of the number of bootstrap samples that should be used]
 
 ## Parametric versus non-parametric bootstrapping
 
-[A description of parametric versus non-parametric bootstrapping (ssdtools currently does both, as far as I am aware although I have not tested that recently). This would also include a justification for the default parametric bootstrapping, with citations (possible even replication of some graphics) to the simulation study in the previous report.]
+Burrlioz 2.0 uses a non-parametric bootstrap method to obtain confidence intervals on the HC
+estimate. Non-parametric bootstrapping is carried out by repeatedly resampling the raw data with
+replacement, and refitting the distribution many times. The 95% confidence limits are then obtained
+by calculating the lower 0.025th and upper 0.975th quantiles of the resulting HC estimates across all56
+the bootstrap samples (typically >1000). This type of bootstrap takes into account uncertainty in the
+distribution fit based on uncertainty in the data.
+
+The ssdtools package by default uses a parametric bootstrap. Instead of resampling the data,
+parametric bootstrapping draws a random a set of new data (of the same sample size as the original)
+from the fitted distribution to repeatedly refit the distribution. Upper and lower 95% bounds are again
+calculated as the lower 0.025th and upper 0.975th quantiles of the resulting HC estimates across all the
+bootstrap samples (again, typically >1000). This will capture the possible uncertainty that may occur
+for a sample size from a given distribution, but it assumes no uncertainty in that original fit, so it is not
+accounting for uncertainty in the input data.
+
+The new TMB version of ssdtools has the capacity to do bootstrapping either using the Burrlioz
+non-parametric method, or the original parametric method of ssdtools (based on
+fitdistrplus).
+
+Using simulation studies the ssdtools team examined bias and compared the resulting coverage
+of the parametric and non-parametric bootstrapping methods [ref]. 
+
+
 
 ## Bootstrapping model averaged SSDs
 
