@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 ## Plotting the cumulative distribution
 
-The `ssdtools` package produces a plot of the cumulative distributions for multiple distribution through the use of the `ssd_plot_cdf()` function. 
-For example, consider the boron data.
+The `ssdtools` package produces a plot of the cumulative distributions for the multiple input distributions through the use of the `ssd_plot_cdf()` function. 
+For example, consider the boron data:
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
 library(ggplot2)
@@ -50,7 +50,7 @@ dist <- ssdtools::ssd_fit_dists(ssddata::ccme_boron)
 pred <- predict(dist, ci = FALSE)
 
 ssdtools::ssd_plot_cdf(dist) +
-  geom_line(data = pred, aes(x = est, y = percent/100))
+  geom_line(data = pred, aes(x = est, y = proportion))
 ```
 
 ### Other customisations
@@ -72,7 +72,7 @@ ggplot(ccme_boron) +
 The third is `geom_xribbon()` which plots species sensitivity confidence intervals
 ```{r}
 ggplot(boron_pred) +
-  geom_xribbon(aes(xmin = lcl, xmax = ucl, y = percent/100))
+  geom_xribbon(aes(xmin = lcl, xmax = ucl, y = proportion))
 ```  
 
 And the fourth is `geom_hcintersect()` which plots hazard concentrations
@@ -84,8 +84,8 @@ ggplot() +
 They can be combined together as follows
 ```{r}
 gp <- ggplot(boron_pred, aes(x = est)) +
-  geom_xribbon(aes(xmin = lcl, xmax = ucl, y = percent/100), alpha = 0.2) +
-  geom_line(aes(y = percent/100)) +
+  geom_xribbon(aes(xmin = lcl, xmax = ucl, y = proportion), alpha = 0.2) +
+  geom_line(aes(y = proportion)) +
   geom_ssdsegment(data = ccme_boron, aes(x = Conc / 2, xend = Conc * 2)) +
   geom_ssdpoint(data = ccme_boron, aes(x = Conc / 2)) +
   geom_ssdpoint(data = ccme_boron, aes(x = Conc * 2)) +
@@ -133,6 +133,8 @@ boron_preds <- nest(ccme_boron, data = c(Chemical, Species, Conc, Units)) %>%
 
 The resultant data and predictions can then be plotted as follows.
 ```{r, fig.width = 5, fig.height = 5}
+library(ssdtools)
+library(ssddata)
 ssd_plot(ccme_boron, boron_preds, xlab = "Concentration (mg/L)", ci = FALSE) +
   facet_wrap(~Group)
 ```
