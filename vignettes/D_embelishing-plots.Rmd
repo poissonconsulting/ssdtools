@@ -3,7 +3,8 @@ title: "Embellishing Plots"
 author: "ssdtools Team"
 date: '`r format(Sys.time(), "%Y-%m-%d")`'
 bibliography: references.bib
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Embellishing Plots}
   %\VignetteEngine{knitr::rmarkdown}

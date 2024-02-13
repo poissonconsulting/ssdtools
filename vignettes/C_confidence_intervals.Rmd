@@ -3,7 +3,8 @@ title: "Obtaining Confidence Intervals"
 author: "ssdtools Team"
 date: "`r Sys.Date()`"
 bibliography: references.bib
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Obtaining Confidence Intervals}
   %\VignetteEngine{knitr::rmarkdown}

@@ -3,7 +3,8 @@ title: "Distributions in ssdtools"
 author: "ssdtools Team"
 date: "`r Sys.Date()`"
 bibliography: references.bib
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Distributions in ssdtools}
   %\VignetteEngine{knitr::rmarkdown}

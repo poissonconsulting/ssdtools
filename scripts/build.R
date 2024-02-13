@@ -12,6 +12,13 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+rmarkdown::render("vignettes/ssdtools.Rmd")
+rmarkdown::render("vignettes/A_model_averaging.Rmd")
+rmarkdown::render("vignettes/B_distributions.Rmd")
+rmarkdown::render("vignettes/C_confidence_intervals.Rmd")
+rmarkdown::render("vignettes/D_embeleshing-plots.Rmd")
+rmarkdown::render("vignettes/E_additional-technical-details.Rmd")
+
 roxygen2md::roxygen2md()
 styler::style_pkg(
   scope = "line_breaks",
