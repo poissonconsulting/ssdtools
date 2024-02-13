@@ -451,13 +451,15 @@ In deriving the AIC, Akaike had to make certain, strong assumptions. In addition
 <br>Since most of the common SSD models are 2-parameter, we should be aiming to have a sample size of at least 11. For 3-parameter models (like the Burr III), the minimum sample size is 16 and if we wanted to fit a mixture of two, 2-parameter models (eg. *logNormal-logNormal* or *logLogistic-logLogistic*) the sample size should be *at least* 26. Sadly, this is rarely the case in practice!<br><br>
 
 ### Model-Averaging in `ssdtools`
-*See the* <mark>**Using ssdtools**</mark> *vignette*
+Please see the [Getting started with ssdtools](https://poissonconsulting.github.io/ssdtools/articles/ssdtools.html) vignette for examples of obtaining model averaged HC values and predictions using ssdtools.
 
 ## References
 
 <div id="refs"></div>
 
 ```{r, results = "asis", echo = FALSE}
-
+library(ssdtools)
+cat(licensing_md())
 ```
+
 

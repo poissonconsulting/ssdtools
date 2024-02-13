@@ -1,2 +1,4 @@
 *.html
 *.R
+ssdtools_cache/
+D_embelishing-plots_cache/

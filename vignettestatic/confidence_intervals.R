@@ -1,7 +1,7 @@
 
 library(ssdtools)
 fit <- ssd_fit_dists(data = ssddata::ccme_silver)
-set.seed = 99
+set.seed(99)
 
 t1 <- system.time(hc1 <- ssd_hc(fit, ci = TRUE, multi_est = FALSE, multi_ci = FALSE, weighted = FALSE))
 t2 <- system.time(hc2 <- ssd_hc(fit, ci = TRUE, multi_est = TRUE, multi_ci = TRUE, weighted = FALSE))
@@ -15,5 +15,5 @@ compare_dat <- data.frame(
   lcl = c(hc1$lcl, hc2$lcl, hc3$lcl, hc4$lcl),
   est = c(hc1$est, hc2$est, hc3$est, hc4$est))
 
-save(hc1, hc2, hc3, hc4, t1, t2, t2, t4, compare_dat, file = "vignettestatic/confidence_intervals.RData")
+save(hc1, hc2, hc3, hc4, t1, t2, t2, t4, compare_dat, file = "vignettes/confidence_intervals.RData")
 
