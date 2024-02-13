@@ -65,6 +65,7 @@ knitr::opts_chunk$set(
 
 ```{r include=FALSE}
 # this just loads the package and suppresses the load package message
+library(ssdtools)
 require(ggplot2)
 require(patchwork)
 ```
@@ -458,7 +459,6 @@ Please see the [Getting started with ssdtools](https://poissonconsulting.github.
 <div id="refs"></div>
 
 ```{r, results = "asis", echo = FALSE}
-library(ssdtools)
 cat(licensing_md())
 ```
 

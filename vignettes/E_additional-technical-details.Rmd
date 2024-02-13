@@ -17,8 +17,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-
 ## Small sample bias
 
 The ssdtools package uses the method of Maximum Likelihood (ML) to estimate parameters for each distribution
