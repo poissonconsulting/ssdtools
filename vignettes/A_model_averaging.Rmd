@@ -4,7 +4,8 @@ author: "ssdtools Team"
 date: "`r Sys.Date()`"
 bibliography: references.bib
 csl: my-style.csl
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 latex_engine: MathJax
 mainfont: Arial
 mathfont: Courier
@@ -92,7 +93,7 @@ When we talk of an 'average' we are usually referring to the simple, *arithmetic
 For the simple arithmetic mean, all of the individual values receive the same weighting - they each contribute $\frac{1}{n}$ to the summation. While this is appropriate in many cases, it's not useful when the components contribute to varying degrees. An example familiar to ecotoxicologists is that of a *time-varying* concentration as shown in the figure below.<br>
 
 
-![](images/Figure1.jpg){width=90% align="center"}
+![](Figure1.jpg){width=90% align="center"}
 
 <br><br>From the figure we see there are 5 concentrations going from left to to right: $\left\{ 0.25,0.95,0.25,0.12,0.5 \right\}$.<br><br>If we were to take the simple arithmetic mean of these concentrations we get $\bar{X}=0.414$. But this ignores the different *durations* of these 5 concentrations. Of the 170 hours, 63 were at concentration 0.25, 25 at concentration 0.95, 23 at concentration 0.25, 23 at concentration 0.12, and 36 at concentration 0.50. So if we were to *weight* these concentrations by time have:<br>\[{{{\bar{X}}}_{TW}}=\frac{\left( 63\cdot 0.25+25\cdot 0.95+23\cdot 0.25+23\cdot 0.12+36\cdot 0.50 \right)}{\left( 63+25+23+23+36 \right)}=\frac{56.01}{170}=0.33\]<br>So, our formula for a *weighted average* is:\[\bar{X}=\sum\limits_{i=1}^{n}{{{w}_{i}}{{X}_{i}}}\] with $0\le {{w}_{i}}\le 1$ and $\sum\limits_{i=1}^{n}{{{w}_{i}}=1}$.<br>Note, the simple arthmetic mean is just a special case of the weighted mean with $\sum\limits_{i=1}^{n}{{{w}_{i}}=\frac{1}{n}}$ ; $\forall i=1,\ldots ,n$
 
@@ -234,7 +235,7 @@ ssd_hp(x,hcp,multi_est=TRUE) == p   # this should result in logical `TRUE`
 
 <p>The *inversion principle* ensures that we only use a **single** distribution function to compute both the HC~x~ *and* the fraction affected. Referring to the figure below, the HC~x~ is obtained from the MA-SSD (red curve) by following the &#8594; arrows while the fraction affected is obtained by following the &#8592; arrows.
 <br><br>
-![](images/Figure2.jpg){width=100% align="center"}
+![](Figure2.jpg){width=100% align="center"}
 <br><br>
 <p>Finally, we'll briefly discuss how the HC~x~ is computed in `R` using the same method as has been implemented in `ssdtools`.</p>
 
@@ -247,7 +248,7 @@ for some fraction affected, $p$.
 </p>
 <p>Finding the solution to this last equation is referred to as *finding the root(s)* of the function $G\left( x \right)$ or, as is made clear in the figure below, *finding the zero-crossing* of the function $G\left( x \right)$ for the case $p=0.2$.
 <br><br>
-![](images/uniroot.jpg){width=100% align="center"}
+![](uniroot.jpg){width=100% align="center"}
 
 <br>
 <p>In `R` finding the roots of $x:G\left( x \right) - p = 0$ is achieved using the `uniroot()` function.</p>
