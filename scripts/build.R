@@ -16,7 +16,7 @@ rmarkdown::render("vignettes/ssdtools.Rmd")
 rmarkdown::render("vignettes/A_model_averaging.Rmd")
 rmarkdown::render("vignettes/B_distributions.Rmd")
 rmarkdown::render("vignettes/C_confidence_intervals.Rmd")
-rmarkdown::render("vignettes/D_embeleshing-plots.Rmd")
+rmarkdown::render("vignettes/D_embelishing-plots.Rmd")
 rmarkdown::render("vignettes/E_additional-technical-details.Rmd")
 
 roxygen2md::roxygen2md()
