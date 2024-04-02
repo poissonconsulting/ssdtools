@@ -3,6 +3,10 @@ title: "Additional technical details"
 author: "sstools Team"
 date: '`r format(Sys.time(), "%Y-%m-%d")`'
 output: rmarkdown::html_vignette
+csl: my-style.csl
+latex_engine: MathJax
+mainfont: Arial
+mathfont: Courier
 #output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Additional technical details}
@@ -45,7 +49,7 @@ The ssdtools package uses the method of Maximum Likelihood (ML) to estimate para
 that is fit to the data. Statistical theory says that maximum likelihood estimators are asymptotically
 unbiased, but does not guarantee performance in small samples. A detailed account of the issue of small sample bias in estimates can be found in the following [pdf](https://github.com/bcgov/ssdtools/blob/master/vignettes/small-sample-bias.pdf).
 
-## Inverse Pareto and Inverse Weibull as limiting distributions of the Burr Type-III distribution
+## inverse Pareto and Inverse Weibull as limiting distributions of the Burr Type-III distribution
 
 ### Burr III distribution
 
@@ -91,7 +95,7 @@ Therefore, \[\begin{array}{*{20}{c}}
 {\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{F_Y}(y;b,c,k)} \right\} = 1 - {{\left( {\frac{b}{y}} \right)}^\lambda }}&{y \ge b}
 \end{array}\]
 
-which we recognise as the (American) Pareto distribution. So, if the limiting distribution of $Y = \frac{1}{X}$ is a Pareto distribution, then the limiting distribution of $X = \frac{1}{Y}$ is the (American) *Inverse Pareto* distribution:
+which we recognise as the (American) Pareto distribution. So, if the limiting distribution of $Y = \frac{1}{X}$ is a Pareto distribution, then the limiting distribution of $X = \frac{1}{Y}$ is the (American) *inverse Pareto* distribution:
 
 \[\begin{array}{l}
 {f_X}\left( {x;\alpha ,\beta } \right) = \lambda {b^\lambda }{x^{\lambda  - 1}};{\rm{  }}0 \le x \le {\textstyle{1 \over b}};{\rm{  }}\lambda {\rm{,}}b > 0\\

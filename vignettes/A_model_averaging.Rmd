@@ -4,8 +4,8 @@ author: "ssdtools Team"
 date: "`r Sys.Date()`"
 bibliography: references.bib
 csl: my-style.csl
-#output: rmarkdown::html_vignette
-output: rmarkdown::pdf_document
+output: rmarkdown::html_vignette
+#output: rmarkdown::pdf_document
 latex_engine: MathJax
 mainfont: Arial
 mathfont: Courier
@@ -93,7 +93,7 @@ When we talk of an 'average' we are usually referring to the simple, *arithmetic
 For the simple arithmetic mean, all of the individual values receive the same weighting - they each contribute $\frac{1}{n}$ to the summation. While this is appropriate in many cases, it's not useful when the components contribute to varying degrees. An example familiar to ecotoxicologists is that of a *time-varying* concentration as shown in the figure below.<br>
 
 
-![](Figure1.jpg){width=90% align="center"}
+![](images/Figure1.jpg){width=90% align="center"}
 
 <br><br>From the figure we see there are 5 concentrations going from left to to right: $\left\{ 0.25,0.95,0.25,0.12,0.5 \right\}$.<br><br>If we were to take the simple arithmetic mean of these concentrations we get $\bar{X}=0.414$. But this ignores the different *durations* of these 5 concentrations. Of the 170 hours, 63 were at concentration 0.25, 25 at concentration 0.95, 23 at concentration 0.25, 23 at concentration 0.12, and 36 at concentration 0.50. So if we were to *weight* these concentrations by time have:<br>\[{{{\bar{X}}}_{TW}}=\frac{\left( 63\cdot 0.25+25\cdot 0.95+23\cdot 0.25+23\cdot 0.12+36\cdot 0.50 \right)}{\left( 63+25+23+23+36 \right)}=\frac{56.01}{170}=0.33\]<br>So, our formula for a *weighted average* is:\[\bar{X}=\sum\limits_{i=1}^{n}{{{w}_{i}}{{X}_{i}}}\] with $0\le {{w}_{i}}\le 1$ and $\sum\limits_{i=1}^{n}{{{w}_{i}}=1}$.<br>Note, the simple arthmetic mean is just a special case of the weighted mean with $\sum\limits_{i=1}^{n}{{{w}_{i}}=\frac{1}{n}}$ ; $\forall i=1,\ldots ,n$
 
@@ -112,7 +112,7 @@ Now, suppose we have only two possibilities for fitting an SSD - both lognormal 
 ```{r echo=FALSE,fig.cap="Emprirical cdf (black); Model 1(green); and Model 2 (blue)", fig.width=7,fig.height=4.5}
 samp<-c(1.73,0.57,0.33,0.28,0.3,0.29,2.15,0.8,0.76,0.54,0.42,0.83,0.21,0.18,0.59)
 samp<-sort(samp)
-plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="concentration",ylab="probability")
+plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="Concentration",ylab="Probability")
 xx<-seq(0.01,3,by=0.01)
 lines(xx,plnorm(xx,meanlog=mean(log(samp[1:10])),sd=sd(log(samp[1:10]))),col= "#77d408" )
 lines(xx,plnorm(xx,meanlog=mean(log(samp[5:15])),sd=sd(log(samp[5:15]))),col="#08afd4")
@@ -127,7 +127,7 @@ lines(xx,plnorm(xx,meanlog=mean(log(samp[5:15])),sd=sd(log(samp[5:15]))),col="#0
 ```{r echo=FALSE,fig.cap="Empirical cdf (black); Model 1(green); Model 2 (blue); and averaged Model (red)",fig.width=7,fig.height=4.5}
 samp<-c(1.73,0.57,0.33,0.28,0.3,0.29,2.15,0.8,0.76,0.54,0.42,0.83,0.21,0.18,0.59)
 samp<-sort(samp)
-plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="concentration",ylab="probability")
+plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="Concentration",ylab="Probability")
 xx<-seq(0.01,3,by=0.01)
 lines(xx,plnorm(xx,meanlog=mean(log(samp[1:10])),sd=sd(log(samp[1:10]))),col= "#77d408" )
 lines(xx,plnorm(xx,meanlog=mean(log(samp[5:15])),sd=sd(log(samp[5:15]))),col="#08afd4")
@@ -137,8 +137,8 @@ lines(xx,(0.4419*plnorm(xx,meanlog=mean(log(samp[5:15])),sd=sd(log(samp[5:15])))
 
 ```
 
-<br>Clearly the strategy has worked - we now have an excellent fitting SSD.What about estimation of an HC~20~?
-<br><br>It's a simple matter to work out the *individual* HC~20~ values for Models 1&2 using the appropriate `qlnorm()` function in `R`. Thus we have:
+<br>Clearly the strategy has worked - we now have an excellent fitting SSD.What about estimation of an *HC20*?
+<br><br>It's a simple matter to work out the *individual* *HC20* values for Models 1&2 using the appropriate `qlnorm()` function in `R`. Thus we have:
 
 ```{r, echo=TRUE}
 # Model 1 HC20
@@ -147,9 +147,9 @@ cat("Model 1 HC20 =",qlnorm(0.2,-1.067,0.414))
 # Model 2 HC20
 cat("Model 2 HC20 =",qlnorm(0.2,-0.387,0.617))
 ```
-What about the averaged distribution? An intuitively appealing approach would be to apply the same weights to the individual HC~20~ values as was applied to the respective models. That is `0.44*0.2428209 + 0.56*0.4040243 = 0.33`.
+What about the averaged distribution? An intuitively appealing approach would be to apply the same weights to the individual *HC20* values as was applied to the respective models. That is `0.44*0.2428209 + 0.56*0.4040243 = 0.33`.
 
-So our model-averaged HC~20~ estimate is 0.33. As a check, we can determine the *fraction affected* at concentration = 0.33 - it should of course be 20%. Let's take a look at the plot.
+So our model-averaged *HC20* estimate is 0.33. As a check, we can determine the *fraction affected* at concentration = 0.33 - it should of course be 20%. Let's take a look at the plot.
 
 ```{r echo=FALSE,fig.width=7,fig.height=5}
 samp<-c(1.73,0.57,0.33,0.28,0.3,0.29,2.15,0.8,0.76,0.54,0.42,0.83,0.21,0.18,0.59)
@@ -159,7 +159,7 @@ xx<-seq(0.01,3,by=0.01)
 
 plot(xx,(0.4419*plnorm(xx,meanlog=mean(log(samp[5:15])),sd=sd(log(samp[5:15])))+
           0.5581*plnorm(xx,meanlog=mean(log(samp[1:10])),sd=sd(log(samp[1:10]))))  ,
-          col="#d40830",type="l",xlab="concentration",ylab="probability")
+          col="#d40830",type="l",xlab="Concentration",ylab="Probability")
 segments(0.33,-1,0.33,0.292,col="blue",lty=21)
 segments(-1,0.292,0.33,0.292,col="blue",lty=21)
 mtext("0.3",side=2,at=0.3,cex=0.8,col="blue")
@@ -169,15 +169,15 @@ mtext("0.33",side=1,at=0.33,cex=0.8,col="blue")
 Something's wrong - the fraction affected at concentration 0.33 is 30% - **not the required 20%**.<br><br>This issue is taken up in the next section
 
 ## Model Averaged SSDs
-As we've just seen, applying the model weights to component HC~x~ values and summing does **not** produce the correct result.<br><br>The reason for this can be explained mathematically as follows (*if your not interested in the mathematical explanation - skip ahead to the next section*).
-<h4>The fallacy of weighting individual *HC~x~* values</h4>
+As we've just seen, applying the model weights to component *HCx* values and summing does **not** produce the correct result.<br><br>The reason for this can be explained mathematically as follows (*if your not interested in the mathematical explanation - skip ahead to the next section*).
+<h4>The fallacy of weighting individual *HCx* values</h4>
 The correct expression for a model-averaged SSD is: $$G\left( x \right) = \sum\limits_{i = 1}^k {{w_i}} {F_i}\left( x \right)$$
 where ${F_i}\left(  \cdot  \right)$ is the *i^th^* component SSD (i.e. *cdf*) and *w~i~* is the weight assigned to ${F_i}\left(  \cdot  \right)$. <br>Notice that the function $G\left( x \right)$ is a proper *cumulative distribution function* (*cdf*) which means for a given quantile, *x*, $G\left( x \right)$ returns the *cumulative probability*: $$P\left[ {X \leqslant x} \right]$$
 
 <br>Now, the *incorrect* approach takes a weighted sum of the component *inverse cdf's*, that is:
 
 $$H\left( p \right) = \sum\limits_{i = 1}^k {{w_i}} {F_i}^{ - 1}\left( p \right)$$
-where ${F_i}^{ - 1}\left(  \cdot  \right)$ is the *i^th^* *inverse cdf*. <br><br>Notice that ${G_i}\left(  \cdot  \right)$ is a function of a *quantile* and returns a **probability** while ${H_i}\left(  \cdot  \right)$ is a function of a *probability* and returns an **quantile**.<p>Now, the <u>correct</u> method of determining the HC~x~ is to work with the proper model-averaged *cdf* $G\left( x \right)$. This means finding the **inverse** function ${G^{ - 1}}\left( p \right)$. We'll address how we do this in a moment.</p>
+where ${F_i}^{ - 1}\left(  \cdot  \right)$ is the *i^th^* *inverse cdf*. <br><br>Notice that ${G_i}\left(  \cdot  \right)$ is a function of a *quantile* and returns a **probability** while ${H_i}\left(  \cdot  \right)$ is a function of a *probability* and returns an **quantile**.<p>Now, the <u>correct</u> method of determining the *HCx* is to work with the proper model-averaged *cdf* $G\left( x \right)$. This means finding the **inverse** function ${G^{ - 1}}\left( p \right)$. We'll address how we do this in a moment.</p>
 The reason why $H\left( p \right)$ does **not** return the correct result is because of <u>the implicit assumption that the inverse of $G\left( x \right)$ is equivalent to $H\left( p \right)$.</U> This is akin to stating the inverse of a *sum* is equal to the sum of the inverses i.e.
 $$\sum\limits_{i = 1}^n {\frac{1}{{{X_i}}}}  = \frac{1}{{\sum\limits_{i = 1}^n {{X_i}} }}{\text{  ???}}$$
 <hr>
@@ -200,7 +200,7 @@ F<-0.4419*qlnorm(t,-1.067,0.414) + 0.5581*qlnorm(t,-0.387,0.617)
 
 plot(xx,(0.4419*plnorm(xx,meanlog=mean(log(samp[5:15])),sd=sd(log(samp[5:15])))+
            0.5581*plnorm(xx,meanlog=mean(log(samp[1:10])),sd=sd(log(samp[1:10]))))  ,
-     col="#d40830",type="l",xlab="concentration",ylab="probability")
+     col="#d40830",type="l",xlab="Concentration",ylab="Probability")
 
 lines(F,t,col="#51c157",lwd=1.75)
 
@@ -215,10 +215,10 @@ mtext("1.12",side=1,at=1.12,cex=0.8,col="grey")
 
 ```
 
-Clearly, the two functions are **not** the same and thus HC~x~ values derived from each will nearly always be different (as indicated by the positions of the vertical red and green dashed lines in the Figure above corresponding to the 2 values of the HC~20~). (Note: The two curves do cross over at a concentration of about 1.12 corresponding to the 90^th^ percentile, but in the region of ecotoxicological interest, there is no such cross-over and so the two approaches will **always** yield different HC~x~ values with this difference &#8594; 0 as x &#8594; 0).<p>WE next discuss the use of a model-averaged SSD to obtain the *correct* model-averaged HC~x~.
+Clearly, the two functions are **not** the same and thus *HCx* values derived from each will nearly always be different (as indicated by the positions of the vertical red and green dashed lines in the Figure above corresponding to the 2 values of the *HC20*). (Note: The two curves do cross over at a concentration of about 1.12 corresponding to the 90^th^ percentile, but in the region of ecotoxicological interest, there is no such cross-over and so the two approaches will **always** yield different *HCx* values with this difference &#8594; 0 as x &#8594; 0).<p>WE next discuss the use of a model-averaged SSD to obtain the *correct* model-averaged *HCx*.
 
-## Computing a model-averaged HC~x~
-A proper HC~x~ needs to satisfy what David Fox refers to as **the inversion principle**. <p>More formally, the inversion principle states that an HC~x~  (denoted as ${\varphi _x}$) <u><i>must</i></u> satisfy the following:<p> $$df\left( {{\varphi _x}} \right) = x\quad \quad and\quad \quad qf\left( x \right) = {\varphi _x}$$<p>
+## Computing a model-averaged *HCx*
+A proper *HCx* needs to satisfy what David Fox refers to as **the inversion principle**. <p>More formally, the inversion principle states that an *HCx*  (denoted as ${\varphi _x}$) <u><i>must</i></u> satisfy the following:<p> $$df\left( {{\varphi _x}} \right) = x\quad \quad and\quad \quad qf\left( x \right) = {\varphi _x}$$<p>
 where $df\left(  \cdot  \right)$ is a model-averaged *distribution function* (i.e. SSD) and $qf\left(  \cdot  \right)$ is a model-averaged *quantile function*. <br><br>For this equality to hold, it is necessary that $qf\left( p \right) = d{f^{ - 1}}\left( p \right)$. </p>
 <br>So, in our example above, the green curve was taken to be $qf\left( x \right)$ and this was used to derive ${\varphi _x}$ but the *fraction affected* $\left\{ { = df\left( {{\varphi _x}} \right)} \right\}$ at ${\varphi _x}$ is computed using the red curve. 
 <p>In `ssdtools` the following is a check that the inversion principle holds:</p>
@@ -226,29 +226,29 @@ where $df\left(  \cdot  \right)$ is a model-averaged *distribution function* (i.
 
 ```
 # Obtain a model-averaged HCx using the ssd_hc() function
-hcp<-ssd_hc(x,p=p)
+hcp<-ssd_hc(x, p = p)
 # Check that the inversion principle holds
-ssd_hp(x,hcp,multi_est=TRUE) == p   # this should result in logical `TRUE`
+ssd_hp(x, hcp, multi_est = TRUE) == p   # this should result in logical `TRUE`
 ```
 *Note: if the `multi_est` argument is set to `FALSE` the test will fail*.
 <br>
 
-<p>The *inversion principle* ensures that we only use a **single** distribution function to compute both the HC~x~ *and* the fraction affected. Referring to the figure below, the HC~x~ is obtained from the MA-SSD (red curve) by following the &#8594; arrows while the fraction affected is obtained by following the &#8592; arrows.
+<p>The *inversion principle* ensures that we only use a **single** distribution function to compute both the *HCx* *and* the fraction affected. Referring to the figure below, the *HCx* is obtained from the MA-SSD (red curve) by following the &#8594; arrows while the fraction affected is obtained by following the &#8592; arrows.
 <br><br>
-![](Figure2.jpg){width=100% align="center"}
+![](images/Figure2.jpg){width=100% align="center"}
 <br><br>
-<p>Finally, we'll briefly discuss how the HC~x~ is computed in `R` using the same method as has been implemented in `ssdtools`.</p>
+<p>Finally, we'll briefly discuss how the *HCx* is computed in `R` using the same method as has been implemented in `ssdtools`.</p>
 
-### Computing the HC~x~ in `R`/`ssdtools`
+### Computing the *HCx* in `R`/`ssdtools`
 Recall, our MA-SSD was given as $$G\left( x \right) = \sum\limits_{i = 1}^k {{w_i}} {F_i}\left( x \right)$$
-and an HC~x~ is obtained from the MA-SSD by essentially working 'in reverse' by starting at a value of $x$ on the **vertical** scale in the Figure above and following the &#8594; arrows and reading off the corresponding value on the horizontal scale.
+and an *HCx* is obtained from the MA-SSD by essentially working 'in reverse' by starting at a value of $x$ on the **vertical** scale in the Figure above and following the &#8594; arrows and reading off the corresponding value on the horizontal scale.
 <p>Obviously, we need to be able to 'codify' this process in `R` (or any other computer language).<br>Mathematically this is equivalent to seeking a solution to the following equation:$${x:G\left( x \right) = p}$$
 or, equvalently:$$x:G\left( x \right) - p = 0$$
 for some fraction affected, $p$.
 </p>
 <p>Finding the solution to this last equation is referred to as *finding the root(s)* of the function $G\left( x \right)$ or, as is made clear in the figure below, *finding the zero-crossing* of the function $G\left( x \right)$ for the case $p=0.2$.
 <br><br>
-![](uniroot.jpg){width=100% align="center"}
+![](images/uniroot.jpg){width=100% align="center"}
 
 <br>
 <p>In `R` finding the roots of $x:G\left( x \right) - p = 0$ is achieved using the `uniroot()` function.</p>
@@ -321,7 +321,7 @@ From this output and using a level of significance of $p = 0.05$, we see that no
 library(EnvStats)
 samp<-c(1.73,0.57,0.33,0.28,0.3,0.29,2.15,0.8,0.76,0.54,0.42,0.83,0.21,0.18,0.59)
 samp<-sort(samp)
-plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="concentration",ylab="probability")
+plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="Concentration",ylab="Probability")
 xx<-seq(0.01,3,by=0.01)
 lines(xx,plnorm(xx,meanlog=-0.6695120,sd=0.7199573),col= "#77d408" )
 lines(xx,pgamma(xx,shape = 2.0591977,scale = 0.3231032),col="#08afd4")
@@ -423,7 +423,7 @@ Finally, let's look at the fitted *model-averaged SSD*:
 ```{r echo=FALSE,fig.cap="Empirical cdf (black) and model-averaged fit (magenta)",fig.width=8,fig.height=5}
 samp<-c(1.73,0.57,0.33,0.28,0.3,0.29,2.15,0.8,0.76,0.54,0.42,0.83,0.21,0.18,0.59)
 samp<-sort(samp)
-plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="concentration",ylab="probability")
+plot(ecdf(samp),main="Empirical and fitted SSDs",xlab="Concentration",ylab="Probability")
 xx<-seq(0.01,3,by=0.005)
 
 lines(xx,plnorm(xx,meanlog=-0.6695120,sd=0.7199573),col= "#959495",lty=2 )
@@ -453,7 +453,7 @@ In deriving the AIC, Akaike had to make certain, strong assumptions. In addition
 <br>Since most of the common SSD models are 2-parameter, we should be aiming to have a sample size of at least 11. For 3-parameter models (like the Burr III), the minimum sample size is 16 and if we wanted to fit a mixture of two, 2-parameter models (eg. *logNormal-logNormal* or *logLogistic-logLogistic*) the sample size should be *at least* 26. Sadly, this is rarely the case in practice!<br><br>
 
 ### Model-Averaging in `ssdtools`
-Please see the [Getting started with ssdtools](https://poissonconsulting.github.io/ssdtools/articles/ssdtools.html) vignette for examples of obtaining model averaged HC values and predictions using ssdtools.
+Please see the [Getting started with ssdtools](https://poissonconsulting.github.io/ssdtools/articles/ssdtools.html) vignette for examples of obtaining model-averaged *HCx* values and predictions using `ssdtools`.
 
 ## References
 
