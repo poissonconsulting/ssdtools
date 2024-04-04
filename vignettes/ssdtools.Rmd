@@ -230,11 +230,11 @@ For this reason, `ssdtools` only permits the analysis of censored data using two
 left_censored_dists <- ssd_fit_dists(left_censored_example, left = "left", right = "right")
 ssd_hc(left_censored_dists, average = FALSE)
 ssd_hc(left_censored_dists)
-ssd_gof(left_censored_dists)
+#ssd_gof(left_censored_dists)
 ```
 
 The model-averaged predictions (and hazard concentrations complete with 95% confidence limits) can be calculated using `AIC` and the results plotted complete with arrows indicating the censorship.
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 set.seed(99)
 left_censored_pred <- predict(left_censored_dists, ci = TRUE)
 
