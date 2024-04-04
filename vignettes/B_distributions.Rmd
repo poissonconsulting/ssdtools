@@ -7,8 +7,8 @@ csl: my-style.csl
 latex_engine: MathJax
 mainfont: Arial
 mathfont: Courier
-output: rmarkdown::html_vignette
-#output: rmarkdown::pdf_document
+#output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Distributions in ssdtools}
   %\VignetteEngine{knitr::rmarkdown}
@@ -240,7 +240,7 @@ While there is a variety of distributions available in `ssdtools`, the inclusion
 
 By default, `ssdtools` uses the (corrected) Akaike Information Criterion for small sample size (AICc) as a measure of relative quality of fit for different distributions and as the basis for calculating the model-averaged weights. However, the choice of distributions used to fit a model-averaged SSD can have a profound effect on the estimated *HCx* values.
 
-Deciding on a final default set of distributions to adopt using the model averaging approach is non-trivial, and we acknowledge that there is probably definitive ‘solution’ to this issue. However, the
+Deciding on a final default set of distributions to adopt using the model averaging approach is non-trivial, and we acknowledge that there is probably no definitive ‘solution’ to this issue. However, the
 default set should be underpinned by a guiding principle of parsimony, i.e., the set should be as large
 as is necessary to cover a wide variety of distributional shapes and contingencies but no bigger.
 Further, the default set should result in model-averaged estimates of *HCx* values that: 1) minimise
