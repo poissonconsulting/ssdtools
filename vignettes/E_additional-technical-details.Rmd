@@ -3,11 +3,11 @@ title: "Additional technical details"
 author: "sstools Team"
 date: '`r format(Sys.time(), "%Y-%m-%d")`'
 output: rmarkdown::html_vignette
+#output: rmarkdown::pdf_document
 csl: my-style.csl
 latex_engine: MathJax
 mainfont: Arial
 mathfont: Courier
-#output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Additional technical details}
   %\VignetteEngine{knitr::rmarkdown}
@@ -49,7 +49,7 @@ The ssdtools package uses the method of Maximum Likelihood (ML) to estimate para
 that is fit to the data. Statistical theory says that maximum likelihood estimators are asymptotically
 unbiased, but does not guarantee performance in small samples. A detailed account of the issue of small sample bias in estimates can be found in the following [pdf](https://github.com/bcgov/ssdtools/blob/master/vignettes/small-sample-bias.pdf).
 
-## inverse Pareto and Inverse Weibull as limiting distributions of the Burr Type-III distribution
+## The inverse Pareto and inverse Weibull as limiting distributions of the Burr Type-III distribution
 
 ### Burr III distribution
 
