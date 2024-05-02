@@ -4,10 +4,9 @@ pkgdown_sha: ~
 articles:
   A_model_averaging: A_model_averaging.html
   B_distributions: B_distributions.html
-  C_confidence_intervals: C_confidence_intervals.html
   confidence-intervals: confidence-intervals.html
   D_embelishing-plots: D_embelishing-plots.html
   E_additional-technical-details: E_additional-technical-details.html
   ssdtools: ssdtools.html
-last_built: 2024-05-02T13:56Z
+last_built: 2024-05-02T14:34Z
 
