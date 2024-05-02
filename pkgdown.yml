@@ -2,11 +2,11 @@ pandoc: 3.1.11
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  A_model_averaging: A_model_averaging.html
-  B_distributions: B_distributions.html
+  additional-technical-details: additional-technical-details.html
   confidence-intervals: confidence-intervals.html
-  D_embelishing-plots: D_embelishing-plots.html
-  E_additional-technical-details: E_additional-technical-details.html
+  distributions: distributions.html
+  embelishing-plots: embelishing-plots.html
+  model-averaging: model-averaging.html
   ssdtools: ssdtools.html
-last_built: 2024-05-02T15:21Z
+last_built: 2024-05-02T16:04Z
 
