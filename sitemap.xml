@@ -103,9 +103,6 @@
     <loc>/reference/is_censored.html</loc>
   </url>
   <url>
-    <loc>/reference/licensing_md.html</loc>
-  </url>
-  <url>
     <loc>/reference/params.html</loc>
   </url>
   <url>
@@ -194,6 +191,9 @@
   </url>
   <url>
     <loc>/reference/ssd_is_censored.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ssd_licensing_md.html</loc>
   </url>
   <url>
     <loc>/reference/ssd_match_moments.html</loc>

@@ -82,7 +82,7 @@
                         <h4 data-toc-skip class="author">ssdtools
 Team</h4>
             
-            <h4 data-toc-skip class="date">2024-05-16</h4>
+            <h4 data-toc-skip class="date">2024-05-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/vignettes/model-averaging.Rmd" class="external-link"><code>vignettes/model-averaging.Rmd</code></a></small>
       <div class="d-none name"><code>model-averaging.Rmd</code></div>
@@ -248,8 +248,9 @@ Models 1&amp;2 using the appropriate <code><a href="https://rdrr.io/r/stats/Logn
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Model 1 HC20</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Model 1 HC20 ="</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">qlnorm</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="op">-</span><span class="fl">1.067</span>,<span class="fl">0.414</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Model 1 HC20 = 0.2428209</span></span>
-<span></span>
+<span><span class="co">#&gt; Model 1 HC20 = 0.2428209</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Model 2 HC20</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Model 2 HC20 ="</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">qlnorm</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="op">-</span><span class="fl">0.387</span>,<span class="fl">0.617</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Model 2 HC20 = 0.4040243</span></span></code></pre></div>
@@ -449,7 +450,7 @@ Anderson-Darling test; Shapiro-Wilk test;and Cramer-von Mises test</em>.
 Cramer-von Mises</a> test is a good choice and is readily performed
 using the <code><a href="https://rdrr.io/pkg/goftest/man/cvm.test.html" class="external-link">cvm.test()</a></code> function in the <code>goftest</code>
 package in <code>R</code> as follows:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Conc<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.73</span>,<span class="fl">0.57</span>,<span class="fl">0.33</span>,<span class="fl">0.28</span>,<span class="fl">0.3</span>,<span class="fl">0.29</span>,<span class="fl">2.15</span>,<span class="fl">0.8</span>,<span class="fl">0.76</span>,<span class="fl">0.54</span>,<span class="fl">0.42</span>,<span class="fl">0.83</span>,<span class="fl">0.21</span>,<span class="fl">0.18</span>,<span class="fl">0.59</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/baddstats/goftest" class="external-link">goftest</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexkowa/EnvStats" class="external-link">EnvStats</a></span><span class="op">)</span>  <span class="co"># this is required for the Pareto cdf (ppareto)</span></span>
@@ -553,12 +554,14 @@ introduction can be found <a href="https://ep-news.web.cern.ch/what-likelihood-f
 </p>
 <p>The likelihood for our three distributions can be computed in
 <code>R</code> as follows:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">dgamma</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">Conc</span>,shape <span class="op">=</span> <span class="fl">2.0591977</span>,scale <span class="op">=</span> <span class="fl">0.3231032</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] -7.020597</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">dlnorm</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">Conc</span>, meanlog <span class="op">=</span> <span class="op">-</span><span class="fl">0.6695120</span>,sdlog   <span class="op">=</span>  <span class="fl">0.7199573</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] -5.812947</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu">EnvStats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/EnvStats/man/Pareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">Conc</span>,location <span class="op">=</span> <span class="fl">0.1800000</span>, shape<span class="op">=</span><span class="fl">0.9566756</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; [1] -7.020597</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">dlnorm</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">Conc</span>, meanlog <span class="op">=</span> <span class="op">-</span><span class="fl">0.6695120</span>,sdlog   <span class="op">=</span>  <span class="fl">0.7199573</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; [1] -5.812947</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu">EnvStats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/EnvStats/man/Pareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">Conc</span>,location <span class="op">=</span> <span class="fl">0.1800000</span>, shape<span class="op">=</span><span class="fl">0.9566756</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; [1] -5.621683</span></span></code></pre></div>
 <p>From which the <em>AIC</em> values readily follow:</p>
 <pre><code><span><span class="co">#&gt; AIC for gamma distribution = 18.04119</span></span>
@@ -594,7 +597,7 @@ distribution</em>. Next, we form the differences:<span class="math display">\[{\
 <p>The model-averaged weights for the gamma, lognormal, and Pareto
 distributions used in the previous example can be computed ‘manually’ in
 <code>R</code> as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.73</span>,<span class="fl">0.57</span>,<span class="fl">0.33</span>,<span class="fl">0.28</span>,<span class="fl">0.3</span>,<span class="fl">0.29</span>,<span class="fl">2.15</span>,<span class="fl">0.8</span>,<span class="fl">0.76</span>,<span class="fl">0.54</span>,<span class="fl">0.42</span>,<span class="fl">0.83</span>,<span class="fl">0.21</span>,<span class="fl">0.18</span>,<span class="fl">0.59</span><span class="op">)</span></span>
 <span><span class="va">aic</span><span class="op">&lt;-</span><span class="cn">NULL</span></span>
 <span><span class="va">k</span><span class="op">&lt;-</span><span class="fl">2</span>  <span class="co"># number of parameters for each of the distributions</span></span>

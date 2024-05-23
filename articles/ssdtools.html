@@ -82,7 +82,7 @@
                         <h4 data-toc-skip class="author">ssdtools
 Team</h4>
             
-            <h4 data-toc-skip class="date">2024-05-16</h4>
+            <h4 data-toc-skip class="date">2024-05-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/HEAD/vignettes/ssdtools.Rmd" class="external-link"><code>vignettes/ssdtools.Rmd</code></a></small>
       <div class="d-none name"><code>ssdtools.Rmd</code></div>
@@ -377,8 +377,9 @@ protected at a given concentration using ssd_hp.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 11</span></span></span>
 <span><span class="co">#&gt;   dist    proportion   est    se   lcl   ucl    wt method    nboot pboot samples</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;I&lt;lis&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> average       0.05  1.32 0.849 0.370  3.67     1 parametr…  <span style="text-decoration: underline;">1</span>000     1 <span style="color: #949494;">&lt;dbl&gt;</span></span></span>
-<span><span class="va">boron_pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ssd_hp.html">ssd_hp</a></span><span class="op">(</span><span class="va">fits</span>, conc <span class="op">=</span> <span class="va">boron_hc5</span><span class="op">$</span><span class="va">est</span>, ci <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> average       0.05  1.32 0.849 0.370  3.67     1 parametr…  <span style="text-decoration: underline;">1</span>000     1 <span style="color: #949494;">&lt;dbl&gt;</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">boron_pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ssd_hp.html">ssd_hp</a></span><span class="op">(</span><span class="va">fits</span>, conc <span class="op">=</span> <span class="va">boron_hc5</span><span class="op">$</span><span class="va">est</span>, ci <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">boron_pc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 11</span></span></span>
 <span><span class="co">#&gt;   dist     conc   est    se   lcl   ucl    wt method     nboot pboot samples  </span></span>
@@ -392,7 +393,7 @@ known for a particular species. If the <code>right</code> argument in
 <code><a href="../reference/ssd_fit_dists.html">ssd_fit_dists()</a></code> is different to the <code>left</code>
 argument then the data are considered to be censored. Let’s make some
 example censored data.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_dat</span> <span class="op">&lt;-</span> <span class="fu">ssddata</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ssddata/man/ccme_boron.html" class="external-link">ccme_boron</a></span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>left<span class="op">=</span><span class="va">Conc</span>, right<span class="op">=</span><span class="va">Conc</span><span class="op">)</span></span>
 <span></span>
@@ -408,7 +409,7 @@ values are identical to those for <code>AICc</code>. For this reason,
 <code>ssdtools</code> only permits the analysis of censored data using
 two-parameter models. We can call only the default two parameter models
 using <code>ssd_dists_bcanz(n = 2)</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">left_censored_dists</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ssd_fit_dists.html">ssd_fit_dists</a></span><span class="op">(</span><span class="va">left_censored_example</span>, </span>
 <span>                                     dists <span class="op">=</span> <span class="fu"><a href="../reference/ssd_dists_bcanz.html">ssd_dists_bcanz</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>                                     left <span class="op">=</span> <span class="st">"left"</span>, right <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
@@ -420,13 +421,15 @@ using <code>ssd_dists_bcanz(n = 2)</code>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> lgumbel       0.05 1.51     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> 0.022<span style="text-decoration: underline;">1</span> paramet…     0    <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> llogis        0.05 1.15     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> 0.059<span style="text-decoration: underline;">0</span> paramet…     0    <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> lnorm         0.05 1.32     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> 0.176  paramet…     0    <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> weibull       0.05 0.752    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> 0.367  paramet…     0    <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/ssd_hc.html">ssd_hc</a></span><span class="op">(</span><span class="va">left_censored_dists</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> weibull       0.05 0.752    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> 0.367  paramet…     0    <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl&gt;</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ssd_hc.html">ssd_hc</a></span><span class="op">(</span><span class="va">left_censored_dists</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 11</span></span></span>
 <span><span class="co">#&gt;   dist    proportion   est    se   lcl   ucl    wt method    nboot pboot samples</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;I&lt;lis&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> average       0.05 0.859    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>     1 parametr…     0   <span style="color: #BB0000;">NaN</span> <span style="color: #949494;">&lt;dbl&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/ssd_gof.html">ssd_gof</a></span><span class="op">(</span><span class="va">left_censored_dists</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> average       0.05 0.859    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>     1 parametr…     0   <span style="color: #BB0000;">NaN</span> <span style="color: #949494;">&lt;dbl&gt;</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ssd_gof.html">ssd_gof</a></span><span class="op">(</span><span class="va">left_censored_dists</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 9</span></span></span>
 <span><span class="co">#&gt;   dist       ad    ks   cvm   aic  aicc   bic delta weight</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -438,7 +441,7 @@ using <code>ssd_dists_bcanz(n = 2)</code>.</p>
 <p>The model-averaged predictions (and hazard concentrations complete
 with 95% confidence limits) can be calculated using <code>AIC</code> and
 the results plotted complete with arrows indicating the censorship.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">99</span><span class="op">)</span></span>
 <span><span class="va">left_censored_pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">left_censored_dists</span>, ci <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -449,7 +452,7 @@ the results plotted complete with arrows indicating the censorship.</p>
 <p><img src="ssdtools_files/figure-html/unnamed-chunk-16-1.png" width="384"></p>
 <p>Note that <code>ssdtools</code> doesn’t currently support right
 censored data:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">right_censored_example</span> <span class="op">&lt;-</span> <span class="va">example_dat</span> </span>
 <span><span class="va">right_censored_example</span><span class="op">$</span><span class="va">right</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span><span class="va">right_censored_dists</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="../reference/ssd_fit_dists.html">ssd_fit_dists</a></span><span class="op">(</span><span class="va">right_censored_example</span>, </span>
