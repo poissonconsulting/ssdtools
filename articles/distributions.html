@@ -61,7 +61,7 @@
                         <h4 data-toc-skip class="author">ssdtools
 Team</h4>
             
-            <h4 data-toc-skip class="date">2024-09-25</h4>
+            <h4 data-toc-skip class="date">2024-09-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/main/vignettes/distributions.Rmd" class="external-link"><code>vignettes/distributions.Rmd</code></a></small>
       <div class="d-none name"><code>distributions.Rmd</code></div>
@@ -358,16 +358,18 @@ is normally distributed. The <em>pdf</em> of
 is given by</p>
 <div style="text-align: center;" font-size: color: class="box">
 <b><u>Lognormal distribution</u></b>
-\[{f_X}\left( {x;\mu ,\sigma } \right) = \frac{1}{{\sqrt {2\pi } {\kern 1pt} \sigma x}}\exp \left[ { - \frac{{{{\left( {\ln x - \mu } \right)}^2}}}{{2{\sigma ^2}}}} \right]{\rm{  ;  }}x,\sigma  &gt; 0,\; - \infty  
+\[{f_X}\left( {x;\mu ,\sigma } \right) = \frac{1}{{\sqrt {2\pi } {\kern 1pt} \sigma x}}\exp \left[ { - \frac{{{{\left( {\ln x - \mu } \right)}^2}}}{{2{\sigma ^2}}}} \right]{\rm{  ;  }}x,\sigma  &gt; 0,\; - \infty  &lt; \mu  &lt; \infty \]
+</div>
 <p>The lognormal distribution was selected as the starting distribution
 given the data are for effect concentrations. The log-normal
 distribution can be fitted using <code>ssdtools</code> supplying the
 string <code>lnorm</code> to the <code>dists</code> argument in the
 <code>ssd_fit_dists</code> call.</p>
 <hr>
-<h4>
+<h4 id="log-normal-1">
 Sample lognormal probability density and cumulative distribution
 functions
+<a class="anchor" aria-label="anchor" href="#log-normal-1"></a>
 </h4>
 <p><img src="distributions_files/figure-html/unnamed-chunk-7-1.png" width="576"><img src="distributions_files/figure-html/unnamed-chunk-7-2.png" width="576"></p>
 </div>
@@ -410,7 +412,13 @@ we have:</p>
 <b><u>Logistic distribution</u></b>
 \[\begin{array}{l}
 \begin{array}{*{20}{c}}
-{{f_X}\left( {x;\mu ,s} \right) = \frac{{{e^{ - x}}}}{{{{\left( {1 + {e^{ - x}}} \right)}^2}}};}&amp;{x,s &gt; 0,\; - \infty   0,\; - \infty  
+{{f_X}\left( {x;\mu ,s} \right) = \frac{{{e^{ - x}}}}{{{{\left( {1 + {e^{ - x}}} \right)}^2}}};}&amp;{x,s &gt; 0,\; - \infty  &lt; \mu  &lt; \infty }
+\end{array}\\
+\begin{array}{*{20}{c}}
+{{F_X}\left( {x;\mu ,s} \right) = \frac{1}{{1 + {e^{ - \frac{{\left( {x - \mu } \right)}}{s}}}}};}&amp;{x,s &gt; 0,\; - \infty  &lt; \mu  &lt; \infty }
+\end{array}
+\end{array}\]
+</div>
 <p><br> The log-logistic distribution is often used as a candidate SSD
 primarily because of its analytic tractability <span class="citation">(Aldenberg and Slob 1993)</span>. We included it
 because it has wider tails than the log-normal and because it is a
@@ -419,9 +427,10 @@ be fitted using <code>ssdtools</code> by supplying the string
 <code>lnorm</code> to the <code>dists</code> argument in the
 <code>ssd_fit_dists</code> call.</p>
 <hr>
-<h4>
+<h4 id="log-logistic-distribution-1">
 Sample Log-logistic probability density and cumulative distribution
 functions
+<a class="anchor" aria-label="anchor" href="#log-logistic-distribution-1"></a>
 </h4>
 <p><img src="distributions_files/figure-html/unnamed-chunk-8-1.png" width="576"><img src="distributions_files/figure-html/unnamed-chunk-8-2.png" width="576"></p>
 </div>
@@ -435,10 +444,10 @@ distribution has the following <em>pdf</em> and <em>cdf</em>.</p>
 \[\begin{array}{l}
 \begin{array}{*{20}{c}}
 {{f_X}\left( {x;b,c} \right) = \frac{{{x^{c - 1}}{e^{ - \left( {\frac{x}{b}} \right)}}}}{{{b^c}\,\Gamma \left( c \right)}}}&amp;{0 \le x}
-\end{array}  0\\
+\end{array} &lt; \infty ;b,c &gt; 0\\
 \begin{array}{*{20}{c}}
 {{F_X}\left( {x;b,c} \right) = \frac{1}{{\,\Gamma \left( c \right)}}\,\gamma \left( {c,\frac{x}{b}} \right)}&amp;{0 \le x}
-\end{array}  0
+\end{array} &lt; \infty ;b,c &gt; 0
 \end{array}\]
 </div>
 <p><br>where
@@ -511,10 +520,10 @@ and also used in <code>ssdtools</code> [Gompertz] has the following
 \[\begin{array}{l}
 \begin{array}{*{20}{c}}
 {{f_X}\left( {x;\eta ,b} \right) = b{\kern 1pt} \eta \exp \left( {\eta  + bx - \eta {e^{bx}}} \right)}&amp;;
-\end{array}\quad 0 \le x  0\\
+\end{array}\quad 0 \le x &lt; \infty ,\eta ,b &gt; 0\\
 \begin{array}{*{20}{c}}
 {{F_X}\left( {x;\eta ,b} \right) = 1 - \exp \left[ { - \eta \left( {{e^{bx}} - 1} \right)} \right]}&amp;;
-\end{array}\quad 0 \le x  0
+\end{array}\quad 0 \le x &lt; \infty ,\eta ,b &gt; 0
 \end{array}\]
 </div>
 <p>The second parameterisation in which the <em>product</em>
@@ -526,10 +535,10 @@ giving:</p>
 <b><u>Gompertz distribution: Parameterisation II</u></b>
 \[\begin{array}{l}
 \begin{array}{*{20}{c}}
-{{f_X}(x;a,b) = \frac{a}{b}\;{e^{\frac{x}{b}}}\;\exp \left[ { - a\left( {{e^{\frac{x}{b}}}\; - 1} \right)} \right]}&amp;{;\quad 0 \le x  0}
+{{f_X}(x;a,b) = \frac{a}{b}\;{e^{\frac{x}{b}}}\;\exp \left[ { - a\left( {{e^{\frac{x}{b}}}\; - 1} \right)} \right]}&amp;{;\quad 0 \le x &lt; \infty,a,b &gt; 0}
 \end{array}\\
 \begin{array}{*{20}{c}}
-{{F_X}(x;a,b) = 1 - \;\exp \left[ { - a\left( {{e^{\frac{x}{b}}}\; - 1} \right)} \right]}&amp;{;\quad 0 \le x  0}
+{{F_X}(x;a,b) = 1 - \;\exp \left[ { - a\left( {{e^{\frac{x}{b}}}\; - 1} \right)} \right]}&amp;{;\quad 0 \le x &lt; \infty,a,b &gt; 0}
 \end{array}
 \end{array}\]
 </div>
@@ -564,10 +573,10 @@ distribution has the following <em>pdf</em> and <em>cdf</em>:</p>
 <b><u>Weibull distribution</u></b>
 \[\begin{array}{l}
 \begin{array}{*{20}{c}}
-{{f_X}(x;a,b) = \frac{c}{\theta }\,{{\left( {\frac{x}{\theta }} \right)}^{c - 1}}{e^{ - {{\left( {\frac{x}{\theta }} \right)}^c}}}}&amp;{;\quad 0 \le x  0}
+{{f_X}(x;a,b) = \frac{c}{\theta }\,{{\left( {\frac{x}{\theta }} \right)}^{c - 1}}{e^{ - {{\left( {\frac{x}{\theta }} \right)}^c}}}}&amp;{;\quad 0 \le x &lt; \infty ,c,\theta  &gt; 0}
 \end{array}\\
 \begin{array}{*{20}{c}}
-{{F_X}(x;a,b) = 1 - \;{e^{ - {{\left( {\frac{x}{\theta }} \right)}^c}}}}&amp;{;\quad 0 \le x  0}
+{{F_X}(x;a,b) = 1 - \;{e^{ - {{\left( {\frac{x}{\theta }} \right)}^c}}}}&amp;{;\quad 0 \le x &lt; \infty ,c,\theta  &gt; 0}
 \end{array}
 \end{array}\]
 </div>
@@ -659,7 +668,7 @@ Now, if X has the Pareto distribution above, then \[Y = \frac{1}{X}\] has an <i>
 \end{array}\quad y \le \frac{1}{\beta };\;\;\alpha ,\beta  &gt; 0\\
 \begin{array}{*{20}{c}}
 {{G_Y}\left( {y;\alpha ,\beta } \right) = {{\left( {\beta \,y} \right)}^\alpha }}&amp;;
-\end{array}\quad 0  0
+\end{array}\quad 0 &lt; y \le \frac{1}{\beta };\;\;\alpha ,\beta  &gt; 0
 \end{array}\]
 </div>
 <p><br><br>Importantly, we see that the <em>North American</em> versions
@@ -868,7 +877,7 @@ License</a></p>
 <p>The code is released under the <a href="https://www.apache.org/licenses/LICENSE-2.0" class="external-link">Apache License
 2.0</a></p>
 </div>
-  <aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -889,8 +898,5 @@ License</a></p>
 
 
 
-  </main>
-</div>
-</div>
-</body>
+  </body>
 </html>
