@@ -139,8 +139,16 @@ Distributions with an absolute AIC difference greater than delta are excluded fr
 <dd><p>A value between 0 and 1 indicating the proportion hazard concentration (or NULL).</p></dd>
 
 
+<dt id="arg-hc-value">hc_value<a class="anchor" aria-label="anchor" href="#arg-hc-value"></a></dt>
+<dd><p>A number of the hazard concentration value to offset.</p></dd>
+
+
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
 <dd><p>A string of the column in data with the labels.</p></dd>
+
+
+<dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
+<dd><p>A number for the size of the labels.</p></dd>
 
 
 <dt id="arg-left">left<a class="anchor" aria-label="anchor" href="#arg-left"></a></dt>
@@ -388,7 +396,7 @@ remove them with a warning.</p></dd>
 
 
 <dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
-<dd><p>A number for the size of the labels.</p></dd>
+<dd><p>A number for the size of the labels. Soft-deprecated for <code>label_size</code>.</p></dd>
 
 
 <dt id="arg-suffix">suffix<a class="anchor" aria-label="anchor" href="#arg-suffix"></a></dt>
@@ -399,8 +407,12 @@ remove them with a warning.</p></dd>
 <dd><p>A flag or NULL specifying whether to only include distributions with both tails.</p></dd>
 
 
+<dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
+<dd><p>A number for the text size.</p></dd>
+
+
 <dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
-<dd><p>A string which transformation to use by default <code>"log10"</code>.</p></dd>
+<dd><p>A string of which transformation to use. Accepted values include <code>"log10"</code>, <code>"log"</code>, and <code>"identity"</code> (<code>"log10"</code> by default).</p></dd>
 
 
 <dt id="arg-weight">weight<a class="anchor" aria-label="anchor" href="#arg-weight"></a></dt>
@@ -418,8 +430,15 @@ remove them with a warning.</p></dd>
 </ul></dd>
 
 
+<dt id="arg-xlimits">xlimits<a class="anchor" aria-label="anchor" href="#arg-xlimits"></a></dt>
+<dd><p>The x-axis limits as one of:</p><ul><li><p><code>NULL</code> to use the default scale range</p></li>
+<li><p>A numeric vector of length two providing the limits.
+Use NA to refer to the existing minimum or maximum limits.</p></li>
+</ul></dd>
+
+
 <dt id="arg-xintercept">xintercept<a class="anchor" aria-label="anchor" href="#arg-xintercept"></a></dt>
-<dd><p>The x-value for the intersect</p></dd>
+<dd><p>The x-value for the intersect.</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
