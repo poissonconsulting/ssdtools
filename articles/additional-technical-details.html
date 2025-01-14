@@ -12,11 +12,15 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto_Condensed-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/Playfair_Display-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Additional Technical Details">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
+<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Additional Technical Details">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -61,7 +65,7 @@
                         <h4 data-toc-skip class="author">ssdtools
 Team</h4>
             
-            <h4 data-toc-skip class="date">2025-01-07</h4>
+            <h4 data-toc-skip class="date">2025-01-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/main/vignettes/additional-technical-details.Rmd" class="external-link"><code>vignettes/additional-technical-details.Rmd</code></a></small>
       <div class="d-none name"><code>additional-technical-details.Rmd</code></div>
@@ -134,7 +138,7 @@ limited to): 5 (current ANZG minimum), 6 (current BC minimum), and 8
 <li>For each randomly generated dataset, <code>ssdtools</code> was used
 to re-fit the data, and model averaged estimates were obtained using the
 multi-method, with upper and lower confidence limits (CLs) produced
-using the recommended weighted sample method (see <a href="https://bcgov.github.io/ssdtools/articles/confidence-intervals.html">Confidence
+using the recommended weighted sample method (see <a href="https://bcgov.github.io/ssdtools/articles/confidence-intervals.html" class="external-link">Confidence
 Intervals for Hazard Concentrations</a> vignette).</li>
 </ol>
 <p>The individual ssdtools fits are shown below for each of the 20
@@ -146,22 +150,13 @@ each dataset, and the results collated across all iterations. For each
 simulated dataset the true HCx values were obtained directly from the
 parameter estimates of from data generating distribution. From these,
 relative bias was calculated as the scaled-difference between the
-estimated HCx values and the true HCx value, i.e
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mover><mrow><mi>H</mi><mi>C</mi></mrow><mo accent="true">̂</mo></mover><mi>x</mi><mo>−</mo><mi>H</mi><mi>C</mi><mi>x</mi></mrow><mrow><mi>H</mi><mi>C</mi><mi>x</mi></mrow></mfrac><annotation encoding="application/x-tex">\frac{\widehat {HC}x-HCx}{HCx}</annotation></semantics></math>
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mrow><mi>H</mi><mi>C</mi></mrow><mo accent="true">̂</mo></mover><mi>x</mi></mrow><annotation encoding="application/x-tex">\widehat {HC}x</annotation></semantics></math>
-is the estimate of the true value,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>C</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">HCx</annotation></semantics></math>;
-coverage was calculated as the proportion of simulations where the true
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>C</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">HCx</annotation></semantics></math>
-value fell within the lower and upper 95% confidence limits; and the
-scaled confidence interval width was calculated as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>U</mi><mi>L</mi><mo>−</mo><mi>L</mi><mi>L</mi></mrow><mrow><mi>H</mi><mi>C</mi><mi>x</mi></mrow></mfrac><annotation encoding="application/x-tex">\frac{UL-LL}{HCx}</annotation></semantics></math>
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mi>L</mi></mrow><annotation encoding="application/x-tex">UL</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi></mrow><annotation encoding="application/x-tex">LL</annotation></semantics></math>
-are the upper and lower limits respectively.</p>
+estimated HCx values and the true HCx value, i.e <span class="math display">\frac{\widehat {HC}x-HCx}{HCx}</span> where <span class="math inline">\widehat {HC}x</span> is the estimate of the true
+value, <span class="math inline">HCx</span>; coverage was calculated as
+the proportion of simulations where the true <span class="math inline">HCx</span> value fell within the lower and upper 95%
+confidence limits; and the scaled confidence interval width was
+calculated as <span class="math display">\frac{UL-LL}{HCx}</span> where
+<span class="math inline">UL</span> and <span class="math inline">LL</span> are the upper and lower limits
+respectively.</p>
 <p>Bias, confidence interval width and coverage as a function of sample
 size across ~1000 simulations of 20 datasets using the multi model
 averaging method and the weighted sample method for estimating
@@ -268,78 +263,89 @@ the Burr Type-III distribution<a class="anchor" aria-label="anchor" href="#the-i
 <div class="section level3">
 <h3 id="burr-iii-distribution">Burr III distribution<a class="anchor" aria-label="anchor" href="#burr-iii-distribution"></a>
 </h3>
-<p>The probability density function,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">{f_X}(x;b,c,k)</annotation></semantics></math>
-and cumulative distribution function,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">{F_X}(x;b,c,k)</annotation></semantics></math>
-for the Burr III distribution (also known as the <em>Dagum</em>
-distribution) as used in <code>ssdtools</code> are</p>
+<p>The probability density function, <span class="math inline">{f_X}(x;b,c,k)</span> and cumulative distribution
+function, <span class="math inline">{F_X}(x;b,c,k)</span> for the Burr
+III distribution (also known as the <em>Dagum</em> distribution) as used
+in <code>ssdtools</code> are</p>
 <div style="text-align: center; font-size: 1.2em; color: black; border: 1px solid black; padding: 10px; border-radius: 5px;">
 <p><b><u>Burr III Distribution</u></b></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>b</mi><mspace width="0.167em"></mspace><mi>k</mi><mspace width="0.167em"></mspace><mi>c</mi></mrow><msup><mi>x</mi><mn>2</mn></msup></mfrac><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>x</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>c</mi><mo>−</mo><mn>1</mn></mrow></msup><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>x</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mfrac><mo>,</mo><mspace width="1.0em"></mspace><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">f_X(x; b, c, k) = \frac{b \, k \, c}{x^2} \frac{\left( \frac{b}{x} \right)^{c - 1}}{\left[ 1 + \left( \frac{b}{x} \right)^c \right]^{k + 1}}, \quad b, c, k, x &gt; 0</annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>x</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup></mfrac><mo>,</mo><mspace width="1.0em"></mspace><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">F_X(x; b, c, k) = \frac{1}{\left[ 1 + \left( \frac{b}{x} \right)^c \right]^k}, \quad b, c, k, x &gt; 0</annotation></semantics></math></p>
+<p><span class="math display">f_X(x; b, c, k) = \frac{b \, k \, c}{x^2}
+\frac{\left( \frac{b}{x} \right)^{c - 1}}{\left[ 1 + \left( \frac{b}{x}
+\right)^c \right]^{k + 1}}, \quad b, c, k, x &gt; 0</span></p>
+<p><span class="math display">F_X(x; b, c, k) = \frac{1}{\left[ 1 +
+\left( \frac{b}{x} \right)^c \right]^k}, \quad b, c, k, x &gt;
+0</span></p>
 </div>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="inverse-pareto-distribution">Inverse Pareto distribution<a class="anchor" aria-label="anchor" href="#inverse-pareto-distribution"></a>
 </h3>
-<p>Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>∼</mo><mi>B</mi><mi>u</mi><mi>r</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">X \sim Burr(b,c,k)</annotation></semantics></math>
-have the <em>pdf</em> given in the box above. It is well known that the
-distribution of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><mfrac><mn>1</mn><mi>X</mi></mfrac></mrow><annotation encoding="application/x-tex">Y = \frac{1}{X}</annotation></semantics></math>
-is the <em>inverse Burr</em> distribution (also known as the
+<p>Let <span class="math inline">X \sim Burr(b,c,k)</span> have the
+<em>pdf</em> given in the box above. It is well known that the
+distribution of <span class="math inline">Y = \frac{1}{X}</span> is the
+<em>inverse Burr</em> distribution (also known as the
 <em>SinghMaddala</em> distribution) for which</p>
-<p><span class="math display">$$
+<p><span class="math display">
 \begin{array}{*{20}{c}}
 {{f_Y}(y;b,c,k) = \frac{{c{\kern 1pt} {\kern 1pt} k{{\left(
 {\frac{y}{b}} \right)}^c}}}{{y{\kern 1pt} {{\left[ {1 + {{\left(
 {\frac{y}{b}} \right)}^c}} \right]}^{k + 1}}}}}, &amp; {b,c,k,y &gt; 0}
 \end{array}
-$$</span></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>F</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup></mfrac></mrow><mo>,</mo></mtd><mtd columnalign="center" style="text-align: center"><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo>,</mo><mi>y</mi><mo>&gt;</mo><mn>0</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+</span></p>
+<p><span class="math display">
 \begin{array}{*{20}{c}}
-{{F_Y}(y;b,c,k) = 1 - \frac{1}{{{{\left[ {1 + {{\left( {\frac{y}{b}} \right)}^c}} \right]}^k}}}}, &amp; {b,c,k,y &gt; 0}
+{{F_Y}(y;b,c,k) = 1 - \frac{1}{{{{\left[ {1 + {{\left( {\frac{y}{b}}
+\right)}^c}} \right]}^k}}}}, &amp; {b,c,k,y &gt; 0}
 \end{array}
-</annotation></semantics></math></p>
-<p>We now consider the limiting distribution when
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>→</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">c \to \infty</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">k \to 0</annotation></semantics></math>
-in such a way that the product
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>k</mi></mrow><annotation encoding="application/x-tex">ck</annotation></semantics></math>
-remains constant,
-i.e. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow><annotation encoding="application/x-tex">ck = \lambda</annotation></semantics></math>.</p>
-<p>Now,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="left" style="text-align: left"><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msub><mi>F</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mfrac><mn>1</mn><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup></mfrac></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">and</mtext></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup><mo>=</mo><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>c</mi><mi>k</mi></mrow></msup><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup><mo stretchy="true" form="postfix">}</mo></mrow></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">and</mtext></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>c</mi><mi>k</mi></mrow></msup><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup><mo stretchy="true" form="postfix">}</mo></mrow><mo>=</mo><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>c</mi><mi>k</mi></mrow></msup><mo stretchy="true" form="postfix">}</mo></mrow><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup><mo stretchy="true" form="postfix">}</mo></mrow></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mo>=</mo><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>c</mi><mi>k</mi></mrow></msup><mo stretchy="true" form="postfix">}</mo></mrow><mspace width="0.278em"></mspace><mo>⋅</mo><mspace width="0.167em"></mspace><mn>1</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>λ</mi></msup></mtd></mtr></mtable><annotation encoding="application/x-tex">
+</span></p>
+<p>We now consider the limiting distribution when <span class="math inline">c \to \infty</span> and <span class="math inline">k
+\to 0</span> in such a way that the product <span class="math inline">ck</span> remains constant, i.e. <span class="math inline">ck = \lambda</span>.</p>
+<p>Now, <span class="math display">
 \begin{array}{l}
-\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{F_Y}(y;b,c,k)} \right\} = 1 - \mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \frac{1}{{{{\left[ {1 + {{\left( {\frac{y}{b}} \right)}^c}} \right]}^k}}} \\
+\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck =
+\lambda } \left\{ {{F_Y}(y;b,c,k)} \right\} = 1 - \mathop {\mathop {\lim
+}\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda }
+\frac{1}{{{{\left[ {1 + {{\left( {\frac{y}{b}} \right)}^c}}
+\right]}^k}}} \\
 \\
 \text{and} \\
 \\
-\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } {\left[ {1 + {{\left( {\frac{y}{b}} \right)}^c}} \right]^k} = \mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}{{\left[ {1 + {{\left( {\frac{b}{y}} \right)}^c}} \right]}^k}} \right\} \\
+\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck =
+\lambda } {\left[ {1 + {{\left( {\frac{y}{b}} \right)}^c}} \right]^k} =
+\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck =
+\lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}{{\left[ {1 +
+{{\left( {\frac{b}{y}} \right)}^c}} \right]}^k}} \right\} \\
 \\
 \text{and} \\
 \\
-\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}{{\left[ {1 + {{\left( {\frac{b}{y}} \right)}^c}} \right]}^k}} \right\} = \mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}} \right\}\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{{\left[ {1 + {{\left( {\frac{b}{y}} \right)}^c}} \right]}^k}} \right\} \\
-= \mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}} \right\}\; \cdot \,1 \\
+\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck =
+\lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}{{\left[ {1 +
+{{\left( {\frac{b}{y}} \right)}^c}} \right]}^k}} \right\} = \mathop
+{\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda }
+\left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}} \right\}\mathop {\mathop
+{\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{
+{{{\left[ {1 + {{\left( {\frac{b}{y}} \right)}^c}} \right]}^k}} \right\}
+\\
+= \mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck =
+\lambda } \left\{ {{{\left( {\frac{y}{b}} \right)}^{ck}}} \right\}\;
+\cdot \,1 \\
 = {\left( {\frac{y}{b}} \right)^\lambda }
 \end{array}
-</annotation></semantics></math></p>
-<p>Therefore,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="center" style="text-align: center"><munder><mo></mo><mrow><mi>c</mi><mi>k</mi><mo>=</mo><mi>λ</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">{</mo><msub><mi>F</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>;</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>λ</mi></msup></mtd><mtd columnalign="center" style="text-align: center"><mi>y</mi><mo>≥</mo><mi>b</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+</span></p>
+<p>Therefore, <span class="math display">
 \begin{array}{*{20}{c}}
-{\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck = \lambda } \left\{ {{F_Y}(y;b,c,k)} \right\} = 1 - {{\left( {\frac{b}{y}} \right)}^\lambda }} &amp; {y \ge b}
+{\mathop {\mathop {\lim }\limits_{(c,k) \to (\infty ,0)} }\limits_{ck =
+\lambda } \left\{ {{F_Y}(y;b,c,k)} \right\} = 1 - {{\left( {\frac{b}{y}}
+\right)}^\lambda }} &amp; {y \ge b}
 \end{array}
-</annotation></semantics></math></p>
+</span></p>
 <p>which we recognise as the (American) Pareto distribution. So, if the
-limiting distribution of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><mfrac><mn>1</mn><mi>X</mi></mfrac></mrow><annotation encoding="application/x-tex">Y = \frac{1}{X}</annotation></semantics></math>
-is a Pareto distribution, then the limiting distribution of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>=</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac></mrow><annotation encoding="application/x-tex">X = \frac{1}{Y}</annotation></semantics></math>
-is the (American) <em>inverse Pareto</em> distribution</p>
-<p><span class="math display">$$
+limiting distribution of <span class="math inline">Y =
+\frac{1}{X}</span> is a Pareto distribution, then the limiting
+distribution of <span class="math inline">X = \frac{1}{Y}</span> is the
+(American) <em>inverse Pareto</em> distribution</p>
+<p><span class="math display">
 \begin{array}{l}
 {f_X}\left( {x;\alpha ,\beta } \right) = \lambda {b^\lambda
 }{x^{\lambda  - 1}};{\rm{  }}0 \le x \le {\textstyle{1 \over
@@ -348,54 +354,53 @@ b}};{\rm{  }}\lambda {\rm{,}}b &gt; 0 \\
 };{\rm{  }}0 \le x \le {\textstyle{1 \over b}};{\rm{  }}\lambda
 {\rm{,}}b &gt; 0
 \end{array}
-$$</span></p>
+</span></p>
 <p>For completeness, the MLEs of this distribution have closed-form
 expressions and are given by</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="left" style="text-align: left"><mover><mi>λ</mi><mo accent="true">̂</mo></mover><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">[</mo><mo>ln</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>g</mi><mi>X</mi></msub><mover><mi>b</mi><mo accent="true">̂</mo></mover></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mover><mi>b</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mn>1</mn><mrow><mo>max</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>X</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">}</mo></mrow></mfrac></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p><span class="math display">
 \begin{array}{l}
-\hat \lambda  = \left[ \ln \left( \frac{{g_X}}{{\hat b}} \right) \right]^{-1} \\
+\hat \lambda  = \left[ \ln \left( \frac{{g_X}}{{\hat b}} \right)
+\right]^{-1} \\
 \hat b = \frac{1}{{\max \{ X_i \}}}
 \end{array}
-</annotation></semantics></math></p>
-<p>and <span class="math inline">$\rm{g_X}$</span> is the <em>geometric
+</span></p>
+<p>and <span class="math inline">\rm{g_X}</span> is the <em>geometric
 mean</em> of the data.</p>
 </div>
 <div class="section level3">
 <h3 id="inverse-weibull-distribution">Inverse Weibull distribution<a class="anchor" aria-label="anchor" href="#inverse-weibull-distribution"></a>
 </h3>
-<p>Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>∼</mo><mtext mathvariant="normal">Burr</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">X \sim \text{Burr}(b,c,k)</annotation></semantics></math>
-have the <em>pdf</em> given in the box above. We make the transformation
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><mfrac><mrow><mi>b</mi><msup><mi>k</mi><mfrac><mn>1</mn><mi>c</mi></mfrac></msup><mi>θ</mi></mrow><mi>X</mi></mfrac></mrow><annotation encoding="application/x-tex">Y = \frac{b k^{\frac{1}{c}} \theta}{X}</annotation></semantics></math>,
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
-is a parameter (constant). The distribution of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
-is also a Burr distribution and has <em>cdf</em></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>G</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mrow><msup><mi>k</mi><mfrac><mn>1</mn><mi>c</mi></mfrac></msup><mi>θ</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mi>k</mi></msup></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-G_Y(y) = 1 - \frac{1}{\left[ 1 + \left( \frac{y}{k^{\frac{1}{c}} \theta} \right)^c \right]^k}.
-</annotation></semantics></math></p>
+<p>Let <span class="math inline">X \sim \text{Burr}(b,c,k)</span> have
+the <em>pdf</em> given in the box above. We make the transformation
+<span class="math inline">Y = \frac{b k^{\frac{1}{c}} \theta}{X}</span>,
+where <span class="math inline">\theta</span> is a parameter (constant).
+The distribution of <span class="math inline">Y</span> is also a Burr
+distribution and has <em>cdf</em></p>
+<p><span class="math display">
+G_Y(y) = 1 - \frac{1}{\left[ 1 + \left( \frac{y}{k^{\frac{1}{c}} \theta}
+\right)^c \right]^k}.
+</span></p>
 <p>We are interested in the limiting behavior of this Burr distribution
-as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>→</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">k \to \infty</annotation></semantics></math>.</p>
+as <span class="math inline">k \to \infty</span>.</p>
 <p>Now,</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><mo>lim</mo><mrow><mi>k</mi><mo>→</mo><mi>∞</mi></mrow></munder><msub><mi>G</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><munder><mo>lim</mo><mrow><mi>k</mi><mo>→</mo><mi>∞</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mrow><msup><mi>k</mi><mfrac><mn>1</mn><mi>c</mi></mfrac></msup><mi>θ</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mo>−</mo><mi>k</mi></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\lim_{k \to \infty} G_Y(y) = 1 - \lim_{k \to \infty} \left[ 1 + \left( \frac{y}{k^{\frac{1}{c}} \theta} \right)^c \right]^{-k}.
-</annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1</mn><mo>−</mo><munder><mo>lim</mo><mrow><mi>k</mi><mo>→</mo><mi>∞</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>θ</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mi>k</mi></mfrac><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mo>−</mo><mi>k</mi></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
-= 1 - \lim_{k \to \infty} \left[ 1 + \frac{\left( \frac{y}{\theta} \right)^c}{k} \right]^{-k}.
-</annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1</mn><mo>−</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">[</mo><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>y</mi><mi>θ</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>c</mi></msup><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><span class="math display">
+\lim_{k \to \infty} G_Y(y) = 1 - \lim_{k \to \infty} \left[ 1 + \left(
+\frac{y}{k^{\frac{1}{c}} \theta} \right)^c \right]^{-k}.
+</span></p>
+<p><span class="math display">
+= 1 - \lim_{k \to \infty} \left[ 1 + \frac{\left( \frac{y}{\theta}
+\right)^c}{k} \right]^{-k}.
+</span></p>
+<p><span class="math display">
 = 1 - \exp \left[ -\left( \frac{y}{\theta} \right)^c \right],
-</annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">{</mo><mrow><mtext mathvariant="normal">using the fact that </mtext><mspace width="0.333em"></mspace></mrow><munder><mo>lim</mo><mrow><mi>n</mi><mo>→</mo><mi>∞</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mfrac><mi>z</mi><mi>n</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mi>n</mi></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup><mo stretchy="true" form="postfix">}</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\left\{ \text{using the fact that } \lim_{n \to \infty} \left( 1 + \frac{z}{n} \right)^{-n} = e^{-z} \right\}.
-</annotation></semantics></math></p>
+</span></p>
+<p><span class="math display">
+\left\{ \text{using the fact that } \lim_{n \to \infty} \left( 1 +
+\frac{z}{n} \right)^{-n} = e^{-z} \right\}.
+</span></p>
 <p>We recognize the last expression as the <em>cdf</em> of a Weibull
-distribution with parameters
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>.</p>
+distribution with parameters <span class="math inline">c</span> and
+<span class="math inline">\theta</span>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -441,9 +446,11 @@ Quality. Australian and New Zealand Governments and Australian State and
 Territory Governments, Canberra, 48 Pp</em>.
 </div>
 </div>
-<p>Error in get(paste0(generic, “.”, class), envir = get_method_env()) :
-object ‘type_sum.accel’ not found ## Licensing Copyright 2015-2023
-Province of British Columbia<br>
+</div>
+<div class="section level2">
+<h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
+</h2>
+<p>Copyright 2015-2023 Province of British Columbia<br>
 Copyright 2021 Environment and Climate Change Canada<br>
 Copyright 2023-2024 Australian Government Department of Climate Change,
 Energy, the Environment and Water</p>
