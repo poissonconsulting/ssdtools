@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ssdtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameter Descriptions for ssdtools Functions</h1>
-      <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/dev/R/params.R" class="external-link"><code>R/params.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/main/R/params.R" class="external-link"><code>R/params.R</code></a></small>
       <div class="d-none name"><code>params.Rd</code></div>
     </div>
 
@@ -417,6 +417,10 @@ remove them with a warning.</p></dd>
 
 <dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
 <dd><p>A string of which transformation to use. Accepted values include <code>"log10"</code>, <code>"log"</code>, and <code>"identity"</code> (<code>"log10"</code> by default).</p></dd>
+
+
+<dt id="arg-valid">valid<a class="anchor" aria-label="anchor" href="#arg-valid"></a></dt>
+<dd><p>A flag or NULL specifying whether to include distributions with valid likelihoods that allows them to be fit with other distributions for modeling averaging.</p></dd>
 
 
 <dt id="arg-weight">weight<a class="anchor" aria-label="anchor" href="#arg-weight"></a></dt>
