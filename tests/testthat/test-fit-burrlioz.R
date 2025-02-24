@@ -19,7 +19,7 @@ test_that("burrlioz with ccme_boron gives invpareto", {
   fit <- ssd_fit_burrlioz(ssddata::ccme_boron)
   expect_s3_class(fit, "fitdists")
   expect_s3_class(fit, "fitburrlioz")
-  expect_identical(names(fit), "invpareto")
+  expect_identical(names(fit), c("invpareto", "invpareto_burrlioz"))
 })
 
 test_that("burrlioz with eight or less samples gives llogis", {
@@ -46,7 +46,7 @@ test_that("burrlioz with invpareto data gives invpareto", {
   fit <- ssd_fit_burrlioz(data)
   expect_s3_class(fit, "fitdists")
   expect_s3_class(fit, "fitburrlioz")
-  expect_identical(names(fit), "invpareto")
+  expect_identical(names(fit), c("invpareto", "invpareto_burrlioz"))
 })
 
 test_that("burrlioz with lgumbel data gives lgumbel", {
@@ -84,7 +84,7 @@ test_that("burrlioz with anon_a", {
   fit <- ssd_fit_burrlioz(ssddata::anon_a)
   expect_s3_class(fit, "fitdists")
   expect_s3_class(fit, "fitburrlioz")
-  expect_identical(names(fit), "invpareto")
+  expect_identical(names(fit), c("invpareto", "invpareto_burrlioz"))
 })
 
 test_that("burrlioz with anon_e", {

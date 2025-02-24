@@ -69,7 +69,7 @@ test_that("ssd_fit_dists not happy with left as left by default", {
 
 test_that("ssd_fit_dists gives chk error if valid and more than one distribution", {
   data <- ssddata::ccme_boron
-  expect_error(ssd_fit_dists(data, dists = c("lnorm", "invpareto")))
+  expect_error(ssd_fit_dists(data, dists = c("lnorm", "invpareto_burrlioz")))
 })
 
 test_that("ssd_fit_dists returns object class fitdists", {
