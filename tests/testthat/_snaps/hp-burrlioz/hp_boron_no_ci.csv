@@ -1,2 +1,2 @@
 dist,conc,est,se,lcl,ucl,wt,method,nboot,pboot,samples
-invpareto,1,8.57733,NA,NA,NA,1,non-parametric,0,NA,numeric(0)
+invpareto_burrlioz,1,8.57733,NA,NA,NA,1,non-parametric,0,NA,numeric(0)

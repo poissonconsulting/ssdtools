@@ -88,7 +88,7 @@ ssd_einvpareto_burrlioz()
 
 ssd_einvpareto()
 
-ssd_einvpareto()
+ssd_elgumbel()
 
 ssd_elgumbel()
 
