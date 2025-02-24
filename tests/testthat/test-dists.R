@@ -19,7 +19,8 @@ test_that("dists all", {
   expect_identical(
     ssd_dists_all(valid = NULL),
     c(
-      "burrIII3", "gamma", "gompertz", "invpareto", "lgumbel", "llogis",
+      "burrIII3", "gamma", "gompertz", "invpareto", "invpareto_burrlioz",
+      "lgumbel", "llogis",
       "llogis_llogis", "lnorm", "lnorm_lnorm", "weibull"
     )
   )
@@ -44,7 +45,7 @@ test_that("dists can select none", {
 })
 
 test_that("dists without tails", {
-  expect_identical(ssd_dists(tails = FALSE, valid = NULL), "invpareto")
+  expect_identical(ssd_dists(tails = FALSE, valid = NULL), c("invpareto", "invpareto_burrlioz"))
 })
 
 test_that("dists 5 pars", {

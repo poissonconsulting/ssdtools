@@ -19,7 +19,7 @@
 #'
 #' Fits 'burrIII3' distribution.
 #' If shape1 parameter is at boundary returns 'lgumbel' (which is equivalent to inverse Weibull).
-#' Else if shape2 parameter is at a boundary returns 'invpareto'.
+#' Else if shape2 parameter is at a boundary returns 'invpareto_burrlioz'.
 #' Otherwise returns 'burrIII3'
 #'
 #' @inheritParams params
@@ -75,7 +75,7 @@ ssd_fit_burrlioz <- function(data, left = "Conc", rescale = FALSE,
     range_shape1 = range_shape1,
     range_shape2 = range_shape2, regex = "shape2$"
   )) {
-    dist <- "invpareto"
+    dist <- "invpareto_burrlioz"
   } else if (is_at_boundary(fit$burrIII3, data,
     range_shape1 = range_shape1,
     range_shape2 = range_shape2, regex = "shape1$"

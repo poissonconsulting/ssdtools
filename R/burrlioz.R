@@ -27,7 +27,7 @@ fit_burrlioz <- function(data, dist, min_pmix, range_shape1, range_shape2,
     range_shape1 = range_shape1,
     range_shape2 = range_shape2, regex = "shape2$"
   )) {
-    dist <- "invpareto"
+    dist <- "invpareto_burrlioz"
   } else if (is_at_boundary(burrIII3, data,
     range_shape1 = range_shape1,
     range_shape2 = range_shape2, regex = "shape1$"

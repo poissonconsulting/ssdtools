@@ -29,7 +29,7 @@ An object of class fitdists.
 \description{
 Fits 'burrIII3' distribution.
 If shape1 parameter is at boundary returns 'lgumbel' (which is equivalent to inverse Weibull).
-Else if shape2 parameter is at a boundary returns 'invpareto'.
+Else if shape2 parameter is at a boundary returns 'invpareto_burrlioz'.
 Otherwise returns 'burrIII3'
 }
 \examples{
