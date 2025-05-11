@@ -42,7 +42,7 @@ ssd_plgumbel <- function(q, locationlog = 0, scalelog = 1, lower.tail = TRUE, lo
 #' @export
 #' @examples
 #'
-#' ssd_einvpareto()
+#' ssd_elgumbel()
 ssd_elgumbel <- function() {
   list(locationlog = 0, scalelog = 1)
 }

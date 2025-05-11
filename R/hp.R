@@ -107,7 +107,7 @@ ssd_hp.fitburrlioz <- function(
     ...) {
   chk_length(x, upper = 1L)
   chk_named(x)
-  chk_subset(names(x), c("burrIII3", "invpareto", "llogis", "lgumbel"))
+  chk_subset(names(x), c("burrIII3", "invpareto_burrlioz", "llogis", "lgumbel"))
   chk_vector(conc)
   chk_numeric(conc)
   chk_flag(ci)
