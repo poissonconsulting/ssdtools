@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [main, joss-paper]
+    branches: [main, joss-paper, demo]
   pull_request:
     branches: [main, joss-paper]
     
