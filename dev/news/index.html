@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ssdtools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,8 +34,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.3.0.9004" id="ssdtools-2309004">ssdtools 2.3.0.9004<a class="anchor" aria-label="anchor" href="#ssdtools-2309004"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.3.0.9005" id="ssdtools-2309005">ssdtools 2.3.0.9005<a class="anchor" aria-label="anchor" href="#ssdtools-2309005"></a></h2>
 <ul><li><p>Implemented model fitting with right censoring for all distributions (by <a href="https://github.com/eduardszoecs" class="external-link">@eduardszoecs</a>).</p></li>
+<li><p>Added following <code>ci_methods</code>: <code>"GMACL"</code>, <code>"MAW1"</code>, <code>"MAW2"</code>, <code>"GMAW1"</code>, <code>"GMAW2"</code>, <code>"arithmetic_samples"</code> and <code>"geometric_samples"</code> to <code><a href="../reference/ssd_hc.html">ssd_hc()</a></code>, <code><a href="../reference/ssd_hp.html">ssd_hp()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>.</p></li>
 <li><p>Added … and check unused to ensure matching names of subsequent arguments.</p></li>
 <li><p>Added class and attribute preserving <code>[[</code> and <code>[</code> operators.</p></li>
 <li><p>Fixed error message when Inf weights.</p></li>
@@ -44,8 +45,10 @@
 <li><p>Added column <code>"dists"</code> to <code><a href="../reference/ssd_hc.html">ssd_hc()</a></code> and <code><a href="../reference/ssd_hp.html">ssd_hp()</a></code> which is a list of the distributions.</p></li>
 <li><p>Renamed <code>"method"</code> column to <code>"boot_method"</code> in tibble output by <code><a href="../reference/ssd_hc.html">ssd_hc()</a></code>, <code><a href="../reference/ssd_hp.html">ssd_hp()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>.</p></li>
 <li><p>Added <code>"est_method"</code> and <code>"ci_method"</code> columns to tibble output by <code><a href="../reference/ssd_hc.html">ssd_hc()</a></code>, <code><a href="../reference/ssd_hp.html">ssd_hp()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>.</p></li>
+<li><p>Added <code>"level"</code> column to tibble output by <code><a href="../reference/ssd_hc.html">ssd_hc()</a></code>, <code><a href="../reference/ssd_hp.html">ssd_hp()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>.</p></li>
 <li><p>Added <code>"at_bound"</code> and <code>"computable"</code> columns to tibble output by <code>gof()</code>.</p></li>
 <li><p>Added <code>strict = TRUE</code> argument to <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> to allow subsetting when distributions missing (with <code>strict = FALSE</code>).</p></li>
+<li><p>Now ensures weighted_samples sum to nboot.</p></li>
 <li><p>Improved method to calculate <code><a href="../reference/ssd_ecd.html">ssd_ecd()</a></code> so ensures symmetric about 0.5 and deprecated <code>ties.method = "first"</code> argument.</p></li>
 <li><p><code><a href="../reference/ssd_fit_bcanz.html">ssd_fit_bcanz()</a></code> now checks all dists are subset of <code><a href="../reference/ssd_dists_bcanz.html">ssd_dists_bcanz()</a></code>.</p></li>
 <li><p><code><a href="../reference/ssd_hc.html">ssd_hc()</a></code>, <code><a href="../reference/ssd_hp.html">ssd_hp()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> now return all non-missing values when <code>nboot = 0</code> except se, lcl and ucl.</p></li>
