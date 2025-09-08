@@ -58,7 +58,7 @@ jobs:
 
           poisslack::slackr_bot(
             text = msg,
-            channel = basename(Sys.getenv("REPO")),
+            channel = paste0(basename(Sys.getenv("REPO")), "-actions"),
             username = "check-package-bot",
             incoming_webhook_url = Sys.getenv("SLACK_WEBHOOK_URL")
           )
