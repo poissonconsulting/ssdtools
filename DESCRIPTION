@@ -52,7 +52,7 @@ Imports:
     chk,
     furrr,
     generics,
-    ggplot2 (>= 3.5.0),
+    ggplot2,
     ggtext,
     glue,
     goftest,
