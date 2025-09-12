@@ -32,7 +32,7 @@ all hazard concentrations from 1 to 99%."><meta property="og:image" content="htt
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Predict Hazard Concentrations of fitdists Object</h1>
-      <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/main/R/predict.R" class="external-link"><code>R/predict.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/v2.4.0/R/predict.R" class="external-link"><code>R/predict.R</code></a></small>
       <div class="d-none name"><code>predict.fitdists.Rd</code></div>
     </div>
 
@@ -123,19 +123,10 @@ or re-estimated for each bootstrap sample dataset.
 The value <code>ci_method = "weighted_samples"</code> takes bootstrap samples
 from each distribution proportional to its AICc based weights and
 calculates the confidence limits (and SE) from this single set.
-The value <code>ci_method = "weighted_arithmetic"</code> (was <code>ci_method = "MACL"</code> but
+The value <code>ci_method = "MACL"</code> (was <code>ci_method = "weighted_arithmetic"</code> but
 has been soft-deprecated) which is only included for
 historical reasons takes the weighted arithmetic mean of the confidence
-limits and <code>ci_method = MGCL</code> which was included for a research paper
-takes the weighted geometric mean of the confidence limits.
-The values <code>ci_method = "MAW1"</code> and <code>ci_method = "MAW2"</code>
-use the two alternative equations of Burnham and Anderson to
-model average the weighted standard errors and then calculate the confidence
-limits using the Wald approach.
-Finally <code>ci_method = "arithmetic"</code> and <code>ci_method = "geometric"</code>
-take the weighted arithmetic or geometric mean of the values for
-each bootstrap iteration across all the distributions and then
-calculate the confidence limits (and SE) from the single set of samples.</p></dd>
+limits.</p></dd>
 
 
 <dt id="arg-parametric">parametric<a class="anchor" aria-label="anchor" href="#arg-parametric"></a></dt>
