@@ -21,6 +21,12 @@ authors:
     href: https://www.canada.ca/en/environment-climate-change.html
   Australian Government Department of Climate Change, Energy, the Environment and Water:
     href: https://www.dcceew.gov.au/
+  Australian Institute of Marine Science:
+    href: https://www.aims.gov.au/
+  Environmetrics Australia:
+    href: https://environmetrics.net/
+  Poisson Consulting:
+    href: https://www.poissonconsulting.ca/
 reference:
 - title: Distribution Names
   desc: Functions that return character vectors of distribution names
