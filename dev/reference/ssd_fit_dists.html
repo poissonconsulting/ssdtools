@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ssdtools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.4.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,7 @@
 <span>  dists <span class="op">=</span> <span class="fu"><a href="ssd_dists_bcanz.html">ssd_dists_bcanz</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="fl">6L</span>,</span>
 <span>  rescale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  odds_max <span class="op">=</span> <span class="fl">0.999</span>,</span>
 <span>  reweight <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  computable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  at_boundary_ok <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -94,7 +95,12 @@
 
 
 <dt id="arg-rescale">rescale<a class="anchor" aria-label="anchor" href="#arg-rescale"></a></dt>
-<dd><p>A flag specifying whether to rescale concentration values by dividing by the geometric mean of the minimum and maximum positive finite values.</p></dd>
+<dd><p>A string specifying whether to leave the values unchanged ("no") or to rescale concentration values by dividing by the geometric mean of the minimum and maximum positive finite values ("geomean") or to logistically transform ("odds").</p></dd>
+
+
+<dt id="arg-odds-max">odds_max<a class="anchor" aria-label="anchor" href="#arg-odds-max"></a></dt>
+<dd><p>A number specifying the upper left value when <code>rescale = "odds"</code>.
+By default left values cannot exceed 0.999.</p></dd>
 
 
 <dt id="arg-reweight">reweight<a class="anchor" aria-label="anchor" href="#arg-reweight"></a></dt>
