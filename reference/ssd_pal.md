@@ -33,8 +33,8 @@ ssd_pal()
 #>     }
 #>     unname(values[seq_len(n)])
 #> }
-#> <bytecode: 0x55fe957bee58>
-#> <environment: 0x55fea8fbeeb8>
+#> <bytecode: 0x557e59e20ad8>
+#> <environment: 0x557e67972de8>
 #> attr(,"class")
 #> [1] "pal_discrete" "scales_pal"   "function"    
 #> attr(,"type")
