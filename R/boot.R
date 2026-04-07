@@ -17,7 +17,11 @@
 
 warn_min_pboot <- function(x, min_pboot) {
   if (any(!is.na(x$pboot) & is.na(x$se) & x$nboot >= 2)) {
-    wrn("One or more pboot values less than ", min_pboot, " (decrease min_pboot with caution).")
+    wrn(
+      "One or more pboot values less than ",
+      min_pboot,
+      " (decrease min_pboot with caution)."
+    )
   }
   x
 }
@@ -26,7 +30,12 @@ sample_nonparametric <- function(data) {
   data[sample(nrow(data), replace = TRUE), ]
 }
 
-sample_parametric <- function(dist, args = args, weighted = weighted, censoring = censoring) {
+sample_parametric <- function(
+  dist,
+  args = args,
+  weighted = weighted,
+  censoring = censoring
+) {
   what <- paste0("ssd_r", dist)
   args$chk <- FALSE
   sample <- do.call(what, args)
@@ -39,7 +48,12 @@ generate_data <- function(dist, data, args, weighted, censoring, parametric) {
   if (!parametric) {
     return(sample_nonparametric(data))
   }
-  sample_parametric(dist, args = args, weighted = weighted, censoring = censoring)
+  sample_parametric(
+    dist,
+    args = args,
+    weighted = weighted,
+    censoring = censoring
+  )
 }
 
 boot_filename <- function(i, dist, prefix, ext = NULL, sep = "_") {
@@ -50,9 +64,29 @@ boot_filepath <- function(i, dist, save_to, prefix = "data", ext = ".csv") {
   file.path(save_to, boot_filename(i, dist, prefix = prefix, ext = ext))
 }
 
-sample_parameters <- function(i, dist, fun, data, args, pars, weighted, censoring, min_pmix, range_shape1, range_shape2, parametric, control, save_to, wts = NULL) {
-  new_data <- generate_data(dist,
-    data = data, args = args, weighted = weighted, censoring = censoring,
+sample_parameters <- function(
+  i,
+  dist,
+  fun,
+  data,
+  args,
+  pars,
+  weighted,
+  censoring,
+  min_pmix,
+  range_shape1,
+  range_shape2,
+  parametric,
+  control,
+  save_to,
+  wts = NULL
+) {
+  new_data <- generate_data(
+    dist,
+    data = data,
+    args = args,
+    weighted = weighted,
+    censoring = censoring,
     parametric = parametric
   )
 
@@ -69,10 +103,17 @@ sample_parameters <- function(i, dist, fun, data, args, pars, weighted, censorin
     dist2 <- dist
   }
 
-  fit <- fun(new_data, dist2,
-    min_pmix = min_pmix, range_shape1 = range_shape1,
-    range_shape2 = range_shape2, control = control, pars = pars, hessian = FALSE,
-    censoring = censoring, weighted = weighted
+  fit <- fun(
+    new_data,
+    dist2,
+    min_pmix = min_pmix,
+    range_shape1 = range_shape1,
+    range_shape2 = range_shape2,
+    control = control,
+    pars = pars,
+    hessian = FALSE,
+    censoring = censoring,
+    weighted = weighted
   )$result
 
   if (is.null(fit)) {
@@ -81,7 +122,10 @@ sample_parameters <- function(i, dist, fun, data, args, pars, weighted, censorin
   est <- estimates(fit, all_estimates = TRUE)
 
   if (!is.null(save_to)) {
-    saveRDS(est, boot_filepath(i, dist, save_to, prefix = "estimates", ext = ".rds"))
+    saveRDS(
+      est,
+      boot_filepath(i, dist, save_to, prefix = "estimates", ext = ".rds")
+    )
   }
 
   if (!is.null(wts)) {
@@ -90,7 +134,23 @@ sample_parameters <- function(i, dist, fun, data, args, pars, weighted, censorin
   est
 }
 
-boot_estimates <- function(fun, dist, estimates, pars, nboot, data, weighted, censoring, range_shape1, range_shape2, min_pmix, parametric, control, save_to, ci_method) {
+boot_estimates <- function(
+  fun,
+  dist,
+  estimates,
+  pars,
+  nboot,
+  data,
+  weighted,
+  censoring,
+  range_shape1,
+  range_shape2,
+  min_pmix,
+  parametric,
+  control,
+  save_to,
+  ci_method
+) {
   sfun <- safely(fun)
 
   args <- list(n = nrow(data))
@@ -111,20 +171,35 @@ boot_estimates <- function(fun, dist, estimates, pars, nboot, data, weighted, ce
       err("Package 'readr' must be installed.")
     }
     readr::write_csv(data, boot_filepath(0, dist, save_to))
-    saveRDS(estimates, boot_filepath(0, dist, save_to, prefix = "estimates", ext = ".rds"))
+    saveRDS(
+      estimates,
+      boot_filepath(0, dist, save_to, prefix = "estimates", ext = ".rds")
+    )
   }
 
-  estimates <- future_map(seq_len(nboot), sample_parameters,
-    dist = dist, fun = sfun,
-    data = data, args = args, pars = pars,
-    weighted = weighted, censoring = censoring, min_pmix = min_pmix,
-    range_shape1 = range_shape1, range_shape2 = range_shape2,
-    parametric = parametric, control = control, save_to = save_to,
+  estimates <- future_map(
+    seq_len(nboot),
+    sample_parameters,
+    dist = dist,
+    fun = sfun,
+    data = data,
+    args = args,
+    pars = pars,
+    weighted = weighted,
+    censoring = censoring,
+    min_pmix = min_pmix,
+    range_shape1 = range_shape1,
+    range_shape2 = range_shape2,
+    parametric = parametric,
+    control = control,
+    save_to = save_to,
     wts = wts,
     .options = furrr::furrr_options(seed = seeds)
   )
-  names(estimates) <- boot_filename(seq_along(estimates),
-    prefix = "", sep = "",
+  names(estimates) <- boot_filename(
+    seq_along(estimates),
+    prefix = "",
+    sep = "",
     dist = paste0("_", dist)
   )
   estimates[!vapply(estimates, is.null, TRUE)]

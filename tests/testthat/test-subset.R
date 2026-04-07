@@ -24,11 +24,23 @@ test_that("subset", {
 
   expect_identical(subset(fits), fits)
   expect_error(names(subset(fits, c("lnorm", "fubar"))))
-  expect_identical(names(subset(fits, c("lnorm", "fubar"), strict = FALSE)), "lnorm")
-  expect_identical(names(subset(fits, c("fubar"), strict = FALSE)), character(0))
-  expect_identical(names(subset(fits, c("lnorm", "gamma"))), c("gamma", "lnorm"))
+  expect_identical(
+    names(subset(fits, c("lnorm", "fubar"), strict = FALSE)),
+    "lnorm"
+  )
+  expect_identical(
+    names(subset(fits, c("fubar"), strict = FALSE)),
+    character(0)
+  )
+  expect_identical(
+    names(subset(fits, c("lnorm", "gamma"))),
+    c("gamma", "lnorm")
+  )
   expect_identical(subset(fits, delta = 10), fits)
   expect_identical(names(subset(fits, delta = 0)), "weibull")
   expect_identical(names(subset(fits, delta = 0.01)), c("gamma", "weibull"))
-  expect_identical(names(subset(fits, c("gamma", "lnorm"), delta = 1.5)), c("gamma", "lnorm"))
+  expect_identical(
+    names(subset(fits, c("gamma", "lnorm"), delta = 1.5)),
+    c("gamma", "lnorm")
+  )
 })

@@ -38,5 +38,15 @@ test_that("tidy fit all with also doesn't reorder dists (but does reorder pars)"
   tidy <- tidy(fit, all = TRUE)
   expect_identical(colnames(tidy), c("dist", "term", "est", "se"))
   expect_identical(tidy$dist, c(rep("lnorm", 3), rep("llogis", 3)))
-  expect_identical(tidy$term, c("log_sdlog", "meanlog", "sdlog", "locationlog", "log_scalelog", "scalelog"))
+  expect_identical(
+    tidy$term,
+    c(
+      "log_sdlog",
+      "meanlog",
+      "sdlog",
+      "locationlog",
+      "log_scalelog",
+      "scalelog"
+    )
+  )
 })

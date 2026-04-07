@@ -41,7 +41,9 @@ NULL
 .pd <- function(q, ..., fun) {
   args <- c(q, list(...))
 
-  if (any(vapply(args, length, 1L) != 1L)) stop()
+  if (any(vapply(args, length, 1L) != 1L)) {
+    stop()
+  }
   if (is.nan(q)) {
     return(NaN)
   }
@@ -60,12 +62,23 @@ NULL
   p <- mapply(.pd, q, ..., MoreArgs = list(fun = fun))
   p[inf & pos] <- 1
   p[inf & !pos] <- 0
-  if (!lower.tail) p <- 1 - p
-  if (log.p) p <- log(p)
+  if (!lower.tail) {
+    p <- 1 - p
+  }
+  if (log.p) {
+    p <- log(p)
+  }
   p
 }
 
-pdist <- function(dist, q, ..., lower.tail = TRUE, log.p = FALSE, .lgt = FALSE) {
+pdist <- function(
+  dist,
+  q,
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  .lgt = FALSE
+) {
   if (!length(q)) {
     return(numeric(0))
   }
@@ -78,15 +91,21 @@ pdist <- function(dist, q, ..., lower.tail = TRUE, log.p = FALSE, .lgt = FALSE) 
   q[lte] <- NA_real_
   p <- .pdist(dist, q = log(q), ..., lower.tail = TRUE, log.p = FALSE)
   p[lte] <- 0
-  if (!lower.tail) p <- 1 - p
-  if (log.p) p <- log(p)
+  if (!lower.tail) {
+    p <- 1 - p
+  }
+  if (log.p) {
+    p <- log(p)
+  }
   p
 }
 
 .qd <- function(p, ..., fun, .lgt) {
   args <- c(p, list(...))
 
-  if (any(vapply(args, length, 1L) != 1L)) stop()
+  if (any(vapply(args, length, 1L) != 1L)) {
+    stop()
+  }
   if (is.nan(p)) {
     return(NaN)
   }
@@ -112,19 +131,32 @@ pdist <- function(dist, q, ..., lower.tail = TRUE, log.p = FALSE, .lgt = FALSE) 
   q
 }
 
-qdist <- function(dist, p, ..., lower.tail = TRUE, log.p = FALSE, .lgt = FALSE) {
+qdist <- function(
+  dist,
+  p,
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  .lgt = FALSE
+) {
   if (!length(p)) {
     return(numeric(0))
   }
 
-  if (log.p) p <- exp(p)
-  if (!lower.tail) p <- 1 - p
+  if (log.p) {
+    p <- exp(p)
+  }
+  if (!lower.tail) {
+    p <- 1 - p
+  }
 
   nvld <- !is.na(p) & !(p >= 0 & p <= 1)
   p[nvld] <- NA_real_
   q <- .qdist(dist, p = p, ..., .lgt = .lgt)
   q[nvld] <- NaN
-  if (.lgt) q <- exp(q)
+  if (.lgt) {
+    q <- exp(q)
+  }
   q
 }
 
@@ -168,7 +200,9 @@ rdist <- function(dist, n, ..., .lgt = FALSE, chk) {
     }
   }
   r <- .rdist(dist, n = n, ...)
-  if (.lgt) r <- exp(r)
+  if (.lgt) {
+    r <- exp(r)
+  }
   r
 }
 
@@ -183,10 +217,15 @@ bdist <- function(dist, data, min_pmix, range_shape1, range_shape2) {
   if (!exists(fun, mode = "function")) {
     return(list(lower = -Inf, upper = Inf))
   }
-  do.call(fun, list(
-    data = data, min_pmix = min_pmix,
-    range_shape1 = range_shape1, range_shape2 = range_shape2
-  ))
+  do.call(
+    fun,
+    list(
+      data = data,
+      min_pmix = min_pmix,
+      range_shape1 = range_shape1,
+      range_shape2 = range_shape2
+    )
+  )
 }
 
 mdist <- function(dist) {

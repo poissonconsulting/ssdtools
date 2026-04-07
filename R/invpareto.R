@@ -20,10 +20,20 @@
 #' @examples
 #'
 #' ssd_pinvpareto(1)
-ssd_pinvpareto <- function(q, shape = 3, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("invpareto",
-    q = q, shape = shape, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_pinvpareto <- function(
+  q,
+  shape = 3,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "invpareto",
+    q = q,
+    shape = shape,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -32,10 +42,20 @@ ssd_pinvpareto <- function(q, shape = 3, scale = 1, lower.tail = TRUE, log.p = F
 #' @examples
 #'
 #' ssd_qinvpareto(0.5)
-ssd_qinvpareto <- function(p, shape = 3, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("invpareto",
-    p = p, shape = shape, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qinvpareto <- function(
+  p,
+  shape = 3,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "invpareto",
+    p = p,
+    shape = shape,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -69,7 +89,8 @@ sinvpareto <- function(data, pars = NULL) {
   shape <- 1 / mean(log(scale / data$right))
 
   spars <- list(log_scale = log(scale), log_shape = log(shape))
-  if (!is.null(pars)) { # use new bias corrected order statistic
+  if (!is.null(pars)) {
+    # use new bias corrected order statistic
     pars$log_scale <- spars$log_scale
     return(pars)
   }

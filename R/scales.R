@@ -28,13 +28,16 @@
 #' ggplot2::ggplot(data = ssddata::anon_e, ggplot2::aes(x = Conc / 10)) +
 #'   geom_ssdpoint() +
 #'   ggplot2::scale_x_log10(labels = ssd_label_comma())
-ssd_label_comma <- function(digits = 3, ..., big.mark = ",", 
-                            decimal.mark = getOption("OutDec", ".")) {
+ssd_label_comma <- function(
+  digits = 3,
+  ...,
+  big.mark = ",",
+  decimal.mark = getOption("OutDec", ".")
+) {
   chk_unused(...)
   chk_number(digits)
   chk_string(big.mark)
   chk_string(decimal.mark)
-
 
   function(x) {
     x <- signif(x, digits = digits)
@@ -57,17 +60,30 @@ ssd_label_comma <- function(digits = 3, ..., big.mark = ",",
 #' ggplot2::ggplot(data = ssddata::anon_e, ggplot2::aes(x = Conc / 10)) +
 #'   geom_ssdpoint() +
 #'   ggplot2::scale_x_log10(labels = ssd_label_comma_hc(1.26))
-ssd_label_comma_hc <- function(hc_value, digits = 3, ..., big.mark = ",", 
-    decimal.mark = getOption("OutDec", ".")) {
+ssd_label_comma_hc <- function(
+  hc_value,
+  digits = 3,
+  ...,
+  big.mark = ",",
+  decimal.mark = getOption("OutDec", ".")
+) {
   chk_unused(...)
   chk_number(hc_value)
 
   function(x) {
-    marked <- ssd_label_comma(digits = digits, big.mark = big.mark, decimal.mark = decimal.mark)(x)
-    purrr::map_chr(marked, ~ {
-      if (!is.na(.x) && .x == signif(hc_value, digits = digits))
-        .x <- paste0("<br>**", .x, "**")
-      .x
-    })
+    marked <- ssd_label_comma(
+      digits = digits,
+      big.mark = big.mark,
+      decimal.mark = decimal.mark
+    )(x)
+    purrr::map_chr(
+      marked,
+      ~ {
+        if (!is.na(.x) && .x == signif(hc_value, digits = digits)) {
+          .x <- paste0("<br>**", .x, "**")
+        }
+        .x
+      }
+    )
   }
 }

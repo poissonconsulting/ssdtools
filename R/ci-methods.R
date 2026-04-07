@@ -12,8 +12,13 @@
 #' ssd_ci_methods()
 ssd_ci_methods <- function() {
   sort(c(
-    "MACL", "GMACL",
-    "multi_fixed", "multi_free", "arithmetic_samples", "geometric_samples", "weighted_samples"
+    "MACL",
+    "GMACL",
+    "multi_fixed",
+    "multi_free",
+    "arithmetic_samples",
+    "geometric_samples",
+    "weighted_samples"
   ))
   ## TODO: add "MATA" method?
 }

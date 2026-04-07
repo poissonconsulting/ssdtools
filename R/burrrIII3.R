@@ -20,10 +20,22 @@
 #' @examples
 #'
 #' ssd_pburrIII3(1)
-ssd_pburrIII3 <- function(q, shape1 = 1, shape2 = 1, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("burrIII3",
-    q = q, shape1 = shape1, shape2 = shape2, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_pburrIII3 <- function(
+  q,
+  shape1 = 1,
+  shape2 = 1,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "burrIII3",
+    q = q,
+    shape1 = shape1,
+    shape2 = shape2,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -32,10 +44,22 @@ ssd_pburrIII3 <- function(q, shape1 = 1, shape2 = 1, scale = 1, lower.tail = TRU
 #' @examples
 #'
 #' ssd_qburrIII3(0.5)
-ssd_qburrIII3 <- function(p, shape1 = 1, shape2 = 1, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("burrIII3",
-    p = p, shape1 = shape1, shape2 = shape2, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qburrIII3 <- function(
+  p,
+  shape1 = 1,
+  shape2 = 1,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "burrIII3",
+    p = p,
+    shape1 = shape1,
+    shape2 = shape2,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -48,7 +72,14 @@ ssd_qburrIII3 <- function(p, shape1 = 1, shape2 = 1, scale = 1, lower.tail = TRU
 #' })
 #' hist(x, breaks = 1000)
 ssd_rburrIII3 <- function(n, shape1 = 1, shape2 = 1, scale = 1, chk = TRUE) {
-  rdist("burrIII3", n = n, shape1 = shape1, shape2 = shape2, scale = scale, chk = chk)
+  rdist(
+    "burrIII3",
+    n = n,
+    shape1 = shape1,
+    shape2 = shape2,
+    scale = scale,
+    chk = chk
+  )
 }
 
 #' @describeIn ssd_e Default Parameter Values for BurrIII Distribution

@@ -43,29 +43,34 @@ ssd_hp <- function(x, ...) {
 #' @describeIn ssd_hp Hazard Proportions for fitdists Object
 #' @export
 ssd_hp.fitdists <- function(
-    x,
-    conc = 1,
-    ...,
-    average = TRUE,
-    ci = FALSE,
-    level = 0.95,
-    nboot = 1000,
-    min_pboot = 0.8,
-    multi_est = deprecated(),
-    est_method = "multi",
-    ci_method = "weighted_samples",
-    parametric = TRUE,
-    delta = 9.21,
-    proportion = FALSE,
-    samples = FALSE,
-    save_to = NULL,
-    control = NULL) {
+  x,
+  conc = 1,
+  ...,
+  average = TRUE,
+  ci = FALSE,
+  level = 0.95,
+  nboot = 1000,
+  min_pboot = 0.8,
+  multi_est = deprecated(),
+  est_method = "multi",
+  ci_method = "weighted_samples",
+  parametric = TRUE,
+  delta = 9.21,
+  proportion = FALSE,
+  samples = FALSE,
+  save_to = NULL,
+  control = NULL
+) {
   chk_vector(conc)
   chk_numeric(conc)
   chk_unused(...)
 
   if (lifecycle::is_present(multi_est)) {
-    lifecycle::deprecate_soft("2.3.1", "ssd_hc(multi_est)", "ssd_hc(est_method)")
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      "ssd_hc(multi_est)",
+      "ssd_hc(est_method)"
+    )
 
     chk_flag(multi_est)
 
@@ -74,13 +79,20 @@ ssd_hp.fitdists <- function(
 
   chk_string(ci_method)
   if (ci_method == "weighted_arithmetic") {
-    lifecycle::deprecate_soft("2.3.1", I("ssd_hp(ci_method = 'weighted_arithmetic')"), I("ssd_hp(ci_method = 'MACL')"))
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      I("ssd_hp(ci_method = 'weighted_arithmetic')"),
+      I("ssd_hp(ci_method = 'MACL')")
+    )
 
     ci_method <- "MACL"
   }
 
   if (missing(proportion)) {
-    lifecycle::deprecate_soft("2.3.1", I("ssd_hp(proportion = FALSE)"), I("ssd_hp(proportion = TRUE)"),
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      I("ssd_hp(proportion = FALSE)"),
+      I("ssd_hp(proportion = TRUE)"),
       "Please set the `proportion` argument to `ssd_hp()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly.",
       id = "ssd_hp"
     )
@@ -119,17 +131,18 @@ ssd_hp.fitdists <- function(
 #' fit <- ssd_fit_burrlioz(ssddata::ccme_boron)
 #' ssd_hp(fit)
 ssd_hp.fitburrlioz <- function(
-    x,
-    conc = 1,
-    ...,
-    ci = FALSE,
-    level = 0.95,
-    nboot = 1000,
-    min_pboot = 0.8,
-    parametric = FALSE,
-    proportion = FALSE,
-    samples = FALSE,
-    save_to = NULL) {
+  x,
+  conc = 1,
+  ...,
+  ci = FALSE,
+  level = 0.95,
+  nboot = 1000,
+  min_pboot = 0.8,
+  parametric = FALSE,
+  proportion = FALSE,
+  samples = FALSE,
+  save_to = NULL
+) {
   chk_length(x, upper = 1L)
   chk_named(x)
   chk_subset(names(x), c("burrIII3", "invpareto", "llogis", "lgumbel"))
@@ -139,7 +152,10 @@ ssd_hp.fitburrlioz <- function(
   chk_unused(...)
 
   if (missing(proportion)) {
-    lifecycle::deprecate_soft("2.3.1", I("ssd_hp(proportion = FALSE)"), I("ssd_hp(proportion = TRUE)"),
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      I("ssd_hp(proportion = FALSE)"),
+      I("ssd_hp(proportion = TRUE)"),
       "Please set the `proportion` argument to `ssd_hp_bcanz()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly.",
       id = "ssd_hp"
     )

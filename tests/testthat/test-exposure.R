@@ -35,7 +35,10 @@ test_that("exposure different mean and log", {
   fits <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
 
   withr::with_seed(50, {
-    expect_snapshot_value(ssd_exposure(fits, 1, sdlog = 10, nboot = 100), style = "deparse")
+    expect_snapshot_value(
+      ssd_exposure(fits, 1, sdlog = 10, nboot = 100),
+      style = "deparse"
+    )
   })
 })
 

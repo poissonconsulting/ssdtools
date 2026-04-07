@@ -18,7 +18,11 @@
 test_that("predict", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
 
-  pred <- predict(fits, ci_method = "weighted_samples", est_method = "arithmetic")
+  pred <- predict(
+    fits,
+    ci_method = "weighted_samples",
+    est_method = "arithmetic"
+  )
   expect_s3_class(pred, "tbl")
   expect_snapshot_data(pred, "pred_dists")
 })
@@ -27,7 +31,13 @@ test_that("predict cis", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
 
   withr::with_seed(50, {
-    pred <- predict(fits, ci = TRUE, nboot = 10L, ci_method = "MACL", est_method = "arithmetic")
+    pred <- predict(
+      fits,
+      ci = TRUE,
+      nboot = 10L,
+      ci_method = "MACL",
+      est_method = "arithmetic"
+    )
   })
   expect_s3_class(pred, "tbl")
   expect_snapshot_data(pred, "pred_cis")
@@ -58,13 +68,25 @@ test_that("predict cis fitburrlioz", {
 test_that("predict matches ssd_hc with and without average", {
   data <- ssddata::ccme_glyphosate
 
-  use_dists <- c("lnorm", "llogis", "lgumbel", "weibull", "gamma", "lnorm_lnorm")
+  use_dists <- c(
+    "lnorm",
+    "llogis",
+    "lgumbel",
+    "weibull",
+    "gamma",
+    "lnorm_lnorm"
+  )
 
   fit <- ssd_fit_dists(
     data = data,
-    left = "Conc", dists = use_dists,
-    silent = TRUE, reweight = FALSE, min_pmix = 0,
-    computable = TRUE, at_boundary_ok = FALSE, rescale = FALSE
+    left = "Conc",
+    dists = use_dists,
+    silent = TRUE,
+    reweight = FALSE,
+    min_pmix = 0,
+    computable = TRUE,
+    at_boundary_ok = FALSE,
+    rescale = FALSE
   )
 
   ave5 <- ssd_hc(fit, est_method = "arithmetic")

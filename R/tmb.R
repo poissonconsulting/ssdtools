@@ -23,7 +23,8 @@ tmb_model <- function(dist, data, pars) {
     data = data,
     parameters = pars,
     map = map,
-    DLL = "ssdtools_TMBExports", silent = TRUE
+    DLL = "ssdtools_TMBExports",
+    silent = TRUE
   )
 }
 
@@ -33,24 +34,43 @@ optimize <- function(par, fn, gr, lower, upper, control, hessian) {
   method <- "L-BFGS-B"
   if (is.null(control$trace) || control$trace < 1) {
     capture.output(
-      optim <- optim(par, fn, gr,
+      optim <- optim(
+        par,
+        fn,
+        gr,
         method = method,
-        lower = lower, upper = upper,
-        control = control, hessian = hessian
+        lower = lower,
+        upper = upper,
+        control = control,
+        hessian = hessian
       )
     )
   } else {
-    optim <- optim(par, fn, gr,
+    optim <- optim(
+      par,
+      fn,
+      gr,
       method = method,
-      lower = lower, upper = upper,
-      control = control, hessian = hessian
+      lower = lower,
+      upper = upper,
+      control = control,
+      hessian = hessian
     )
   }
   optim
 }
 
-fit_tmb <- function(data, dist, min_pmix, range_shape1, range_shape2,
-                    control, pars = NULL, hessian = TRUE, ...) {
+fit_tmb <- function(
+  data,
+  dist,
+  min_pmix,
+  range_shape1,
+  range_shape2,
+  control,
+  pars = NULL,
+  hessian = TRUE,
+  ...
+) {
   pars <- sdist(dist, data, pars)
   model <- tmb_model(dist, data, pars = pars)
   bounds <- bdist(dist, data, min_pmix, range_shape1, range_shape2)
@@ -58,9 +78,14 @@ fit_tmb <- function(data, dist, min_pmix, range_shape1, range_shape2,
   lower <- bounds$lower[names(model$par)]
   upper <- bounds$upper[names(model$par)]
 
-  optim <- optimize(model$par, model$fn, model$gr,
-    lower = lower, upper = upper,
-    control = control, hessian = hessian
+  optim <- optimize(
+    model$par,
+    model$fn,
+    model$gr,
+    lower = lower,
+    upper = upper,
+    control = control,
+    hessian = hessian
   )
 
   fit <- list(dist = dist, model = model, optim = optim)

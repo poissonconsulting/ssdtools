@@ -27,7 +27,13 @@
 #'
 #' @examples
 #' ssd_censor_data(ssddata::ccme_boron, censoring = c(2.5, Inf))
-ssd_censor_data <- function(data, left = "Conc", ..., right = left, censoring = c(0, Inf)) {
+ssd_censor_data <- function(
+  data,
+  left = "Conc",
+  ...,
+  right = left,
+  censoring = c(0, Inf)
+) {
   .chk_data(data, left, right)
   chk_unused(...)
   chk_numeric(censoring)
@@ -59,7 +65,11 @@ censoring_text <- function(x) {
     return("inconsistently censored")
   }
   left <- if (x[1] == 0) NULL else paste0("left (", signif(x[1], 4), ")")
-  right <- if (is.infinite(x[2])) NULL else paste0("right (", signif(x[2], 4), ")")
+  right <- if (is.infinite(x[2])) {
+    NULL
+  } else {
+    paste0("right (", signif(x[2], 4), ")")
+  }
   censoring <- c(left, right)
   censoring <- cc(censoring, conj = " and ", brac = "")
   censoring <- paste0(censoring, " censored")

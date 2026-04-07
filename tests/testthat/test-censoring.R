@@ -7,9 +7,27 @@ test_that("left, right and interval censoring works ", {
   fit <- ssd_fit_dists(data, right = "right")
 
   withr::with_seed(50, {
-    hcnonparametric <- ssd_hc(fit, ci = TRUE, average = FALSE, parametric = FALSE, nboot = 10, min_pboot = 0.1)
-    expect_warning(hcparametric <- ssd_hc(fit, ci = TRUE, average = FALSE, parametric = TRUE), "^Parametric CIs cannot be calculated for censored data\\.$")
-    expect_warning(hcaverage <- ssd_hc(fit, ci = FALSE, average = TRUE, parametric = TRUE), "^Model averaged estimates cannot be calculated for censored data when the distributions have different numbers of parameters\\.$")
+    hcnonparametric <- ssd_hc(
+      fit,
+      ci = TRUE,
+      average = FALSE,
+      parametric = FALSE,
+      nboot = 10,
+      min_pboot = 0.1
+    )
+    expect_warning(
+      hcparametric <- ssd_hc(
+        fit,
+        ci = TRUE,
+        average = FALSE,
+        parametric = TRUE
+      ),
+      "^Parametric CIs cannot be calculated for censored data\\.$"
+    )
+    expect_warning(
+      hcaverage <- ssd_hc(fit, ci = FALSE, average = TRUE, parametric = TRUE),
+      "^Model averaged estimates cannot be calculated for censored data when the distributions have different numbers of parameters\\.$"
+    )
   })
   expect_snapshot_data(hcnonparametric, "hcnonparametric", digits = 3)
 
@@ -19,7 +37,17 @@ test_that("left, right and interval censoring works ", {
 
   withr::with_seed(50, {
     # FIXME - should return tibble with 1 row even if NAs
-    expect_error(expect_warning(hcaveragenonparametric <- ssd_hc(fit, ci = TRUE, average = TRUE, parametric = FALSE, nboot = 10, min_pboot = 0.5), "^Model averaged estimates cannot be calculated for censored data when the distributions have different numbers of parameters\\.$"))
+    expect_error(expect_warning(
+      hcaveragenonparametric <- ssd_hc(
+        fit,
+        ci = TRUE,
+        average = TRUE,
+        parametric = FALSE,
+        nboot = 10,
+        min_pboot = 0.5
+      ),
+      "^Model averaged estimates cannot be calculated for censored data when the distributions have different numbers of parameters\\.$"
+    ))
   })
 })
 
@@ -29,11 +57,29 @@ test_that("left, right and interval censoring works same number of parameter ", 
   data$right[1] <- Inf
   data$Conc[2] <- 0
   data$right[3] <- data$Conc[3] * 2
-  fit <- ssd_fit_dists(data, right = "right", dists = ssdtools::ssd_dists_bcanz(npars = 2L))
+  fit <- ssd_fit_dists(
+    data,
+    right = "right",
+    dists = ssdtools::ssd_dists_bcanz(npars = 2L)
+  )
 
   withr::with_seed(50, {
-    hcnonparametric <- ssd_hc(fit, ci = TRUE, average = FALSE, parametric = FALSE, nboot = 10)
-    expect_warning(hcparametric <- ssd_hc(fit, ci = TRUE, average = FALSE, parametric = TRUE), "^Parametric CIs cannot be calculated for censored data\\.$")
+    hcnonparametric <- ssd_hc(
+      fit,
+      ci = TRUE,
+      average = FALSE,
+      parametric = FALSE,
+      nboot = 10
+    )
+    expect_warning(
+      hcparametric <- ssd_hc(
+        fit,
+        ci = TRUE,
+        average = FALSE,
+        parametric = TRUE
+      ),
+      "^Parametric CIs cannot be calculated for censored data\\.$"
+    )
     hcaverage <- ssd_hc(fit, ci = FALSE, average = TRUE, parametric = TRUE)
   })
   expect_snapshot_data(hcnonparametric, "hcnonparametric2")
@@ -42,7 +88,13 @@ test_that("left, right and interval censoring works same number of parameter ", 
 
   expect_snapshot_data(hcaverage, "hcaverage2")
   withr::with_seed(50, {
-    hcaveragenonparametric <- ssd_hc(fit, ci = TRUE, average = TRUE, parametric = FALSE, nboot = 10)
+    hcaveragenonparametric <- ssd_hc(
+      fit,
+      ci = TRUE,
+      average = TRUE,
+      parametric = FALSE,
+      nboot = 10
+    )
   })
   expect_snapshot_data(hcaveragenonparametric, "hcaveragenonparametric2")
 })

@@ -53,10 +53,28 @@ get_nboots <- function(weight, nboot) {
   nboots
 }
 
-hcp_weighted <- function(x, value, level, nboot, est_method, min_pboot,
-                         data, rescale, weighted, censoring, min_pmix,
-                         range_shape1, range_shape2, parametric, control,
-                         save_to, ci_method, hc, fun, ...) {
+hcp_weighted <- function(
+  x,
+  value,
+  level,
+  nboot,
+  est_method,
+  min_pboot,
+  data,
+  rescale,
+  weighted,
+  censoring,
+  min_pmix,
+  range_shape1,
+  range_shape2,
+  parametric,
+  control,
+  save_to,
+  ci_method,
+  hc,
+  fun,
+  ...
+) {
   weight <- glance(x, wt = TRUE)$wt
   nboots <- get_nboots(weight, nboot)
 
@@ -64,12 +82,29 @@ hcp_weighted <- function(x, value, level, nboot, est_method, min_pboot,
   nboots <- nboots[nboots > 0]
 
   hcp <- purrr::map2(
-    x, nboots, hcp_tmbfit,
-    value = value, ci = TRUE, level = level,
-    min_pboot = min_pboot, data = data, rescale = rescale, weighted = weighted, censoring = censoring,
-    min_pmix = min_pmix, range_shape1 = range_shape1, range_shape2 = range_shape2,
-    parametric = parametric, est_method = est_method, ci_method = ci_method, average = TRUE, control = control,
-    hc = hc, save_to = save_to, samples = TRUE, fun = fun
+    x,
+    nboots,
+    hcp_tmbfit,
+    value = value,
+    ci = TRUE,
+    level = level,
+    min_pboot = min_pboot,
+    data = data,
+    rescale = rescale,
+    weighted = weighted,
+    censoring = censoring,
+    min_pmix = min_pmix,
+    range_shape1 = range_shape1,
+    range_shape2 = range_shape2,
+    parametric = parametric,
+    est_method = est_method,
+    ci_method = ci_method,
+    average = TRUE,
+    control = control,
+    hc = hc,
+    save_to = save_to,
+    samples = TRUE,
+    fun = fun
   )
 
   hcp_wb(hcp, level = level, nboot = nboot)

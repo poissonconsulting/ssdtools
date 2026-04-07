@@ -30,7 +30,13 @@ test_that("summary fitdists with left censored, rescaled, weighted data", {
   data$Mass <- seq_len(nrow(data))
   data$Other <- data$Conc
   data$Conc[2] <- NA
-  fits <- ssd_fit_dists(data, right = "Other", weight = "Mass", rescale = TRUE, dists = "lnorm")
+  fits <- ssd_fit_dists(
+    data,
+    right = "Other",
+    weight = "Mass",
+    rescale = TRUE,
+    dists = "lnorm"
+  )
   expect_snapshot_output(print(fits))
 })
 
@@ -48,7 +54,13 @@ test_that("summary fitdists with right censored, rescaled, weighted data", {
   data$Mass <- seq_len(nrow(data))
   data$Other <- data$Conc
   data$Other[1] <- Inf
-  fits <- ssd_fit_dists(data, right = "Other", weight = "Mass", rescale = TRUE, dists = "lnorm")
+  fits <- ssd_fit_dists(
+    data,
+    right = "Other",
+    weight = "Mass",
+    rescale = TRUE,
+    dists = "lnorm"
+  )
   expect_snapshot_output(print(fits))
 })
 

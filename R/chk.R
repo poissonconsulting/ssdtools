@@ -15,7 +15,15 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-.chk_data <- function(data, left, right, odds = FALSE, weight = NULL, nrow = 0, missing = FALSE) {
+.chk_data <- function(
+  data,
+  left,
+  right,
+  odds = FALSE,
+  weight = NULL,
+  nrow = 0,
+  missing = FALSE
+) {
   chk_string(left)
   chk_string(right)
   chk_null_or(weight, vld = vld_string)
@@ -49,10 +57,19 @@
     data[[weight]] <- as.double(data[[weight]])
   }
   check_data(data, values, nrow = c(nrow, Inf))
-  if (any(!is.na(data[[right]]) & !is.na(data[[left]]) & data[[right]] < data[[left]])) {
+  if (
+    any(
+      !is.na(data[[right]]) &
+        !is.na(data[[left]]) &
+        data[[right]] < data[[left]]
+    )
+  ) {
     msg <- paste0(
-      "`data$", right, "` must have values greater than or equal to `data$",
-      left, "`"
+      "`data$",
+      right,
+      "` must have values greater than or equal to `data$",
+      left,
+      "`"
     )
     abort_chk(msg)
   }
@@ -65,7 +82,11 @@
       (is.na(data$right) | data$right == 0 | is.infinite(data$right))
 
     if (any(missing)) {
-      msg <- paste0("`data` has %n row%s with effectively missing values in '", left, "'")
+      msg <- paste0(
+        "`data` has %n row%s with effectively missing values in '",
+        left,
+        "'"
+      )
       if (right != left && any(data$left != data$right)) {
         msg <- paste0(msg, " and '", right, "'")
       }
@@ -74,11 +95,21 @@
   }
   zero_weight <- data$weight == 0
   if (any(zero_weight)) {
-    abort_chk("`data` has %n row%s with zero weight in '", weight, "'", n = sum(zero_weight))
+    abort_chk(
+      "`data` has %n row%s with zero weight in '",
+      weight,
+      "'",
+      n = sum(zero_weight)
+    )
   }
   inf_weight <- is.infinite(data$weight)
   if (any(inf_weight)) {
-    abort_chk("`data` has %n row%s with Inf weight in '", weight, "'", n = sum(inf_weight))
+    abort_chk(
+      "`data` has %n row%s with Inf weight in '",
+      weight,
+      "'",
+      n = sum(inf_weight)
+    )
   }
   org_data
 }

@@ -20,13 +20,27 @@
 #' @examples
 #'
 #' ssd_pllogis_llogis(1)
-ssd_pllogis_llogis <- function(q, locationlog1 = 0, scalelog1 = 1,
-                               locationlog2 = 1, scalelog2 = 1, pmix = 0.5,
-                               lower.tail = TRUE, log.p = FALSE) {
-  pdist("logis_logis",
-    q = q, location1 = locationlog1, scale1 = scalelog1,
-    location2 = locationlog2, scale2 = scalelog2, pmix = pmix,
-    lower.tail = lower.tail, log.p = log.p, .lgt = TRUE
+ssd_pllogis_llogis <- function(
+  q,
+  locationlog1 = 0,
+  scalelog1 = 1,
+  locationlog2 = 1,
+  scalelog2 = 1,
+  pmix = 0.5,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "logis_logis",
+    q = q,
+    location1 = locationlog1,
+    scale1 = scalelog1,
+    location2 = locationlog2,
+    scale2 = scalelog2,
+    pmix = pmix,
+    lower.tail = lower.tail,
+    log.p = log.p,
+    .lgt = TRUE
   )
 }
 
@@ -35,13 +49,27 @@ ssd_pllogis_llogis <- function(q, locationlog1 = 0, scalelog1 = 1,
 #' @examples
 #'
 #' ssd_qllogis_llogis(0.5)
-ssd_qllogis_llogis <- function(p, locationlog1 = 0, scalelog1 = 1,
-                               locationlog2 = 1, scalelog2 = 1, pmix = 0.5,
-                               lower.tail = TRUE, log.p = FALSE) {
-  qdist("logis_logis",
-    p = p, location1 = locationlog1, scale1 = scalelog1,
-    location2 = locationlog2, scale2 = scalelog2, pmix = pmix,
-    lower.tail = lower.tail, log.p = log.p, .lgt = TRUE
+ssd_qllogis_llogis <- function(
+  p,
+  locationlog1 = 0,
+  scalelog1 = 1,
+  locationlog2 = 1,
+  scalelog2 = 1,
+  pmix = 0.5,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "logis_logis",
+    p = p,
+    location1 = locationlog1,
+    scale1 = scalelog1,
+    location2 = locationlog2,
+    scale2 = scalelog2,
+    pmix = pmix,
+    lower.tail = lower.tail,
+    log.p = log.p,
+    .lgt = TRUE
   )
 }
 
@@ -53,11 +81,25 @@ ssd_qllogis_llogis <- function(p, locationlog1 = 0, scalelog1 = 1,
 #'   x <- ssd_rllogis_llogis(10000)
 #' })
 #' hist(x, breaks = 1000)
-ssd_rllogis_llogis <- function(n, locationlog1 = 0, scalelog1 = 1,
-                               locationlog2 = 1, scalelog2 = 1, pmix = 0.5, chk = TRUE) {
-  rdist("logis_logis",
-    n = n, location1 = locationlog1, scale1 = scalelog1,
-    location2 = locationlog2, scale2 = scalelog2, pmix = pmix, .lgt = TRUE, chk = chk
+ssd_rllogis_llogis <- function(
+  n,
+  locationlog1 = 0,
+  scalelog1 = 1,
+  locationlog2 = 1,
+  scalelog2 = 1,
+  pmix = 0.5,
+  chk = TRUE
+) {
+  rdist(
+    "logis_logis",
+    n = n,
+    location1 = locationlog1,
+    scale1 = scalelog1,
+    location2 = locationlog2,
+    scale2 = scalelog2,
+    pmix = pmix,
+    .lgt = TRUE,
+    chk = chk
   )
 }
 
@@ -68,8 +110,11 @@ ssd_rllogis_llogis <- function(n, locationlog1 = 0, scalelog1 = 1,
 #' ssd_ellogis_llogis()
 ssd_ellogis_llogis <- function() {
   list(
-    locationlog1 = 0, scalelog1 = 1,
-    locationlog2 = 1, scalelog2 = 1, pmix = 0.5
+    locationlog1 = 0,
+    scalelog1 = 1,
+    locationlog2 = 1,
+    scalelog2 = 1,
+    pmix = 0.5
   )
 }
 
@@ -94,8 +139,20 @@ sllogis_llogis <- function(data, pars = NULL) {
 
 bllogis_llogis <- function(x, min_pmix, ...) {
   list(
-    lower = list(locationlog1 = -Inf, log_scalelog1 = -Inf, locationlog2 = -Inf, log_scalelog2 = -Inf, pmix = min_pmix),
-    upper = list(locationlog1 = Inf, log_scalelog1 = Inf, locationlog2 = Inf, log_scalelog2 = Inf, pmix = 1 - min_pmix)
+    lower = list(
+      locationlog1 = -Inf,
+      log_scalelog1 = -Inf,
+      locationlog2 = -Inf,
+      log_scalelog2 = -Inf,
+      pmix = min_pmix
+    ),
+    upper = list(
+      locationlog1 = Inf,
+      log_scalelog1 = Inf,
+      locationlog2 = Inf,
+      log_scalelog2 = Inf,
+      pmix = 1 - min_pmix
+    )
   )
 }
 
@@ -103,7 +160,9 @@ plogis_logis_ssd <- function(q, location1, scale1, location2, scale2, pmix) {
   if (scale1 <= 0 || scale2 <= 0 || pmix <= 0 || pmix >= 1) {
     return(NaN)
   }
-  pmix * plogis_ssd(q, location1, scale1) + (1 - pmix) * plogis_ssd(q, location2, scale2)
+  pmix *
+    plogis_ssd(q, location1, scale1) +
+    (1 - pmix) * plogis_ssd(q, location2, scale2)
 }
 
 qlogis_logis_ssd <- function(p, location1, scale1, location2, scale2, pmix) {
@@ -128,18 +187,38 @@ rlogis_logis_ssd <- function(n, location1, scale1, location2, scale2, pmix) {
   x
 }
 
-pllogis_llogis_ssd <- function(q, locationlog1, scalelog1,
-                               locationlog2, scalelog2, pmix) {
-  plogis_logis_ssd(log(q),
-    location1 = locationlog1, scale1 = scalelog1,
-    location2 = locationlog2, scale2 = scalelog2, pmix = pmix
+pllogis_llogis_ssd <- function(
+  q,
+  locationlog1,
+  scalelog1,
+  locationlog2,
+  scalelog2,
+  pmix
+) {
+  plogis_logis_ssd(
+    log(q),
+    location1 = locationlog1,
+    scale1 = scalelog1,
+    location2 = locationlog2,
+    scale2 = scalelog2,
+    pmix = pmix
   )
 }
 
-qllogis_llogis_ssd <- function(p, locationlog1, scalelog1,
-                               locationlog2, scalelog2, pmix) {
-  exp(qlogis_logis_ssd(p,
-    location1 = locationlog1, scale1 = scalelog1,
-    location2 = locationlog2, scale2 = scalelog2, pmix = pmix
+qllogis_llogis_ssd <- function(
+  p,
+  locationlog1,
+  scalelog1,
+  locationlog2,
+  scalelog2,
+  pmix
+) {
+  exp(qlogis_logis_ssd(
+    p,
+    location1 = locationlog1,
+    scale1 = scalelog1,
+    location2 = locationlog2,
+    scale2 = scalelog2,
+    pmix = pmix
   ))
 }

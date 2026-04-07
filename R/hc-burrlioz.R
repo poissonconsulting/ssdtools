@@ -24,7 +24,15 @@
 #' @return A tibble of corresponding hazard concentrations.
 #' @keywords internal
 #' @export
-ssd_hc_burrlioz <- function(x, percent, proportion = 0.05, ci = FALSE, level = 0.95, nboot = 1000,
-                            min_pboot = 0.8, parametric = FALSE) {
+ssd_hc_burrlioz <- function(
+  x,
+  percent,
+  proportion = 0.05,
+  ci = FALSE,
+  level = 0.95,
+  nboot = 1000,
+  min_pboot = 0.8,
+  parametric = FALSE
+) {
   lifecycle::deprecate_stop("0.3.5", "ssd_hc_burrlioz()", "ssd_hc()")
 }

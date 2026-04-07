@@ -49,15 +49,29 @@ test_that("ssd_rlnorm_lnorm allows reversed distributions", {
 })
 
 test_that("lnorm_lnorm positive q with extreme distribution", {
-  expect_snapshot_value(qlnorm_lnorm_ssd(0.05,
-    meanlog1 = -10.39362, sdlog1 = 0.399835,
-    meanlog2 = -4.76721, sdlog2 = 2.583824, pmix = 0.1308133
-  ), style = "deparse")
+  expect_snapshot_value(
+    qlnorm_lnorm_ssd(
+      0.05,
+      meanlog1 = -10.39362,
+      sdlog1 = 0.399835,
+      meanlog2 = -4.76721,
+      sdlog2 = 2.583824,
+      pmix = 0.1308133
+    ),
+    style = "deparse"
+  )
 })
 
 test_that("lnorm_lnorm positive q with extreme large distribution", {
-  expect_snapshot_value(qlnorm_lnorm_ssd(0.99,
-    meanlog1 = -4.76721, sdlog1 = 0.399835,
-    meanlog2 = 100.39362, sdlog2 = 2.583824, pmix = 0.1308133
-  ), style = "deparse")
+  expect_snapshot_value(
+    qlnorm_lnorm_ssd(
+      0.99,
+      meanlog1 = -4.76721,
+      sdlog1 = 0.399835,
+      meanlog2 = 100.39362,
+      sdlog2 = 2.583824,
+      pmix = 0.1308133
+    ),
+    style = "deparse"
+  )
 })

@@ -40,7 +40,10 @@ tidy.tmbfit <- function(x, all = FALSE, ...) {
   est <- unname(x[, 1])
   se <- unname(x[, 2])
   x <- tibble(
-    dist = dist, term = term, est = est, se = se,
+    dist = dist,
+    term = term,
+    est = est,
+    se = se,
     .name_repair = "minimal"
   )
 

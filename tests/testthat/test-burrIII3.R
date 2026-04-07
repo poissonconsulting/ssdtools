@@ -28,7 +28,14 @@ test_that("burrIII3 gives cis with ccme_chloride", {
   fit <- ssd_fit_dists(ssddata::ccme_chloride, dists = "burrIII3")
   expect_s3_class(fit, "fitdists")
   withr::with_seed(50, {
-    hc <- ssd_hc(fit, nboot = 10, ci = TRUE, ci_method = "MACL", est_method = "arithmetic", samples = TRUE)
+    hc <- ssd_hc(
+      fit,
+      nboot = 10,
+      ci = TRUE,
+      ci_method = "MACL",
+      est_method = "arithmetic",
+      samples = TRUE
+    )
   })
   expect_snapshot_data(hc, "hc_chloride")
 })
@@ -37,14 +44,25 @@ test_that("burrIII3 gives cis with ccme_uranium", {
   fit <- ssd_fit_dists(ssddata::ccme_uranium, dists = "burrIII3")
   expect_s3_class(fit, "fitdists")
   withr::with_seed(50, {
-    hc <- ssd_hc(fit, nboot = 10, ci = TRUE, ci_method = "MACL", est_method = "arithmetic", samples = TRUE)
+    hc <- ssd_hc(
+      fit,
+      nboot = 10,
+      ci = TRUE,
+      ci_method = "MACL",
+      est_method = "arithmetic",
+      samples = TRUE
+    )
   })
 
   expect_snapshot_data(hc, "hc_uranium")
 })
 
 test_that("burrIII3 fits anon_e but only at boundary ok", {
-  fit <- ssd_fit_dists(ssddata::anon_e, dists = "burrIII3", at_boundary_ok = TRUE)
+  fit <- ssd_fit_dists(
+    ssddata::anon_e,
+    dists = "burrIII3",
+    at_boundary_ok = TRUE
+  )
   tidy <- tidy(fit)
   expect_snapshot_data(tidy, "tidy_anon_e")
   expect_error(expect_warning(

@@ -32,10 +32,20 @@ dgompertz <- function(x, llocation = 0, lshape = 0, log = FALSE) {
 #' @examples
 #'
 #' ssd_pgompertz(1)
-ssd_pgompertz <- function(q, location = 1, shape = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("gompertz",
-    q = q, location = location, shape = shape,
-    lower.tail = lower.tail, log.p = log.p
+ssd_pgompertz <- function(
+  q,
+  location = 1,
+  shape = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "gompertz",
+    q = q,
+    location = location,
+    shape = shape,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -47,7 +57,13 @@ ssd_pgompertz <- function(q, location = 1, shape = 1, lower.tail = TRUE, log.p =
 #' @inheritParams params
 #' @keywords internal
 #' @export
-pgompertz <- function(q, llocation = 0, lshape = 0, lower.tail = TRUE, log.p = FALSE) {
+pgompertz <- function(
+  q,
+  llocation = 0,
+  lshape = 0,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
   lifecycle::deprecate_stop("1.0.0", "pgompertz()", "ssd_pgompertz()")
 }
 
@@ -56,10 +72,20 @@ pgompertz <- function(q, llocation = 0, lshape = 0, lower.tail = TRUE, log.p = F
 #' @examples
 #'
 #' ssd_qgompertz(0.5)
-ssd_qgompertz <- function(p, location = 1, shape = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("gompertz",
-    p = p, location = location, shape = shape,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qgompertz <- function(
+  p,
+  location = 1,
+  shape = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "gompertz",
+    p = p,
+    location = location,
+    shape = shape,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -71,7 +97,13 @@ ssd_qgompertz <- function(p, location = 1, shape = 1, lower.tail = TRUE, log.p =
 #' @inheritParams params
 #' @keywords internal
 #' @export
-qgompertz <- function(p, llocation = 0, lshape = 0, lower.tail = TRUE, log.p = FALSE) {
+qgompertz <- function(
+  p,
+  llocation = 0,
+  lshape = 0,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
   lifecycle::deprecate_stop("1.0.0", "qgompertz()", "ssd_qgompertz()")
 }
 
@@ -116,7 +148,12 @@ sgompertz <- function(data, pars = NULL) {
     pars <- rev(unlist(pars))
   }
   data <- data.frame(x = x)
-  fit <- suppressWarnings(VGAM::vglm(x ~ 1, VGAM::gompertz, coefstart = pars, data = data))
+  fit <- suppressWarnings(VGAM::vglm(
+    x ~ 1,
+    VGAM::gompertz,
+    coefstart = pars,
+    data = data
+  ))
   list(
     log_location = unname(coef(fit)[2]) * (1 + 1e-3),
     log_shape = unname(coef(fit)[1]) * (1 - 1e-3)
