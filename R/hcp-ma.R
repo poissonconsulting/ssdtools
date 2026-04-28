@@ -68,9 +68,21 @@ ma_se <- function(se, log_se, est, wt, adj, ci_method) {
   if (ci_method %in% c("GMAW1", "GMAW2")) {
     est_ma <- ma_est(est, wt = wt, est_method = "geometric")
     if (ci_method == "GMAW1") {
-      maw_se <- maw1(log_se, est = log(est), est_ma = log(est_ma), wt = wt, adj = adj)
+      maw_se <- maw1(
+        log_se,
+        est = log(est),
+        est_ma = log(est_ma),
+        wt = wt,
+        adj = adj
+      )
     } else {
-      maw_se <- maw2(log_se, est = log(est), est_ma = log(est_ma), wt = wt, adj = adj)
+      maw_se <- maw2(
+        log_se,
+        est = log(est),
+        est_ma = log(est_ma),
+        wt = wt,
+        adj = adj
+      )
     }
     return(exp_se(maw_se, est_ma))
   }
@@ -81,8 +93,12 @@ ma_ci <- function(est, se, log_se, wt, df, level, ci_method) {
   tail <- 1 - (1 - level) / 2
   adj <- stats::qt(tail, df = df) / stats::qnorm(tail)
   se_adj <- ma_se(
-    se = se, log_se = log_se, est = est, wt = wt,
-    adj = adj, ci_method = ci_method
+    se = se,
+    log_se = log_se,
+    est = est,
+    wt = wt,
+    adj = adj,
+    ci_method = ci_method
   )
   quantiles <- stats::qnorm(c(1 - tail, tail))
 
@@ -106,7 +122,15 @@ ma_lcl <- function(est, lcl, se, log_se, wt, df, level, ci_method) {
     return(weighted_mean(lcl, wt, geometric = ci_method == "GMACL"))
   }
   if (ci_method %in% c("MAW1", "MAW2", "GMAW1", "GMAW2")) {
-    ci <- ma_ci(est = est, se = se, log_se = log_se, wt = wt, df = df, level = level, ci_method = ci_method)
+    ci <- ma_ci(
+      est = est,
+      se = se,
+      log_se = log_se,
+      wt = wt,
+      df = df,
+      level = level,
+      ci_method = ci_method
+    )
     return(ci[1])
   }
   NA_real_
@@ -117,7 +141,15 @@ ma_ucl <- function(ucl, est, se, log_se, wt, df, level, ci_method) {
     return(weighted_mean(ucl, wt, geometric = ci_method == "GMACL"))
   }
   if (ci_method %in% c("MAW1", "MAW2", "GMAW1", "GMAW2")) {
-    ci <- ma_ci(est = est, se = se, log_se = log_se, wt = wt, df = df, level = level, ci_method = ci_method)
+    ci <- ma_ci(
+      est = est,
+      se = se,
+      log_se = log_se,
+      wt = wt,
+      df = df,
+      level = level,
+      ci_method = ci_method
+    )
     return(ci[2])
   }
   NA_real_
@@ -136,34 +168,102 @@ hcp_ma2 <- function(hcp, weight, ndata, level, est_method, ci_method) {
     dplyr::summarise(
       est_ma = ma_est(.data$est, .data$weight, est_method = est_method),
       se_ma = ma_se(
-        se = .data$se, log_se = .data$log_se, est = .data$est, wt = .data$weight,
-        adj = 1, ci_method = ci_method
+        se = .data$se,
+        log_se = .data$log_se,
+        est = .data$est,
+        wt = .data$weight,
+        adj = 1,
+        ci_method = ci_method
       ),
-      lcl_ma = ma_lcl(lcl = .data$lcl, est = .data$est, se = .data$se, log_se = .data$log_se, wt = .data$weight, df = .data$df, level = level, ci_method = ci_method),
-      ucl_ma = ma_ucl(ucl = .data$ucl, est = .data$est, se = .data$se, log_se = .data$log_se, wt = .data$weight, df = .data$df, level = level, ci_method = ci_method),
+      lcl_ma = ma_lcl(
+        lcl = .data$lcl,
+        est = .data$est,
+        se = .data$se,
+        log_se = .data$log_se,
+        wt = .data$weight,
+        df = .data$df,
+        level = level,
+        ci_method = ci_method
+      ),
+      ucl_ma = ma_ucl(
+        ucl = .data$ucl,
+        est = .data$est,
+        se = .data$se,
+        log_se = .data$log_se,
+        wt = .data$weight,
+        df = .data$df,
+        level = level,
+        ci_method = ci_method
+      ),
       pboot = min(.data$pboot),
       samples = list(unlist(.data$samples))
     ) |>
     dplyr::ungroup() |>
     dplyr::rename(
-      est = "est_ma", lcl = "lcl_ma", ucl = "ucl_ma", se = "se_ma"
+      est = "est_ma",
+      lcl = "lcl_ma",
+      ucl = "ucl_ma",
+      se = "se_ma"
     )
 }
 
-hcp_ma <- function(x, value, ci, level, nboot, est_method, min_pboot,
-                   data, rescale, weighted, censoring, min_pmix,
-                   range_shape1, range_shape2, parametric, control,
-                   save_to, samples, ci_method, hc, fun) {
+hcp_ma <- function(
+  x,
+  value,
+  ci,
+  level,
+  nboot,
+  est_method,
+  min_pboot,
+  data,
+  rescale,
+  weighted,
+  censoring,
+  min_pmix,
+  range_shape1,
+  range_shape2,
+  parametric,
+  control,
+  save_to,
+  samples,
+  ci_method,
+  hc,
+  fun
+) {
   hcp <- purrr::map(
-    x, hcp_tmbfit,
-    nboot = nboot, value = value, ci = ci, level = level,
-    min_pboot = min_pboot, data = data, rescale = rescale, weighted = weighted, censoring = censoring,
-    min_pmix = min_pmix, range_shape1 = range_shape1, range_shape2 = range_shape2,
-    parametric = parametric, est_method = est_method, ci_method = ci_method, average = TRUE, control = control,
-    hc = hc, save_to = save_to, samples = samples, fun = fun
+    x,
+    hcp_tmbfit,
+    nboot = nboot,
+    value = value,
+    ci = ci,
+    level = level,
+    min_pboot = min_pboot,
+    data = data,
+    rescale = rescale,
+    weighted = weighted,
+    censoring = censoring,
+    min_pmix = min_pmix,
+    range_shape1 = range_shape1,
+    range_shape2 = range_shape2,
+    parametric = parametric,
+    est_method = est_method,
+    ci_method = ci_method,
+    average = TRUE,
+    control = control,
+    hc = hc,
+    save_to = save_to,
+    samples = samples,
+    fun = fun
   )
   weight <- glance(x, wt = TRUE)$wt
   ndata <- ndata(data)
 
-  hcp_ma2(hcp, weight, ndata, level = level, est_method = est_method, ci_method = ci_method)
+  hcp_ma2(
+    hcp,
+    weight,
+    ndata,
+    level = level,
+    est_method = est_method,
+    ci_method = ci_method
+  )
 }

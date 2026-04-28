@@ -34,23 +34,31 @@ test_that("scale_fill_ssd is ggproto", {
 })
 
 test_that("stat_ssd deprecated", {
-  lifecycle::expect_defunct(ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
-    stat_ssd())
+  lifecycle::expect_defunct(
+    ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
+      stat_ssd()
+  )
 })
 
 test_that("plot stat_ssd", {
-  expect_defunct(ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
-    stat_ssd())
+  expect_defunct(
+    ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
+      stat_ssd()
+  )
 })
 
 test_that("geom_ssd deprecated", {
-  expect_defunct(ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
-    geom_ssd())
+  expect_defunct(
+    ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
+      geom_ssd()
+  )
 })
 
 test_that("plot geom_ssd", {
-  expect_defunct(ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
-    geom_ssd())
+  expect_defunct(
+    ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
+      geom_ssd()
+  )
 })
 
 test_that("plot geom_ssdpoint", {
@@ -68,7 +76,10 @@ test_that("plot geom_ssdpoint identity stat", {
 })
 
 test_that("plot geom_ssdsegment", {
-  gp <- ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc, xend = Conc * 2)) +
+  gp <- ggplot2::ggplot(
+    ssddata::ccme_boron,
+    ggplot2::aes(x = Conc, xend = Conc * 2)
+  ) +
     geom_ssdsegment()
   expect_snapshot_plot(gp, "geom_ssdsegment")
 })
@@ -76,22 +87,33 @@ test_that("plot geom_ssdsegment", {
 test_that("plot geom_ssdsegment identity", {
   data <- ssddata::ccme_boron
   data$New <- (seq_len(nrow(data)) - 0.5) / nrow(data)
-  gp <- ggplot2::ggplot(data, ggplot2::aes(
-    x = Conc, xend = Conc * 2,
-    y = New, yend = New
-  )) +
+  gp <- ggplot2::ggplot(
+    data,
+    ggplot2::aes(
+      x = Conc,
+      xend = Conc * 2,
+      y = New,
+      yend = New
+    )
+  ) +
     geom_ssdsegment(stat = "identity")
   expect_snapshot_plot(gp, "geom_ssdsegment_identity")
 })
 
 test_that("plot geom_ssdsegment arrow", {
-  gp <- ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc, xend = Conc * 2)) +
+  gp <- ggplot2::ggplot(
+    ssddata::ccme_boron,
+    ggplot2::aes(x = Conc, xend = Conc * 2)
+  ) +
     geom_ssdsegment(arrow = grid::arrow())
   expect_snapshot_plot(gp, "geom_ssdsegment_arrow")
 })
 
 test_that("plot geom_ssdsegment no data", {
-  gp <- ggplot2::ggplot(ssddata::ccme_boron[FALSE, ], ggplot2::aes(x = Conc, xend = Conc * 2)) +
+  gp <- ggplot2::ggplot(
+    ssddata::ccme_boron[FALSE, ],
+    ggplot2::aes(x = Conc, xend = Conc * 2)
+  ) +
     geom_ssdsegment()
   expect_snapshot_plot(gp, "geom_ssdsegment_nodata")
 })

@@ -33,7 +33,7 @@
 #' @param ci A flag specifying whether to estimate confidence intervals (by bootstrapping).
 #' @param ci_method A string specifying which method to use for estimating
 #' the standard error and confidence limits from the bootstrap samples.
-#' The default and recommended value is still `ci_method = "weighted_samples"` 
+#' The default and recommended value is still `ci_method = "weighted_samples"`
 #' which takes bootstrap samples
 #' from each distribution proportional to its AICc based weights and
 #' calculates the confidence limits (and SE) from this single set.
@@ -46,7 +46,7 @@
 #' limits while `ci_method = GMACL` which
 #' takes the weighted geometric mean of the confidence limits was added for completeness but is also not recommended.
 #' Finally `ci_method = "arithmetic_samples"` and `ci_method = "geometric_samples"`
-#' take the weighted arithmetic or geometric mean of the values for 
+#' take the weighted arithmetic or geometric mean of the values for
 #' each bootstrap iteration across all the distributions and then
 #' calculate the confidence limits (and SE) from the single set of samples.
 #' @param censoring A numeric vector of the left and right censoring values.

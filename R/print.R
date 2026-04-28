@@ -50,9 +50,17 @@ print.summary_fitdists <- function(x, ...) {
   }
   properties <- c(censoring, weighted, rescaled)
   properties <- cc(properties, conj = " and ", brac = "")
-  if (length(properties)) properties <- paste0(" ", properties)
+  if (length(properties)) {
+    properties <- paste0(" ", properties)
+  }
 
-  txt <- paste0("Parameters estimated from ", x$nrow, " rows of", properties, " data.")
+  txt <- paste0(
+    "Parameters estimated from ",
+    x$nrow,
+    " rows of",
+    properties,
+    " data."
+  )
   cat(txt)
   invisible(x)
 }

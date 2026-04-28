@@ -20,13 +20,26 @@
 #' @examples
 #'
 #' ssd_plnorm_lnorm(1)
-ssd_plnorm_lnorm <- function(q, meanlog1 = 0, sdlog1 = 1,
-                             meanlog2 = 1, sdlog2 = 1, pmix = 0.5,
-                             lower.tail = TRUE, log.p = FALSE) {
-  pdist("lnorm_lnorm",
-    q = q, meanlog1 = meanlog1, sdlog1 = sdlog1,
-    meanlog2 = meanlog2, sdlog2 = sdlog2, pmix = pmix,
-    lower.tail = lower.tail, log.p = log.p
+ssd_plnorm_lnorm <- function(
+  q,
+  meanlog1 = 0,
+  sdlog1 = 1,
+  meanlog2 = 1,
+  sdlog2 = 1,
+  pmix = 0.5,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "lnorm_lnorm",
+    q = q,
+    meanlog1 = meanlog1,
+    sdlog1 = sdlog1,
+    meanlog2 = meanlog2,
+    sdlog2 = sdlog2,
+    pmix = pmix,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -35,13 +48,26 @@ ssd_plnorm_lnorm <- function(q, meanlog1 = 0, sdlog1 = 1,
 #' @examples
 #'
 #' ssd_qlnorm_lnorm(0.5)
-ssd_qlnorm_lnorm <- function(p, meanlog1 = 0, sdlog1 = 1,
-                             meanlog2 = 1, sdlog2 = 1, pmix = 0.5,
-                             lower.tail = TRUE, log.p = FALSE) {
-  qdist("lnorm_lnorm",
-    p = p, meanlog1 = meanlog1, sdlog1 = sdlog1,
-    meanlog2 = meanlog2, sdlog2 = sdlog2, pmix = pmix,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qlnorm_lnorm <- function(
+  p,
+  meanlog1 = 0,
+  sdlog1 = 1,
+  meanlog2 = 1,
+  sdlog2 = 1,
+  pmix = 0.5,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "lnorm_lnorm",
+    p = p,
+    meanlog1 = meanlog1,
+    sdlog1 = sdlog1,
+    meanlog2 = meanlog2,
+    sdlog2 = sdlog2,
+    pmix = pmix,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -53,11 +79,24 @@ ssd_qlnorm_lnorm <- function(p, meanlog1 = 0, sdlog1 = 1,
 #'   x <- ssd_rlnorm_lnorm(10000)
 #' })
 #' hist(x, breaks = 1000)
-ssd_rlnorm_lnorm <- function(n, meanlog1 = 0, sdlog1 = 1,
-                             meanlog2 = 1, sdlog2 = 1, pmix = 0.5, chk = TRUE) {
-  rdist("lnorm_lnorm",
-    n = n, meanlog1 = meanlog1, sdlog1 = sdlog1,
-    meanlog2 = meanlog2, sdlog2 = sdlog2, pmix = pmix, chk = chk
+ssd_rlnorm_lnorm <- function(
+  n,
+  meanlog1 = 0,
+  sdlog1 = 1,
+  meanlog2 = 1,
+  sdlog2 = 1,
+  pmix = 0.5,
+  chk = TRUE
+) {
+  rdist(
+    "lnorm_lnorm",
+    n = n,
+    meanlog1 = meanlog1,
+    sdlog1 = sdlog1,
+    meanlog2 = meanlog2,
+    sdlog2 = sdlog2,
+    pmix = pmix,
+    chk = chk
   )
 }
 
@@ -68,8 +107,11 @@ ssd_rlnorm_lnorm <- function(n, meanlog1 = 0, sdlog1 = 1,
 #' ssd_elnorm_lnorm()
 ssd_elnorm_lnorm <- function() {
   list(
-    meanlog1 = 0, sdlog1 = 1,
-    meanlog2 = 1, sdlog2 = 1, pmix = 0.5
+    meanlog1 = 0,
+    sdlog1 = 1,
+    meanlog2 = 1,
+    sdlog2 = 1,
+    pmix = 0.5
   )
 }
 
@@ -95,8 +137,20 @@ slnorm_lnorm <- function(data, pars = NULL) {
 
 blnorm_lnorm <- function(x, min_pmix, ...) {
   list(
-    lower = list(meanlog1 = -Inf, log_sdlog1 = -Inf, meanlog2 = -Inf, log_sdlog2 = -Inf, pmix = min_pmix),
-    upper = list(meanlog1 = Inf, log_sdlog1 = Inf, meanlog2 = Inf, log_sdlog2 = Inf, pmix = 1 - min_pmix)
+    lower = list(
+      meanlog1 = -Inf,
+      log_sdlog1 = -Inf,
+      meanlog2 = -Inf,
+      log_sdlog2 = -Inf,
+      pmix = min_pmix
+    ),
+    upper = list(
+      meanlog1 = Inf,
+      log_sdlog1 = Inf,
+      meanlog2 = Inf,
+      log_sdlog2 = Inf,
+      pmix = 1 - min_pmix
+    )
   )
 }
 
@@ -104,7 +158,9 @@ plnorm_lnorm_ssd <- function(q, meanlog1, sdlog1, meanlog2, sdlog2, pmix) {
   if (sdlog1 <= 0 || sdlog2 <= 0 || pmix <= 0 || pmix >= 1) {
     return(NaN)
   }
-  pmix * plnorm_ssd(q, meanlog1, sdlog1) + (1 - pmix) * plnorm_ssd(q, meanlog2, sdlog2)
+  pmix *
+    plnorm_ssd(q, meanlog1, sdlog1) +
+    (1 - pmix) * plnorm_ssd(q, meanlog2, sdlog2)
 }
 
 qlnorm_lnorm_ssd <- function(p, meanlog1, sdlog1, meanlog2, sdlog2, pmix) {

@@ -73,7 +73,8 @@ test_that("ssd_fit_dists gives chk error if valid and more than one distribution
 })
 
 test_that("ssd_fit_dists returns object class fitdists", {
-  fit <- ssd_fit_dists(ssddata::ccme_boron,
+  fit <- ssd_fit_dists(
+    ssddata::ccme_boron,
     dists = c("lnorm", "llogis"),
     rescale = FALSE
   )
@@ -84,7 +85,10 @@ test_that("ssd_fit_dists happy with left as left but happy if right other", {
   data <- ssddata::ccme_boron
   data$left <- data$Conc
   data$right <- data$Conc
-  expect_s3_class(ssd_fit_dists(data, left = "left", right = "right"), "fitdists")
+  expect_s3_class(
+    ssd_fit_dists(data, left = "left", right = "right"),
+    "fitdists"
+  )
 })
 
 test_that("ssd_fit_dists not affected if all weight 1", {
@@ -221,7 +225,8 @@ test_that("ssd_fit_dists warns to rescale data", {
 
 test_that("ssd_fit_dists doesn't warns to rescale data if already rescaled", {
   data <- data.frame(Conc = rep(2, 6))
-  expect_error(expect_warning(ssd_fit_dists(data, rescale = TRUE, dist = "lnorm"),
+  expect_error(expect_warning(
+    ssd_fit_dists(data, rescale = TRUE, dist = "lnorm"),
     regexp = "^Distribution 'lnorm' failed to fit:"
   ))
 })
@@ -229,7 +234,8 @@ test_that("ssd_fit_dists doesn't warns to rescale data if already rescaled", {
 test_that("ssd_fit_dists warns of optimizer convergence code error", {
   data <- ssddata::ccme_boron
   expect_error(
-    expect_warning(ssd_fit_dists(data, control = list(maxit = 1), dist = "lnorm"),
+    expect_warning(
+      ssd_fit_dists(data, control = list(maxit = 1), dist = "lnorm"),
       regexp = "^Distribution 'lnorm' failed to converge \\(try rescaling data\\): Iteration limit maxit reach \\(try increasing the maximum number of iterations in control\\)\\.$"
     )
   )
@@ -244,13 +250,17 @@ test_that("ssd_fit_dists estimates for ssddata::ccme_boron on bcanz dists", {
 })
 
 test_that("ssd_fit_dists not reorder", {
-  fit <- ssd_fit_dists(ssddata::ccme_boron,
+  fit <- ssd_fit_dists(
+    ssddata::ccme_boron,
     dists = c("lnorm", "llogis"),
     rescale = FALSE
   )
 
   expect_identical(npars(fit), c(lnorm = 2L, llogis = 2L))
-  expect_equal(logLik(fit), c(lnorm = -117.514216489547, llogis = -118.507435324581))
+  expect_equal(
+    logLik(fit),
+    c(lnorm = -117.514216489547, llogis = -118.507435324581)
+  )
 })
 
 test_that("ssd_fit_dists equal weights no effect", {
@@ -346,13 +356,29 @@ test_that("ssd_fit_dists gives same answer for missing versus Inf right", {
 
 test_that("ssd_fit_dists min_pmix at_boundary_ok FALSE", {
   withr::with_seed(50, {
-    conc <- ssd_rlnorm_lnorm(1000, meanlog1 = 0, meanlog2 = 1, sdlog1 = 1 / 10, sdlog2 = 1 / 10, pmix = 0.1)
+    conc <- ssd_rlnorm_lnorm(
+      1000,
+      meanlog1 = 0,
+      meanlog2 = 1,
+      sdlog1 = 1 / 10,
+      sdlog2 = 1 / 10,
+      pmix = 0.1
+    )
   })
   data <- data.frame(Conc = conc)
-  fits <- ssd_fit_dists(data, dists = c("lnorm_lnorm", "llogis_llogis"), min_pmix = 0.1)
+  fits <- ssd_fit_dists(
+    data,
+    dists = c("lnorm_lnorm", "llogis_llogis"),
+    min_pmix = 0.1
+  )
   tidy <- tidy(fits)
   expect_error(
-    expect_warning(expect_warning(ssd_fit_dists(data, dists = c("lnorm_lnorm", "llogis_llogis"), min_pmix = 0.11, at_boundary_ok = FALSE))),
+    expect_warning(expect_warning(ssd_fit_dists(
+      data,
+      dists = c("lnorm_lnorm", "llogis_llogis"),
+      min_pmix = 0.11,
+      at_boundary_ok = FALSE
+    ))),
     "All distributions failed to fit."
   )
   expect_snapshot_data(tidy, "min_pmix5")
@@ -360,10 +386,22 @@ test_that("ssd_fit_dists min_pmix at_boundary_ok FALSE", {
 
 test_that("ssd_fit_dists min_pmix", {
   withr::with_seed(50, {
-    conc <- ssd_rlnorm_lnorm(1000, meanlog1 = 0, meanlog2 = 1, sdlog1 = 1 / 10, sdlog2 = 1 / 10, pmix = 0.1)
+    conc <- ssd_rlnorm_lnorm(
+      1000,
+      meanlog1 = 0,
+      meanlog2 = 1,
+      sdlog1 = 1 / 10,
+      sdlog2 = 1 / 10,
+      pmix = 0.1
+    )
   })
   data <- data.frame(Conc = conc)
-  fits <- ssd_fit_dists(data, dists = c("lnorm_lnorm"), min_pmix = 0.11, at_boundary_ok = TRUE)
+  fits <- ssd_fit_dists(
+    data,
+    dists = c("lnorm_lnorm"),
+    min_pmix = 0.11,
+    at_boundary_ok = TRUE
+  )
   tidy <- tidy(fits)
   expect_equal(tidy$est[tidy$term == "pmix"], 0.11)
 })
@@ -371,12 +409,17 @@ test_that("ssd_fit_dists min_pmix", {
 test_that("ssd_fit_dists at_boundary_ok message", {
   withr::with_seed(50, {
     expect_warning(
-      ssd_fit_dists(ssddata::ccme_boron, dists = c("lnorm", "burrIII3"), at_boundary_ok = FALSE),
+      ssd_fit_dists(
+        ssddata::ccme_boron,
+        dists = c("lnorm", "burrIII3"),
+        at_boundary_ok = FALSE
+      ),
       "one or more parameters at boundary[.]$"
     )
   })
   expect_warning(
-    ssd_fit_dists(ssddata::ccme_boron,
+    ssd_fit_dists(
+      ssddata::ccme_boron,
       dists = c("lnorm", "burrIII3"),
       at_boundary_ok = TRUE,
       computable = TRUE
@@ -393,16 +436,20 @@ test_that("ssd_fit_dists bcanz with anon_e", {
 
 test_that("ssd_fit_dists unstable with anon_e", {
   expect_warning(
-    fit <- ssd_fit_dists(ssddata::anon_e, dists = ssd_dists(bcanz = FALSE)), "gompertz"
+    fit <- ssd_fit_dists(ssddata::anon_e, dists = ssd_dists(bcanz = FALSE)),
+    "gompertz"
   )
   tidy <- tidy(fit)
   expect_snapshot_data(tidy, "tidy_unstable_anon_e")
 })
 
 test_that("ssd_fit_dists works min_pmix = 0.5 and at_boundary_ok = TRUE and computable = FALSE", {
-  fit <- ssd_fit_dists(ssddata::ccme_boron,
-    dists = c("lnorm", "lnorm_lnorm"), min_pmix = 0.5,
-    at_boundary_ok = TRUE, computable = FALSE
+  fit <- ssd_fit_dists(
+    ssddata::ccme_boron,
+    dists = c("lnorm", "lnorm_lnorm"),
+    min_pmix = 0.5,
+    at_boundary_ok = TRUE,
+    computable = FALSE
   )
   tidy <- tidy(fit)
   expect_snapshot_data(tidy, "min_pmix_05")
@@ -410,9 +457,15 @@ test_that("ssd_fit_dists works min_pmix = 0.5 and at_boundary_ok = TRUE and comp
 
 test_that("ssd_fit_dists min_pmix 0", {
   withr::with_seed(50, {
-    data <- data.frame(Conc = ssd_rlnorm_lnorm(100, meanlog1 = 0, meanlog2 = 2, pmix = 0.01))
+    data <- data.frame(
+      Conc = ssd_rlnorm_lnorm(100, meanlog1 = 0, meanlog2 = 2, pmix = 0.01)
+    )
   })
-  fit <- ssd_fit_dists(data, dists = c("lnorm_lnorm", "llogis_llogis"), min_pmix = 0)
+  fit <- ssd_fit_dists(
+    data,
+    dists = c("lnorm_lnorm", "llogis_llogis"),
+    min_pmix = 0
+  )
   tidy <- tidy(fit)
   expect_snapshot_data(tidy, "tidy_pmix0")
 })

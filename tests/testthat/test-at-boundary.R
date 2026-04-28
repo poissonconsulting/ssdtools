@@ -18,14 +18,21 @@ test_that("test at boundary 2 9", {
     data <- data.frame(Conc = c(0.02, 0.01, rlnorm(9, 1)))
     fit <- ssd_fit_dists(data = data)
   })
-  expect_equal(unname(fit$lnorm_lnorm$optim$par["pmix"]), ssd_min_pmix(nrow(data)))
+  expect_equal(
+    unname(fit$lnorm_lnorm$optim$par["pmix"]),
+    ssd_min_pmix(nrow(data))
+  )
   gof <- ssd_gof(fit, wt = TRUE)
   expect_snapshot_data(gof, "b29")
   expect_identical(
     ssd_at_boundary(fit),
     c(
-      gamma = FALSE, lgumbel = FALSE, llogis = FALSE, lnorm = FALSE,
-      lnorm_lnorm = TRUE, weibull = FALSE
+      gamma = FALSE,
+      lgumbel = FALSE,
+      llogis = FALSE,
+      lnorm = FALSE,
+      lnorm_lnorm = TRUE,
+      weibull = FALSE
     )
   )
   expect_false(ssd_at_boundary(fit$lnorm))
@@ -37,14 +44,21 @@ test_that("test at boundary 2 14", {
     data <- data.frame(Conc = c(0.01, 0.02, rlnorm(14, 1)))
     fit <- ssd_fit_dists(data = data)
   })
-  expect_equal(unname(fit$lnorm_lnorm$optim$par["pmix"]), ssd_min_pmix(nrow(data)))
+  expect_equal(
+    unname(fit$lnorm_lnorm$optim$par["pmix"]),
+    ssd_min_pmix(nrow(data))
+  )
   gof <- ssd_gof(fit, wt = TRUE)
   expect_snapshot_data(gof, "b214")
   expect_identical(
     ssd_at_boundary(fit),
     c(
-      gamma = FALSE, lgumbel = FALSE, llogis = FALSE, lnorm = FALSE,
-      lnorm_lnorm = TRUE, weibull = FALSE
+      gamma = FALSE,
+      lgumbel = FALSE,
+      llogis = FALSE,
+      lnorm = FALSE,
+      lnorm_lnorm = TRUE,
+      weibull = FALSE
     )
   )
   expect_false(ssd_at_boundary(fit$lnorm))
@@ -65,8 +79,12 @@ test_that("test at boundary 2 23", {
   expect_identical(
     ssd_at_boundary(fit),
     c(
-      gamma = FALSE, lgumbel = FALSE, llogis = FALSE, lnorm = FALSE,
-      lnorm_lnorm = TRUE, weibull = FALSE
+      gamma = FALSE,
+      lgumbel = FALSE,
+      llogis = FALSE,
+      lnorm = FALSE,
+      lnorm_lnorm = TRUE,
+      weibull = FALSE
     )
   )
   expect_false(ssd_at_boundary(fit$lnorm))
@@ -78,8 +96,12 @@ test_that("test at_boundary fits2.3", {
   expect_identical(
     ssd_at_boundary(fits),
     c(
-      gamma = NA, lgumbel = NA, llogis = NA, lnorm = NA,
-      lnorm_lnorm = NA, weibull = NA
+      gamma = NA,
+      lgumbel = NA,
+      llogis = NA,
+      lnorm = NA,
+      lnorm_lnorm = NA,
+      weibull = NA
     )
   )
   expect_identical(ssd_at_boundary(fits$lnorm), NA)

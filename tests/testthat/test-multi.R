@@ -23,23 +23,46 @@ test_that("multi", {
   })
 
   withr::with_seed(50, {
-    expect_snapshot_value(ssd_rmulti(1, gamma.weight = 0.5, lnorm.weight = 0.5), style = "deparse")
+    expect_snapshot_value(
+      ssd_rmulti(1, gamma.weight = 0.5, lnorm.weight = 0.5),
+      style = "deparse"
+    )
   })
 
   withr::with_seed(50, {
-    expect_snapshot_value(ssd_rmulti(1, gamma.weight = 1, lnorm.weight = 1), style = "deparse")
+    expect_snapshot_value(
+      ssd_rmulti(1, gamma.weight = 1, lnorm.weight = 1),
+      style = "deparse"
+    )
   })
 
-  expect_snapshot_value(ssd_qmulti(ssd_pmulti(c(0, 0.1, 0.5, 0.9, 0.99), lnorm.weight = 1), lnorm.weight = 1),
+  expect_snapshot_value(
+    ssd_qmulti(
+      ssd_pmulti(c(0, 0.1, 0.5, 0.9, 0.99), lnorm.weight = 1),
+      lnorm.weight = 1
+    ),
     style = "deparse"
   )
 
-  expect_snapshot_value(ssd_pmulti(ssd_qmulti(c(0, 0.1, 0.5, 0.9, 0.99), lnorm.weight = 1), lnorm.weight = 1),
+  expect_snapshot_value(
+    ssd_pmulti(
+      ssd_qmulti(c(0, 0.1, 0.5, 0.9, 0.99), lnorm.weight = 1),
+      lnorm.weight = 1
+    ),
     style = "deparse"
   )
-  expect_error(ssd_pmulti(0.5), "^At least one distribution must have a positive weight\\.$")
-  expect_error(ssd_qmulti(0.75), "^At least one distribution must have a positive weight\\.$")
-  expect_error(ssd_rmulti(1), "^At least one distribution must have a positive weight\\.$")
+  expect_error(
+    ssd_pmulti(0.5),
+    "^At least one distribution must have a positive weight\\.$"
+  )
+  expect_error(
+    ssd_qmulti(0.75),
+    "^At least one distribution must have a positive weight\\.$"
+  )
+  expect_error(
+    ssd_rmulti(1),
+    "^At least one distribution must have a positive weight\\.$"
+  )
   test_dist("multi", multi = TRUE)
 })
 
@@ -54,9 +77,18 @@ test_that("ssd_pmulti", {
   expect_snapshot_value(ssd_pmulti_fitdists(10000, fit), style = "deparse")
   expect_snapshot_value(ssd_pmulti_fitdists(c(1, 2), fit), style = "deparse")
   expect_snapshot_value(ssd_pmulti_fitdists(c(1, NA), fit), style = "deparse")
-  expect_snapshot_value(ssd_pmulti_fitdists(1, fit, lower.tail = FALSE), style = "deparse")
-  expect_snapshot_value(ssd_pmulti_fitdists(1, fit, log.p = TRUE), style = "deparse")
-  expect_snapshot_value(ssd_pmulti_fitdists(1, fit, lower.tail = FALSE, log.p = TRUE), style = "deparse")
+  expect_snapshot_value(
+    ssd_pmulti_fitdists(1, fit, lower.tail = FALSE),
+    style = "deparse"
+  )
+  expect_snapshot_value(
+    ssd_pmulti_fitdists(1, fit, log.p = TRUE),
+    style = "deparse"
+  )
+  expect_snapshot_value(
+    ssd_pmulti_fitdists(1, fit, lower.tail = FALSE, log.p = TRUE),
+    style = "deparse"
+  )
 })
 
 test_that("ssd_pmulti weights", {
@@ -71,7 +103,10 @@ test_that("ssd_pmulti weights", {
   args$weibull.weight <- 0
   expect_snapshot_value(do.call("ssd_pmulti", args), style = "deparse")
   args$lnorm.weight <- 0
-  expect_error(do.call("ssd_pmulti", args), "^At least one distribution must have a positive weight\\.$")
+  expect_error(
+    do.call("ssd_pmulti", args),
+    "^At least one distribution must have a positive weight\\.$"
+  )
   args$lnorm.weight <- 1.1
   expect_snapshot_value(do.call("ssd_pmulti", args), style = "deparse")
   args$lnorm.weight <- 1
@@ -88,10 +123,22 @@ test_that("ssd_qmulti", {
   expect_identical(ssd_qmulti_fitdists(1, fit), Inf)
   expect_equal(ssd_qmulti_fitdists(0, fit), 0)
   expect_snapshot_value(ssd_qmulti_fitdists(0.5, fit), style = "deparse")
-  expect_snapshot_value(ssd_qmulti_fitdists(c(0.5, 0.75), fit), style = "deparse")
-  expect_snapshot_value(ssd_qmulti_fitdists(0.25, fit, lower.tail = FALSE), style = "deparse")
-  expect_snapshot_value(ssd_qmulti_fitdists(log(0.75), fit, log.p = TRUE), style = "deparse")
-  expect_snapshot_value(ssd_qmulti_fitdists(log(0.25), fit, lower.tail = FALSE, log.p = TRUE), style = "deparse")
+  expect_snapshot_value(
+    ssd_qmulti_fitdists(c(0.5, 0.75), fit),
+    style = "deparse"
+  )
+  expect_snapshot_value(
+    ssd_qmulti_fitdists(0.25, fit, lower.tail = FALSE),
+    style = "deparse"
+  )
+  expect_snapshot_value(
+    ssd_qmulti_fitdists(log(0.75), fit, log.p = TRUE),
+    style = "deparse"
+  )
+  expect_snapshot_value(
+    ssd_qmulti_fitdists(log(0.25), fit, lower.tail = FALSE, log.p = TRUE),
+    style = "deparse"
+  )
 })
 
 test_that("ssd_qmulti weights", {
@@ -106,7 +153,10 @@ test_that("ssd_qmulti weights", {
   args$weibull.weight <- 0
   expect_snapshot_value(do.call("ssd_qmulti", args), style = "deparse")
   args$lnorm.weight <- 0
-  expect_error(do.call("ssd_qmulti", args), "^At least one distribution must have a positive weight\\.$")
+  expect_error(
+    do.call("ssd_qmulti", args),
+    "^At least one distribution must have a positive weight\\.$"
+  )
   args$lnorm.weight <- 1.1
   expect_snapshot_value(do.call("ssd_qmulti", args), style = "deparse")
   args$lnorm.weight <- 1.0

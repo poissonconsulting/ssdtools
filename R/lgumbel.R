@@ -32,10 +32,21 @@ dlgumbel <- function(x, locationlog = 0, scalelog = 1, log = FALSE) {
 #' @examples
 #'
 #' ssd_plgumbel(1)
-ssd_plgumbel <- function(q, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("gumbel",
-    q = q, location = locationlog, scale = scalelog,
-    lower.tail = lower.tail, log.p = log.p, .lgt = TRUE
+ssd_plgumbel <- function(
+  q,
+  locationlog = 0,
+  scalelog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "gumbel",
+    q = q,
+    location = locationlog,
+    scale = scalelog,
+    lower.tail = lower.tail,
+    log.p = log.p,
+    .lgt = TRUE
   )
 }
 
@@ -56,7 +67,13 @@ ssd_elgumbel <- function() {
 #' @inheritParams params
 #' @keywords internal
 #' @export
-plgumbel <- function(q, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p = FALSE) {
+plgumbel <- function(
+  q,
+  locationlog = 0,
+  scalelog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
   lifecycle::deprecate_stop("1.0.0", "plgumbel()", "ssd_plgumbel()")
 }
 
@@ -65,10 +82,21 @@ plgumbel <- function(q, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p 
 #' @examples
 #'
 #' ssd_qlgumbel(0.5)
-ssd_qlgumbel <- function(p, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("gumbel",
-    p = p, location = locationlog, scale = scalelog,
-    lower.tail = lower.tail, log.p = log.p, .lgt = TRUE
+ssd_qlgumbel <- function(
+  p,
+  locationlog = 0,
+  scalelog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "gumbel",
+    p = p,
+    location = locationlog,
+    scale = scalelog,
+    lower.tail = lower.tail,
+    log.p = log.p,
+    .lgt = TRUE
   )
 }
 
@@ -80,11 +108,20 @@ ssd_qlgumbel <- function(p, locationlog = 0, scalelog = 1, lower.tail = TRUE, lo
 #' @inheritParams params
 #' @keywords internal
 #' @export
-qlgumbel <- function(p, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p = FALSE) {
+qlgumbel <- function(
+  p,
+  locationlog = 0,
+  scalelog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
   lifecycle::deprecate_stop("1.0.0", "qlgumbel()", "ssd_qlgumbel()")
-  ssd_qlgumbel(p,
-    locationlog = locationlog, scalelog = scalelog,
-    lower.tail = lower.tail, log.p = log.p
+  ssd_qlgumbel(
+    p,
+    locationlog = locationlog,
+    scalelog = scalelog,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -97,7 +134,14 @@ qlgumbel <- function(p, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p 
 #' })
 #' hist(x, breaks = 1000)
 ssd_rlgumbel <- function(n, locationlog = 0, scalelog = 1, chk = TRUE) {
-  rdist("gumbel", n = n, location = locationlog, scale = scalelog, .lgt = TRUE, chk = chk)
+  rdist(
+    "gumbel",
+    n = n,
+    location = locationlog,
+    scale = scalelog,
+    .lgt = TRUE,
+    chk = chk
+  )
 }
 
 #' @describeIn ssd_e Default Parameter Values for log-Gumbel Distribution

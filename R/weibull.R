@@ -20,10 +20,20 @@
 #' @examples
 #'
 #' ssd_pweibull(1)
-ssd_pweibull <- function(q, shape = 1, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("weibull",
-    q = q, shape = shape, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_pweibull <- function(
+  q,
+  shape = 1,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "weibull",
+    q = q,
+    shape = shape,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -32,10 +42,20 @@ ssd_pweibull <- function(q, shape = 1, scale = 1, lower.tail = TRUE, log.p = FAL
 #' @examples
 #'
 #' ssd_qweibull(0.5)
-ssd_qweibull <- function(p, shape = 1, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("weibull",
-    p = p, shape = shape, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qweibull <- function(
+  p,
+  shape = 1,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "weibull",
+    p = p,
+    shape = shape,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 

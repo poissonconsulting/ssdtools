@@ -35,15 +35,39 @@ ssd_plot_cdf <- function(x, ...) {
 #' fits <- ssd_fit_dists(ssddata::ccme_boron)
 #' ssd_plot_cdf(fits)
 #' ssd_plot_cdf(fits, average = NA)
-ssd_plot_cdf.fitdists <- function(x, average = FALSE, est_method = "multi", delta = 9.21, ...) {
+ssd_plot_cdf.fitdists <- function(
+  x,
+  average = FALSE,
+  est_method = "multi",
+  delta = 9.21,
+  ...
+) {
   chk_scalar(average)
   chk_logical(average)
 
   if (!is.na(average)) {
-    pred <- ssd_hc(x, proportion = 1:99 / 100, average = average, est_method = est_method, delta = delta)
+    pred <- ssd_hc(
+      x,
+      proportion = 1:99 / 100,
+      average = average,
+      est_method = est_method,
+      delta = delta
+    )
   } else {
-    pred <- ssd_hc(x, proportion = 1:99 / 100, average = FALSE, est_method = est_method, delta = delta)
-    pred_ave <- ssd_hc(x, proportion = 1:99 / 100, average = TRUE, est_method = est_method, delta = delta)
+    pred <- ssd_hc(
+      x,
+      proportion = 1:99 / 100,
+      average = FALSE,
+      est_method = est_method,
+      delta = delta
+    )
+    pred_ave <- ssd_hc(
+      x,
+      proportion = 1:99 / 100,
+      average = TRUE,
+      est_method = est_method,
+      delta = delta
+    )
     pred <- dplyr::bind_rows(pred, pred_ave)
   }
   data <- ssd_data(x)
@@ -53,11 +77,18 @@ ssd_plot_cdf.fitdists <- function(x, average = FALSE, est_method = "multi", delt
   linecolor <- linetype
 
   gp <- ssd_plot(
-    data = data, pred = pred, left = cols$left, right = cols$right,
-    ci = FALSE, hc = NULL, linetype = linetype, linecolor = linecolor, ...
+    data = data,
+    pred = pred,
+    left = cols$left,
+    right = cols$right,
+    ci = FALSE,
+    hc = NULL,
+    linetype = linetype,
+    linecolor = linecolor,
+    ...
   )
-  if(!is.null(linetype)) {
-    gp <- gp +  labs(linetype = "Distribution", color = "Distribution")
+  if (!is.null(linetype)) {
+    gp <- gp + labs(linetype = "Distribution", color = "Distribution")
   }
   gp
 }
@@ -80,8 +111,13 @@ ssd_plot_cdf.list <- function(x, ...) {
   linecolor <- linetype
 
   ssd_plot(
-    data = data, pred = pred,
-    ci = FALSE, hc = NULL, linetype = linetype, linecolor = linecolor, ...
+    data = data,
+    pred = pred,
+    ci = FALSE,
+    hc = NULL,
+    linetype = linetype,
+    linecolor = linecolor,
+    ...
   ) +
     labs(color = "Distribution", linetype = "Distribution")
 }

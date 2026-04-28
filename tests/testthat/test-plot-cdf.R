@@ -21,7 +21,10 @@ test_that("ssd_plot_cdf", {
   expect_snapshot_plot(ssd_plot_cdf(fits), "fits")
   expect_snapshot_plot(ssd_plot_cdf(fits, average = TRUE), "fits_average")
   expect_snapshot_plot(ssd_plot_cdf(fits, average = NA), "fits_average_na")
-  expect_snapshot_plot(ssd_plot_cdf(fits, average = TRUE, est_method = "geometric"), "fits_average_est_method")
+  expect_snapshot_plot(
+    ssd_plot_cdf(fits, average = TRUE, est_method = "geometric"),
+    "fits_average_est_method"
+  )
 })
 
 test_that("ssd_plot_cdf deals with rescaled data", {
@@ -42,7 +45,12 @@ test_that("ssd_plot_cdf deals with named list", {
 test_that("autoplot deals with delta", {
   dists <- ssd_dists_all()
   withr::with_seed(50, {
-    fits <- ssd_fit_dists(ssddata::ccme_boron, dists = dists, at_boundary_ok = TRUE, computable = FALSE)
+    fits <- ssd_fit_dists(
+      ssddata::ccme_boron,
+      dists = dists,
+      at_boundary_ok = TRUE,
+      computable = FALSE
+    )
   })
   expect_snapshot_plot(ssd_plot_cdf(fits, delta = Inf), "fits_delta")
 })
@@ -61,5 +69,8 @@ test_that("ssd_plot_cdf small data", {
   data$Conc <- data$Conc / 1000
   fits <- ssd_fit_dists(data)
 
-  expect_snapshot_plot(ssd_plot_cdf(fits, decimal.mark = "_"), "fits_decimalmark")
+  expect_snapshot_plot(
+    ssd_plot_cdf(fits, decimal.mark = "_"),
+    "fits_decimalmark"
+  )
 })

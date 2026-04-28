@@ -20,10 +20,20 @@
 #' @examples
 #'
 #' ssd_pgamma(1)
-ssd_pgamma <- function(q, shape = 1, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("gamma",
-    q = q, shape = shape, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_pgamma <- function(
+  q,
+  shape = 1,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "gamma",
+    q = q,
+    shape = shape,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -32,10 +42,20 @@ ssd_pgamma <- function(q, shape = 1, scale = 1, lower.tail = TRUE, log.p = FALSE
 #' @examples
 #'
 #' ssd_qgamma(0.5)
-ssd_qgamma <- function(p, shape = 1, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("gamma",
-    p = p, shape = shape, scale = scale,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qgamma <- function(
+  p,
+  shape = 1,
+  scale = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "gamma",
+    p = p,
+    shape = shape,
+    scale = scale,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 

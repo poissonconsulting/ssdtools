@@ -16,39 +16,65 @@
 #    limitations under the License.
 
 #' @export
-ggplot2::waiver 
+ggplot2::waiver
 
-plot_coord_scale <- function(data, xlab, ylab, trans, big.mark, decimal.mark,
-   suffix, xbreaks = waiver(), xlimits = NULL, hc_value = NULL) {
+plot_coord_scale <- function(
+  data,
+  xlab,
+  ylab,
+  trans,
+  big.mark,
+  decimal.mark,
+  suffix,
+  xbreaks = waiver(),
+  xlimits = NULL,
+  hc_value = NULL
+) {
   chk_string(xlab)
   chk_string(ylab)
 
   if (is.waive(xbreaks)) {
-    xbreaks <- switch(trans,
-      "log10" = function(x) unique(c(scales::log10_trans()$breaks(x), hc_value)),
+    xbreaks <- switch(
+      trans,
+      "log10" = function(x) {
+        unique(c(scales::log10_trans()$breaks(x), hc_value))
+      },
       "log" = function(x) unique(c(scales::log_trans()$breaks(x), hc_value)),
-      "identity" = function(x) unique(c(scales::identity_trans()$breaks(x), hc_value))
+      "identity" = function(x) {
+        unique(c(scales::identity_trans()$breaks(x), hc_value))
+      }
     )
   } else {
     xbreaks <- unique(c(xbreaks, hc_value))
   }
 
-  ssd_label_fun <- ssd_label_comma(big.mark = big.mark, decimal.mark = decimal.mark)
+  ssd_label_fun <- ssd_label_comma(
+    big.mark = big.mark,
+    decimal.mark = decimal.mark
+  )
   if (!is.null(hc_value)) {
-    ssd_label_fun <- ssd_label_comma_hc(hc_value, big.mark = big.mark, decimal.mark = decimal.mark)
+    ssd_label_fun <- ssd_label_comma_hc(
+      hc_value,
+      big.mark = big.mark,
+      decimal.mark = decimal.mark
+    )
   }
 
   list(
     coord_transform(x = trans),
-    scale_x_continuous(xlab,
+    scale_x_continuous(
+      xlab,
       breaks = xbreaks,
       minor_breaks = NULL,
       labels = ssd_label_fun,
       limits = xlimits
     ),
-    scale_y_continuous(ylab,
-      labels = label_percent(suffix = suffix), limits = c(0, 1),
-      breaks = seq(0, 1, by = 0.2), expand = c(0, 0)
+    scale_y_continuous(
+      ylab,
+      labels = label_percent(suffix = suffix),
+      limits = c(0, 1),
+      breaks = seq(0, 1, by = 0.2),
+      expand = c(0, 0)
     )
   )
 }
@@ -63,21 +89,43 @@ plot_coord_scale <- function(data, xlab, ylab, trans, big.mark, decimal.mark,
 #' @export
 #' @examples
 #' ssd_plot(ssddata::ccme_boron, boron_pred, label = "Species", shape = "Group")
-ssd_plot <- function(data, pred, left = "Conc", right = left, ...,
-                     label = NULL, shape = NULL, color = NULL, size,
-                     linetype = NULL, linecolor = NULL,
-                     xlab = "Concentration", ylab = "Species Affected",
-                     ci = TRUE, ribbon = TRUE, hc = 0.05,
-                     shift_x = 3, add_x = 0,
-                     bounds = c(left = 1, right = 1),
-                     big.mark = ",", 
-                     decimal.mark = getOption("OutDec", "."),
-                     suffix = "%",
-                     trans = "log10", xbreaks = waiver(),
-                     xlimits = NULL, text_size = 11, label_size = 2.5,
-                     theme_classic = FALSE) {
+ssd_plot <- function(
+  data,
+  pred,
+  left = "Conc",
+  right = left,
+  ...,
+  label = NULL,
+  shape = NULL,
+  color = NULL,
+  size,
+  linetype = NULL,
+  linecolor = NULL,
+  xlab = "Concentration",
+  ylab = "Species Affected",
+  ci = TRUE,
+  ribbon = TRUE,
+  hc = 0.05,
+  shift_x = 3,
+  add_x = 0,
+  bounds = c(left = 1, right = 1),
+  big.mark = ",",
+  decimal.mark = getOption("OutDec", "."),
+  suffix = "%",
+  trans = "log10",
+  xbreaks = waiver(),
+  xlimits = NULL,
+  text_size = 11,
+  label_size = 2.5,
+  theme_classic = FALSE
+) {
   if (lifecycle::is_present(size)) {
-    lifecycle::deprecate_soft("2.1.0", "ssd_plot(size)", "ssd_plot(label_size)", id = "size")
+    lifecycle::deprecate_soft(
+      "2.1.0",
+      "ssd_plot(size)",
+      "ssd_plot(label_size)",
+      id = "size"
+    )
     chk_number(size)
     label_size <- size
   }
@@ -89,7 +137,10 @@ ssd_plot <- function(data, pred, left = "Conc", right = left, ...,
   chk_null_or(linetype, vld = vld_string)
   chk_null_or(linecolor, vld = vld_string)
   check_names(data, unique(c(left, right, label, shape)))
-  check_names(pred, c("proportion", "est", "lcl", "ucl", unique(c(linetype, linecolor))))
+  check_names(
+    pred,
+    c("proportion", "est", "lcl", "ucl", unique(c(linetype, linecolor)))
+  )
   chk_numeric(pred$proportion)
   chk_range(pred$proportion)
   check_data(pred, values = list(est = 1, lcl = c(1, NA), ucl = c(1, NA)))
@@ -130,42 +181,97 @@ ssd_plot <- function(data, pred, left = "Conc", right = left, ...,
 
   if (ci) {
     if (ribbon) {
-      gp <- gp + geom_xribbon(data = pred, aes(xmin = !!sym("lcl"), xmax = !!sym("ucl"), y = !!sym("proportion")), alpha = 0.2)
+      gp <- gp +
+        geom_xribbon(
+          data = pred,
+          aes(
+            xmin = !!sym("lcl"),
+            xmax = !!sym("ucl"),
+            y = !!sym("proportion")
+          ),
+          alpha = 0.2
+        )
     } else {
       gp <- gp +
-        geom_line(data = pred, aes(x = !!sym("lcl"), y = !!sym("proportion")), color = "black", linetype = "dashed") +
-        geom_line(data = pred, aes(x = !!sym("ucl"), y = !!sym("proportion")), color = "black", linetype = "dashed")
+        geom_line(
+          data = pred,
+          aes(x = !!sym("lcl"), y = !!sym("proportion")),
+          color = "black",
+          linetype = "dashed"
+        ) +
+        geom_line(
+          data = pred,
+          aes(x = !!sym("ucl"), y = !!sym("proportion")),
+          color = "black",
+          linetype = "dashed"
+        )
     }
   }
 
   if (!is.null(linecolor)) {
-    gp <- gp + geom_line(data = pred, aes(x = !!sym("est"), y = !!sym("proportion"), linetype = !!linetype, color = !!linecolor))
+    gp <- gp +
+      geom_line(
+        data = pred,
+        aes(
+          x = !!sym("est"),
+          y = !!sym("proportion"),
+          linetype = !!linetype,
+          color = !!linecolor
+        )
+      )
   } else if (ribbon) {
-    gp <- gp + geom_line(data = pred, aes(x = !!sym("est"), y = !!sym("proportion"), linetype = !!linetype), color = "black")
+    gp <- gp +
+      geom_line(
+        data = pred,
+        aes(x = !!sym("est"), y = !!sym("proportion"), linetype = !!linetype),
+        color = "black"
+      )
   } else {
-    gp <- gp + geom_line(data = pred, aes(x = !!sym("est"), y = !!sym("proportion"), linetype = !!linetype), color = "#3063A3")
+    gp <- gp +
+      geom_line(
+        data = pred,
+        aes(x = !!sym("est"), y = !!sym("proportion"), linetype = !!linetype),
+        color = "#3063A3"
+      )
   }
 
   if (!is.null(hc)) {
-    gp <- gp + geom_hcintersect(
-      data = pred[pred$proportion %in% hc, ],
-      aes(xintercept = !!sym("est"), yintercept = !!sym("proportion"))
-    )
+    gp <- gp +
+      geom_hcintersect(
+        data = pred[pred$proportion %in% hc, ],
+        aes(xintercept = !!sym("est"), yintercept = !!sym("proportion"))
+      )
   }
 
   if (!is.null(color)) {
     gp <- gp +
-      geom_ssdpoint(data = data, aes(
-        x = !!sym("left"), y = !!sym("y"), shape = !!shape,
-        color = !!color
-      ), stat = "identity") +
-      geom_ssdpoint(data = data, aes(
-        x = !!sym("right"), y = !!sym("y"), shape = !!shape,
-        color = !!color
-      ), stat = "identity") +
+      geom_ssdpoint(
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          shape = !!shape,
+          color = !!color
+        ),
+        stat = "identity"
+      ) +
+      geom_ssdpoint(
+        data = data,
+        aes(
+          x = !!sym("right"),
+          y = !!sym("y"),
+          shape = !!shape,
+          color = !!color
+        ),
+        stat = "identity"
+      ) +
       geom_ssdsegment(
-        data = data, aes(
-          x = !!sym("left"), y = !!sym("y"), xend = !!sym("right"), yend = !!sym("y"),
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          xend = !!sym("right"),
+          yend = !!sym("y"),
           color = !!color
         ),
         stat = "identity"
@@ -173,35 +279,63 @@ ssd_plot <- function(data, pred, left = "Conc", right = left, ...,
   } else {
     gp <- gp +
       geom_ssdpoint(
-        data = data, aes(
-          x = !!sym("left"), y = !!sym("y"), shape = !!shape
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          shape = !!shape
         ),
         stat = "identity"
       ) +
-      geom_ssdpoint(data = data, aes(
-        x = !!sym("right"), y = !!sym("y"), shape = !!shape
-      ), stat = "identity") +
-      geom_ssdsegment(data = data, aes(
-        x = !!sym("left"), y = !!sym("y"), xend = !!sym("right"), yend = !!sym("y")
-      ), stat = "identity")
+      geom_ssdpoint(
+        data = data,
+        aes(
+          x = !!sym("right"),
+          y = !!sym("y"),
+          shape = !!shape
+        ),
+        stat = "identity"
+      ) +
+      geom_ssdsegment(
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          xend = !!sym("right"),
+          yend = !!sym("y")
+        ),
+        stat = "identity"
+      )
   }
 
   hc_value <- NULL
   if (!is.null(hc)) {
     hc_value <- pred$est[pred$proportion %in% hc]
   }
-  gp <- gp + plot_coord_scale(data,
-    xlab = xlab, ylab = ylab, big.mark = big.mark, decimal.mark = decimal.mark,
-    suffix = suffix,
-    trans = trans, xbreaks = xbreaks, xlimits = xlimits, hc_value = hc_value
-  )
+  gp <- gp +
+    plot_coord_scale(
+      data,
+      xlab = xlab,
+      ylab = ylab,
+      big.mark = big.mark,
+      decimal.mark = decimal.mark,
+      suffix = suffix,
+      trans = trans,
+      xbreaks = xbreaks,
+      xlimits = xlimits,
+      hc_value = hc_value
+    )
 
   if (!is.null(label)) {
     data$right <- (data$right + add_x) * shift_x
-    gp <- gp + geom_text(
-      data = data, aes(x = !!sym("right"), y = !!sym("y"), label = !!label),
-      hjust = 0, size = label_size, fontface = "italic"
-    )
+    gp <- gp +
+      geom_text(
+        data = data,
+        aes(x = !!sym("right"), y = !!sym("y"), label = !!label),
+        hjust = 0,
+        size = label_size,
+        fontface = "italic"
+      )
   }
 
   if (theme_classic) {

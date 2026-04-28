@@ -62,7 +62,11 @@ test_that("gof censored same parameters5", {
   data$right <- data$Conc
   data$Conc[c(3, 6, 8)] <- NA
 
-  fits <- ssd_fit_dists(data, right = "right", dists = c("llogis_llogis", "lnorm_lnorm"))
+  fits <- ssd_fit_dists(
+    data,
+    right = "right",
+    dists = c("llogis_llogis", "lnorm_lnorm")
+  )
 
   gof_statistic <- ssd_gof(fits, wt = TRUE)
   expect_snapshot_data(gof_statistic, "gof_statistic5")
@@ -76,7 +80,11 @@ test_that("gof censored same diff parameters", {
   data$right <- data$Conc
   data$Conc[c(3, 6, 8)] <- NA
 
-  fits <- ssd_fit_dists(data, right = "right", dists = c("llogis", "lnorm_lnorm"))
+  fits <- ssd_fit_dists(
+    data,
+    right = "right",
+    dists = c("llogis", "lnorm_lnorm")
+  )
 
   gof_statistic <- ssd_gof(fits, wt = TRUE)
   expect_snapshot_data(gof_statistic, "gof_statisticn")

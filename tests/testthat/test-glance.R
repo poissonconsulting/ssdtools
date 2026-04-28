@@ -82,8 +82,16 @@ test_that("glance reweight same log_lik", {
   data$Upper[1] <- data$Conc[1] * 1.0001
 
   fit <- ssd_fit_dists(data, dists = c("gamma", "llogis", "lnorm"))
-  fit_cens <- ssd_fit_dists(data, dists = c("gamma", "llogis", "lnorm"), right = "Upper")
-  fit_cens_n <- ssd_fit_dists(data, dists = c("gamma", "llogis", "lnorm_lnorm"), right = "Upper")
+  fit_cens <- ssd_fit_dists(
+    data,
+    dists = c("gamma", "llogis", "lnorm"),
+    right = "Upper"
+  )
+  fit_cens_n <- ssd_fit_dists(
+    data,
+    dists = c("gamma", "llogis", "lnorm_lnorm"),
+    right = "Upper"
+  )
 
   glance <- glance(fit, wt = TRUE)
   glance_cens <- glance(fit_cens, wt = TRUE)

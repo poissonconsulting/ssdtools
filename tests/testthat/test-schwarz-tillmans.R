@@ -17,7 +17,12 @@
 
 test_that("schwarz-tillmans", {
   dists <- c(
-    "gompertz", "weibull", "gamma", "lnorm", "llogis", "lgumbel"
+    "gompertz",
+    "weibull",
+    "gamma",
+    "lnorm",
+    "llogis",
+    "lgumbel"
   )
   withr::with_seed(50, {
     fits <- ssd_fit_dists(ssddata::ccme_boron, dists = dists)

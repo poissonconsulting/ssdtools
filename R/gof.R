@@ -75,7 +75,9 @@ ssd_gof.fitdists <- function(x, ..., pvalue = FALSE, wt = FALSE) {
 
   if (vld_flag(wt) && !wt) {
     lifecycle::deprecate_soft(
-      "2.3.1", I("ssd_gof(wt = FALSE)"), I("ssd_gof(wt = TRUE)"),
+      "2.3.1",
+      I("ssd_gof(wt = FALSE)"),
+      I("ssd_gof(wt = TRUE)"),
       "Please set the `wt` argument to `ssd_gof()` to be TRUE which will rename the 'weight' column to 'wt' and then update your downstream code accordingly."
     )
   }

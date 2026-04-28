@@ -27,7 +27,10 @@
 #' @keywords internal
 #' @export
 ssd_plot_cf <- function(data, left = "Conc") {
-  lifecycle::deprecate_stop("0.3.5", "ssd_plot_cf()", "fitdistrplus::descdist()",
+  lifecycle::deprecate_stop(
+    "0.3.5",
+    "ssd_plot_cf()",
+    "fitdistrplus::descdist()",
     details = "Please use fitdistrplus::descdist(data$Conc, boot = 100L)."
   )
 }

@@ -19,8 +19,16 @@ test_that("dists all", {
   expect_identical(
     ssd_dists_all(valid = NULL),
     c(
-      "burrIII3", "gamma", "gompertz", "invpareto", "lgumbel", "llogis",
-      "llogis_llogis", "lnorm", "lnorm_lnorm", "weibull"
+      "burrIII3",
+      "gamma",
+      "gompertz",
+      "invpareto",
+      "lgumbel",
+      "llogis",
+      "llogis_llogis",
+      "lnorm",
+      "lnorm_lnorm",
+      "weibull"
     )
   )
 })
@@ -30,8 +38,15 @@ test_that("dists shiny", {
     expect_identical(
       ssd_dists_shiny(),
       c(
-        "burrIII3", "gamma", "gompertz", "lgumbel", "llogis",
-        "llogis_llogis", "lnorm", "lnorm_lnorm", "weibull"
+        "burrIII3",
+        "gamma",
+        "gompertz",
+        "lgumbel",
+        "llogis",
+        "llogis_llogis",
+        "lnorm",
+        "lnorm_lnorm",
+        "weibull"
       )
     )
   )
@@ -55,5 +70,8 @@ test_that("dists 5 pars", {
 
 test_that("dists bcanz", {
   expect_identical(ssd_dists_bcanz(), ssd_dists(bcanz = TRUE))
-  expect_identical(ssd_dists_bcanz(npars = 2L), c("gamma", "lgumbel", "llogis", "lnorm", "weibull"))
+  expect_identical(
+    ssd_dists_bcanz(npars = 2L),
+    c("gamma", "lgumbel", "llogis", "lnorm", "weibull")
+  )
 })

@@ -20,10 +20,20 @@
 #' @examples
 #'
 #' ssd_plnorm(1)
-ssd_plnorm <- function(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("lnorm",
-    q = q, meanlog = meanlog, sdlog = sdlog,
-    lower.tail = lower.tail, log.p = log.p
+ssd_plnorm <- function(
+  q,
+  meanlog = 0,
+  sdlog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "lnorm",
+    q = q,
+    meanlog = meanlog,
+    sdlog = sdlog,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 
@@ -32,10 +42,20 @@ ssd_plnorm <- function(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FAL
 #' @examples
 #'
 #' ssd_qlnorm(0.5)
-ssd_qlnorm <- function(p, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("lnorm",
-    p = p, meanlog = meanlog, sdlog = sdlog,
-    lower.tail = lower.tail, log.p = log.p
+ssd_qlnorm <- function(
+  p,
+  meanlog = 0,
+  sdlog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "lnorm",
+    p = p,
+    meanlog = meanlog,
+    sdlog = sdlog,
+    lower.tail = lower.tail,
+    log.p = log.p
   )
 }
 

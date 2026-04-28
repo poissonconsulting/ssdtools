@@ -31,9 +31,14 @@ min_discrepancy <- function(dist, meanlog, sdlog, nsim) {
   pars$chk <- NULL
 
   pars <- unlist(pars)
-  optim(pars, discrepancy,
-    fun = fun, meanlog = meanlog, sdlog = sdlog,
-    nsim = nsim, control = list(abstol = 0.01)
+  optim(
+    pars,
+    discrepancy,
+    fun = fun,
+    meanlog = meanlog,
+    sdlog = sdlog,
+    nsim = nsim,
+    control = list(abstol = 0.01)
   )
 }
 
@@ -55,13 +60,24 @@ min_discrepancy <- function(dist, meanlog, sdlog, nsim) {
 #' print(moments)
 #' ssd_hc(moments)
 #' ssd_plot_cdf(moments)
-ssd_match_moments <- function(dists = ssd_dists_bcanz(), meanlog = 1, sdlog = 1, ...,
-                              nsim = 1e+05) {
+ssd_match_moments <- function(
+  dists = ssd_dists_bcanz(),
+  meanlog = 1,
+  sdlog = 1,
+  ...,
+  nsim = 1e+05
+) {
   chk_vector(dists)
   chk_s3_class(dists, "character")
   chk_unused(...)
 
-  pars <- lapply(dists, min_discrepancy, meanlog = meanlog, sdlog = sdlog, nsim = nsim)
+  pars <- lapply(
+    dists,
+    min_discrepancy,
+    meanlog = meanlog,
+    sdlog = sdlog,
+    nsim = nsim
+  )
   pars <- lapply(pars, function(x) x$par)
   names(pars) <- dists
   pars

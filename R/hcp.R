@@ -47,7 +47,18 @@ no_hcp <- function(hc) {
   )
 }
 
-clean_hcp <- function(hcp, ci, level, average, est_method, ci_method, parametric, nboot, min_pboot, samples) {
+clean_hcp <- function(
+  hcp,
+  ci,
+  level,
+  average,
+  est_method,
+  ci_method,
+  parametric,
+  nboot,
+  min_pboot,
+  samples
+) {
   hcp$est_method <- est_method
   hcp$ci_method <- ci_method
   hcp$boot_method <- if (parametric) "parametric" else "non-parametric"
@@ -83,12 +94,42 @@ clean_hcp <- function(hcp, ci, level, average, est_method, ci_method, parametric
   }
 
   hcp |>
-    dplyr::select(c("dist", "value", "est", "se", "lcl", "ucl", "wt", "level", "est_method", "ci_method", "boot_method", "nboot", "pboot", "dists", "samples"))
+    dplyr::select(c(
+      "dist",
+      "value",
+      "est",
+      "se",
+      "lcl",
+      "ucl",
+      "wt",
+      "level",
+      "est_method",
+      "ci_method",
+      "boot_method",
+      "nboot",
+      "pboot",
+      "dists",
+      "samples"
+    ))
 }
 
 hcp2 <- function(
-    x, value, ci, level, nboot, average, est_method, min_pboot, parametric,
-    ci_method, control, hc, save_to, samples, fun) {
+  x,
+  value,
+  ci,
+  level,
+  nboot,
+  average,
+  est_method,
+  min_pboot,
+  parametric,
+  ci_method,
+  control,
+  hc,
+  save_to,
+  samples,
+  fun
+) {
   if (!length(x) || !length(value)) {
     return(no_hcp())
   }
@@ -126,33 +167,86 @@ hcp2 <- function(
   if (!average) {
     hcp <- hcp_ind(
       x,
-      value = value, ci = ci, level = level, nboot = nboot,
+      value = value,
+      ci = ci,
+      level = level,
+      nboot = nboot,
       min_pboot = min_pboot,
-      data = data, rescale = rescale, weighted = weighted, censoring = censoring,
-      min_pmix = min_pmix, range_shape1 = range_shape1, range_shape2 = range_shape2,
-      parametric = parametric, control = control,
-      est_method = est_method, ci_method = ci_method,
-      hc = hc, save_to = save_to, samples = samples, fun = fun
+      data = data,
+      rescale = rescale,
+      weighted = weighted,
+      censoring = censoring,
+      min_pmix = min_pmix,
+      range_shape1 = range_shape1,
+      range_shape2 = range_shape2,
+      parametric = parametric,
+      control = control,
+      est_method = est_method,
+      ci_method = ci_method,
+      hc = hc,
+      save_to = save_to,
+      samples = samples,
+      fun = fun
     )
     hcp$dists <- as.list(hcp$dist)
   } else {
     hcp <- hcp_average(
-      x = x, value = value, ci = ci, level = level, nboot = nboot, est_method = est_method,
-      min_pboot = min_pboot, ci_method = ci_method,
-      data = data, rescale = rescale, weighted = weighted, censoring = censoring,
-      min_pmix = min_pmix, range_shape1 = range_shape1, range_shape2 = range_shape2,
-      parametric = parametric, control = control,
-      hc = hc, save_to = save_to, samples = samples, fun = fun
+      x = x,
+      value = value,
+      ci = ci,
+      level = level,
+      nboot = nboot,
+      est_method = est_method,
+      min_pboot = min_pboot,
+      ci_method = ci_method,
+      data = data,
+      rescale = rescale,
+      weighted = weighted,
+      censoring = censoring,
+      min_pmix = min_pmix,
+      range_shape1 = range_shape1,
+      range_shape2 = range_shape2,
+      parametric = parametric,
+      control = control,
+      hc = hc,
+      save_to = save_to,
+      samples = samples,
+      fun = fun
     )
     hcp$dists <- rep(list(sort(names(x))), nrow(hcp))
   }
-  clean_hcp(hcp, ci = ci, level = level, average = average, est_method = est_method, ci_method = ci_method, parametric = parametric, nboot = nboot, min_pboot = min_pboot, samples = samples)
+  clean_hcp(
+    hcp,
+    ci = ci,
+    level = level,
+    average = average,
+    est_method = est_method,
+    ci_method = ci_method,
+    parametric = parametric,
+    nboot = nboot,
+    min_pboot = min_pboot,
+    samples = samples
+  )
 }
 
 hcp <- function(
-    x, value, ci, level, nboot, average, est_method, delta, min_pboot,
-    parametric, ci_method, control, samples, save_to,
-    hc, fun = fit_tmb) {
+  x,
+  value,
+  ci,
+  level,
+  nboot,
+  average,
+  est_method,
+  delta,
+  min_pboot,
+  parametric,
+  ci_method,
+  control,
+  samples,
+  save_to,
+  hc,
+  fun = fit_tmb
+) {
   chk_vector(value)
   chk_numeric(value)
   chk_flag(ci)
@@ -182,10 +276,20 @@ hcp <- function(
 
   hcp <- hcp2(
     x,
-    value = value, ci = ci, level = level, nboot = nboot,
-    average = average, est_method = est_method, min_pboot = min_pboot,
-    parametric = parametric, ci_method = ci_method,
-    control = control, save_to = save_to, samples = samples, hc = hc, fun = fun
+    value = value,
+    ci = ci,
+    level = level,
+    nboot = nboot,
+    average = average,
+    est_method = est_method,
+    min_pboot = min_pboot,
+    parametric = parametric,
+    ci_method = ci_method,
+    control = control,
+    save_to = save_to,
+    samples = samples,
+    hc = hc,
+    fun = fun
   )
   warn_min_pboot(hcp, min_pboot)
 }

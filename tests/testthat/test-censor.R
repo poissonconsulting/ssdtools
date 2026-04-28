@@ -31,7 +31,10 @@ test_that("ssd_censor use existing right and left", {
   data <- ssddata::ccme_boron
   data$right2 <- data$Conc
   data$left3 <- data$Conc
-  expect_identical(ssd_censor_data(data, left = "left3", right = "right2"), data)
+  expect_identical(
+    ssd_censor_data(data, left = "left3", right = "right2"),
+    data
+  )
 })
 
 test_that("ssd_censor no rows", {
@@ -41,13 +44,22 @@ test_that("ssd_censor no rows", {
 })
 
 test_that("ssd_censor c(2.5, Inf)", {
-  expect_snapshot_data(ssd_censor_data(ssddata::ccme_boron, censoring = c(2.5, Inf)), "boron_25")
+  expect_snapshot_data(
+    ssd_censor_data(ssddata::ccme_boron, censoring = c(2.5, Inf)),
+    "boron_25"
+  )
 })
 
 test_that("ssd_censor c(0, 10)", {
-  expect_snapshot_data(ssd_censor_data(ssddata::ccme_boron, censoring = c(0, 10)), "boron_10")
+  expect_snapshot_data(
+    ssd_censor_data(ssddata::ccme_boron, censoring = c(0, 10)),
+    "boron_10"
+  )
 })
 
 test_that("ssd_censor c(2.5, 10)", {
-  expect_snapshot_data(ssd_censor_data(ssddata::ccme_boron, censoring = c(2.5, 10)), "boron_2510")
+  expect_snapshot_data(
+    ssd_censor_data(ssddata::ccme_boron, censoring = c(2.5, 10)),
+    "boron_2510"
+  )
 })

@@ -19,7 +19,14 @@ test_that("hp", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
 
   withr::with_seed(102, {
-    hp <- ssd_hp(fits, conc = 1, ci = TRUE, nboot = 10, average = FALSE, proportion = FALSE)
+    hp <- ssd_hp(
+      fits,
+      conc = 1,
+      ci = TRUE,
+      nboot = 10,
+      average = FALSE,
+      proportion = FALSE
+    )
   })
   expect_snapshot_data(hp, "hp")
 })
@@ -41,7 +48,24 @@ test_that("hp fitdists works with zero length conc", {
 
   hp <- ssd_hp(fits, numeric(0), proportion = FALSE)
   expect_s3_class(hp, "tbl_df")
-  expect_identical(colnames(hp), c("dist", "conc", "est", "se", "lcl", "ucl", "wt", "est_method", "ci_method", "boot_method", "nboot", "pboot", "samples"))
+  expect_identical(
+    colnames(hp),
+    c(
+      "dist",
+      "conc",
+      "est",
+      "se",
+      "lcl",
+      "ucl",
+      "wt",
+      "est_method",
+      "ci_method",
+      "boot_method",
+      "nboot",
+      "pboot",
+      "samples"
+    )
+  )
   expect_equal(hp$dist, character(0))
   expect_identical(hp$conc, numeric(0))
   expect_equal(hp$est, numeric(0))
@@ -109,7 +133,15 @@ test_that("hp fitdists works with cis", {
   fits <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
 
   withr::with_seed(10, {
-    hp <- ssd_hp(fits, 1, ci = TRUE, nboot = 10, ci_method = "MACL", samples = TRUE, proportion = FALSE)
+    hp <- ssd_hp(
+      fits,
+      1,
+      ci = TRUE,
+      nboot = 10,
+      ci_method = "MACL",
+      samples = TRUE,
+      proportion = FALSE
+    )
   })
   expect_s3_class(hp, "tbl_df")
   expect_snapshot_data(hp, "hp98")
@@ -135,12 +167,43 @@ test_that("hp fitdists gives different answer with model averaging as hp not sam
   data <- ssddata::aims_molybdenum_marine
 
   fits_lgumbel <- ssd_fit_dists(data, dists = "lgumbel")
-  expect_equal(ssd_hp(fits_lgumbel, ssd_hc(fits_lgumbel, proportion = 5 / 100)$est, proportion = TRUE)$est, 5 / 100)
+  expect_equal(
+    ssd_hp(
+      fits_lgumbel,
+      ssd_hc(fits_lgumbel, proportion = 5 / 100)$est,
+      proportion = TRUE
+    )$est,
+    5 / 100
+  )
 
   fits_lnorm_lnorm <- ssd_fit_dists(data, dists = "lnorm_lnorm")
-  expect_equal(ssd_hp(fits_lnorm_lnorm, ssd_hc(fits_lnorm_lnorm, proportion = 5 / 100)$est, proportion = TRUE)$est, 5 / 100)
-  fits_both <- ssd_fit_dists(data, dists = c("lgumbel", "lnorm_lnorm"), min_pmix = 0)
-  expect_equal(ssd_hp(fits_both, ssd_hc(fits_both, proportion = 5 / 100, ci_method = "MACL", est_method = "arithmetic")$est, proportion = TRUE)$est, 4.59194131309822 / 100, tolerance = 1e-06)
+  expect_equal(
+    ssd_hp(
+      fits_lnorm_lnorm,
+      ssd_hc(fits_lnorm_lnorm, proportion = 5 / 100)$est,
+      proportion = TRUE
+    )$est,
+    5 / 100
+  )
+  fits_both <- ssd_fit_dists(
+    data,
+    dists = c("lgumbel", "lnorm_lnorm"),
+    min_pmix = 0
+  )
+  expect_equal(
+    ssd_hp(
+      fits_both,
+      ssd_hc(
+        fits_both,
+        proportion = 5 / 100,
+        ci_method = "MACL",
+        est_method = "arithmetic"
+      )$est,
+      proportion = TRUE
+    )$est,
+    4.59194131309822 / 100,
+    tolerance = 1e-06
+  )
 })
 
 test_that("ssd_hc fitdists works odds", {
@@ -149,11 +212,34 @@ test_that("ssd_hc fitdists works odds", {
   withr::local_seed(99)
   fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds")
   withr::local_seed(99)
-  hp1 <- ssd_hp(fits, average = FALSE, proportion = TRUE, est_method = "multi", ci = TRUE, nboot = 10L)
+  hp1 <- ssd_hp(
+    fits,
+    average = FALSE,
+    proportion = TRUE,
+    est_method = "multi",
+    ci = TRUE,
+    nboot = 10L
+  )
   expect_snapshot_data(hp1, "hpwet1")
-  hp7 <- ssd_hp(fits, conc = 0.7979396, average = FALSE, proportion = TRUE, est_method = "multi", ci = TRUE, nboot = 10L)
+  hp7 <- ssd_hp(
+    fits,
+    conc = 0.7979396,
+    average = FALSE,
+    proportion = TRUE,
+    est_method = "multi",
+    ci = TRUE,
+    nboot = 10L
+  )
   expect_snapshot_data(hp7, "hpwet7")
-  hp10 <- ssd_hp(fits, conc = 10, average = FALSE, proportion = TRUE, est_method = "multi", ci = TRUE, nboot = 10L)
+  hp10 <- ssd_hp(
+    fits,
+    conc = 10,
+    average = FALSE,
+    proportion = TRUE,
+    est_method = "multi",
+    ci = TRUE,
+    nboot = 10L
+  )
   expect_snapshot_data(hp10, "hpwet10")
 })
 
@@ -163,22 +249,47 @@ test_that("ssd_hp fitdists works odds 0.8", {
   withr::local_seed(99)
   fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds", odds_max = 0.8)
   withr::local_seed(99)
-  hp1 <- ssd_hp(fits, average = FALSE, proportion = TRUE, est_method = "multi", ci = TRUE, nboot = 10L)
+  hp1 <- ssd_hp(
+    fits,
+    average = FALSE,
+    proportion = TRUE,
+    est_method = "multi",
+    ci = TRUE,
+    nboot = 10L
+  )
   expect_snapshot_data(hp1, "hpwet081")
-  hp7 <- ssd_hp(fits, conc = 0.7591709, average = FALSE, proportion = TRUE, est_method = "multi", ci = TRUE, nboot = 10L)
+  hp7 <- ssd_hp(
+    fits,
+    conc = 0.7591709,
+    average = FALSE,
+    proportion = TRUE,
+    est_method = "multi",
+    ci = TRUE,
+    nboot = 10L
+  )
   expect_snapshot_data(hp7, "hpwet087")
 })
 
 test_that("ssd_hp fitdists averages", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
-  hp <- ssd_hp(fits, ci_method = "MACL", est_method = "arithmetic", proportion = FALSE)
+  hp <- ssd_hp(
+    fits,
+    ci_method = "MACL",
+    est_method = "arithmetic",
+    proportion = FALSE
+  )
   expect_s3_class(hp, "tbl_df")
   expect_snapshot_data(hp, "hp145")
 })
 
 test_that("ssd_hp fitdists geomean", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
-  hp <- ssd_hp(fits, ci_method = "MACL", est_method = "geometric", proportion = FALSE)
+  hp <- ssd_hp(
+    fits,
+    ci_method = "MACL",
+    est_method = "geometric",
+    proportion = FALSE
+  )
   expect_s3_class(hp, "tbl_df")
   expect_snapshot_data(hp, "hp145g")
 })
@@ -213,7 +324,14 @@ test_that("ssd_hp doesn't calculate cis with inconsistent censoring", {
   data$Conc2[1] <- 1.0
   fits <- ssd_fit_dists(data, dists = c("lnorm", "llogis"))
   withr::with_seed(10, {
-    hp <- ssd_hp(fits, 1, ci = TRUE, nboot = 10, ci_method = "MACL", proportion = FALSE)
+    hp <- ssd_hp(
+      fits,
+      1,
+      ci = TRUE,
+      nboot = 10,
+      ci_method = "MACL",
+      proportion = FALSE
+    )
   })
   expect_snapshot_value(hp$se, style = "deparse")
 
@@ -248,7 +366,14 @@ test_that("ssd_hp calculates cis with equally weighted data", {
   data$Weight <- rep(2, nrow(data))
   fits <- ssd_fit_dists(data, weight = "Weight", dists = "lnorm")
   withr::with_seed(10, {
-    hp <- ssd_hp(fits, 1, ci = TRUE, nboot = 10, ci_method = "MACL", proportion = FALSE)
+    hp <- ssd_hp(
+      fits,
+      1,
+      ci = TRUE,
+      nboot = 10,
+      ci_method = "MACL",
+      proportion = FALSE
+    )
   })
   expect_snapshot_value(hp$se, style = "deparse")
 })
@@ -257,7 +382,14 @@ test_that("ssd_hp calculates cis with two distributions", {
   data <- ssddata::ccme_boron
   fits <- ssd_fit_dists(data, dists = c("lnorm", "llogis"))
   withr::with_seed(10, {
-    hp <- ssd_hp(fits, 1, ci = TRUE, nboot = 10, ci_method = "MACL", proportion = FALSE)
+    hp <- ssd_hp(
+      fits,
+      1,
+      ci = TRUE,
+      nboot = 10,
+      ci_method = "MACL",
+      proportion = FALSE
+    )
   })
   expect_snapshot_value(hp$se, style = "deparse")
 })
@@ -294,12 +426,30 @@ test_that("ssd_hp effect with higher weight two distributions", {
   data$Weight <- rep(1, nrow(data))
   fits <- ssd_fit_dists(data, weight = "Weight", dists = c("lnorm", "llogis"))
   data$Weight <- rep(10, nrow(data))
-  fits_10 <- ssd_fit_dists(data, weight = "Weight", dists = c("lnorm", "llogis"))
+  fits_10 <- ssd_fit_dists(
+    data,
+    weight = "Weight",
+    dists = c("lnorm", "llogis")
+  )
   withr::with_seed(10, {
-    hp <- ssd_hp(fits, 3, ci = TRUE, nboot = 10, ci_method = "MACL", proportion = FALSE)
+    hp <- ssd_hp(
+      fits,
+      3,
+      ci = TRUE,
+      nboot = 10,
+      ci_method = "MACL",
+      proportion = FALSE
+    )
   })
   withr::with_seed(10, {
-    hp_10 <- ssd_hp(fits_10, 3, ci = TRUE, nboot = 10, ci_method = "MACL", proportion = FALSE)
+    hp_10 <- ssd_hp(
+      fits_10,
+      3,
+      ci = TRUE,
+      nboot = 10,
+      ci_method = "MACL",
+      proportion = FALSE
+    )
   })
   expect_snapshot_value(hp$est, style = "deparse")
   expect_snapshot_value(hp_10$est, style = "deparse")
@@ -309,14 +459,37 @@ test_that("ssd_hp effect with higher weight two distributions", {
 
 test_that("ssd_hp cis with non-convergence", {
   withr::with_seed(99, {
-    conc <- ssd_rlnorm_lnorm(100, meanlog1 = 0, meanlog2 = 1, sdlog1 = 1 / 10, sdlog2 = 1 / 10, pmix = 0.2)
+    conc <- ssd_rlnorm_lnorm(
+      100,
+      meanlog1 = 0,
+      meanlog2 = 1,
+      sdlog1 = 1 / 10,
+      sdlog2 = 1 / 10,
+      pmix = 0.2
+    )
     data <- data.frame(Conc = conc)
     fit <- ssd_fit_dists(data, dists = "lnorm_lnorm", min_pmix = 0.15)
     expect_identical(attr(fit, "min_pmix"), 0.15)
-    hp15 <- ssd_hp(fit, conc = 1, ci = TRUE, nboot = 100, min_pboot = 0.9, proportion = FALSE)
+    hp15 <- ssd_hp(
+      fit,
+      conc = 1,
+      ci = TRUE,
+      nboot = 100,
+      min_pboot = 0.9,
+      proportion = FALSE
+    )
     attr(fit, "min_pmix") <- 0.3
     expect_identical(attr(fit, "min_pmix"), 0.3)
-    hp30 <- ssd_hp(fit, conc = 1, ci = TRUE, nboot = 100, min_pboot = 0.9, ci_method = "MACL", samples = TRUE, proportion = FALSE)
+    hp30 <- ssd_hp(
+      fit,
+      conc = 1,
+      ci = TRUE,
+      nboot = 100,
+      min_pboot = 0.9,
+      ci_method = "MACL",
+      samples = TRUE,
+      proportion = FALSE
+    )
   })
   expect_s3_class(hp30, "tbl")
   expect_snapshot_data(hp30, "hp_30")
@@ -325,7 +498,15 @@ test_that("ssd_hp cis with non-convergence", {
 test_that("ssd_hp with 1 bootstrap", {
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
   withr::with_seed(10, {
-    hp <- ssd_hp(fit, 1, ci = TRUE, nboot = 1, ci_method = "MACL", samples = TRUE, proportion = FALSE)
+    hp <- ssd_hp(
+      fit,
+      1,
+      ci = TRUE,
+      nboot = 1,
+      ci_method = "MACL",
+      samples = TRUE,
+      proportion = FALSE
+    )
   })
   expect_snapshot_data(hp, "hp_1")
 })
@@ -334,12 +515,26 @@ test_that("ssd_hp fix_weight", {
   fits <- ssd_fit_dists(ssddata::ccme_boron, dists = c("lnorm", "lgumbel"))
 
   withr::with_seed(102, {
-    hc_unfix <- ssd_hp(fits, nboot = 100, ci = TRUE, ci_method = "multi_free", samples = TRUE, proportion = FALSE)
+    hc_unfix <- ssd_hp(
+      fits,
+      nboot = 100,
+      ci = TRUE,
+      ci_method = "multi_free",
+      samples = TRUE,
+      proportion = FALSE
+    )
   })
   expect_snapshot_data(hc_unfix, "hc_unfix")
 
   withr::with_seed(102, {
-    hc_fix <- ssd_hp(fits, nboot = 100, ci = TRUE, ci_method = "multi_fixed", samples = TRUE, proportion = FALSE)
+    hc_fix <- ssd_hp(
+      fits,
+      nboot = 100,
+      ci = TRUE,
+      ci_method = "multi_fixed",
+      samples = TRUE,
+      proportion = FALSE
+    )
   })
   expect_snapshot_data(hc_fix, "hc_fix")
 })
@@ -347,16 +542,46 @@ test_that("ssd_hp fix_weight", {
 test_that("hp multis match", {
   fits <- ssd_fit_dists(ssddata::ccme_boron, dists = c("lnorm", "gamma"))
   withr::with_seed(102, {
-    hp_tf <- ssd_hp(fits, ci = TRUE, nboot = 10, average = TRUE, ci_method = "weighted_samples", proportion = FALSE)
+    hp_tf <- ssd_hp(
+      fits,
+      ci = TRUE,
+      nboot = 10,
+      average = TRUE,
+      ci_method = "weighted_samples",
+      proportion = FALSE
+    )
   })
   withr::with_seed(102, {
-    hp_ft <- ssd_hp(fits, ci = TRUE, nboot = 10, average = TRUE, est_method = "arithmetic", ci_method = "multi_fixed", proportion = FALSE)
+    hp_ft <- ssd_hp(
+      fits,
+      ci = TRUE,
+      nboot = 10,
+      average = TRUE,
+      est_method = "arithmetic",
+      ci_method = "multi_fixed",
+      proportion = FALSE
+    )
   })
   withr::with_seed(102, {
-    hp_ff <- ssd_hp(fits, ci = TRUE, nboot = 10, average = TRUE, est_method = "arithmetic", ci_method = "weighted_samples", proportion = FALSE)
+    hp_ff <- ssd_hp(
+      fits,
+      ci = TRUE,
+      nboot = 10,
+      average = TRUE,
+      est_method = "arithmetic",
+      ci_method = "weighted_samples",
+      proportion = FALSE
+    )
   })
   withr::with_seed(102, {
-    hp_tt <- ssd_hp(fits, ci = TRUE, nboot = 10, average = TRUE, ci_method = "multi_fixed", proportion = FALSE)
+    hp_tt <- ssd_hp(
+      fits,
+      ci = TRUE,
+      nboot = 10,
+      average = TRUE,
+      ci_method = "multi_fixed",
+      proportion = FALSE
+    )
   })
 
   expect_identical(hp_tf$est, hp_tt$est)
@@ -368,13 +593,28 @@ test_that("hp multis match", {
 test_that("hp weighted bootie", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   withr::with_seed(102, {
-    hp_weighted2 <- ssd_hp(fits,
-      ci = TRUE, nboot = 10, average = TRUE, est_method = "arithmetic", ci_method = "weighted_samples",
-      samples = TRUE, proportion = FALSE
+    hp_weighted2 <- ssd_hp(
+      fits,
+      ci = TRUE,
+      nboot = 10,
+      average = TRUE,
+      est_method = "arithmetic",
+      ci_method = "weighted_samples",
+      samples = TRUE,
+      proportion = FALSE
     )
   })
   withr::with_seed(102, {
-    hp_unweighted2 <- ssd_hp(fits, ci = TRUE, nboot = 10, average = TRUE, est_method = "arithmetic", ci_method = "MACL", samples = TRUE, proportion = FALSE)
+    hp_unweighted2 <- ssd_hp(
+      fits,
+      ci = TRUE,
+      nboot = 10,
+      average = TRUE,
+      est_method = "arithmetic",
+      ci_method = "MACL",
+      samples = TRUE,
+      proportion = FALSE
+    )
   })
 
   expect_identical(hp_weighted2$est, hp_unweighted2$est)
@@ -407,7 +647,12 @@ test_that("hp est_method = FALSE deprecated and overrides est_method", {
 
   withr::with_seed(10, {
     lifecycle::expect_deprecated({
-      false <- ssd_hp(fits, multi_est = FALSE, est_method = "geometric", proportion = FALSE)
+      false <- ssd_hp(
+        fits,
+        multi_est = FALSE,
+        est_method = "geometric",
+        proportion = FALSE
+      )
     })
   })
 
@@ -418,7 +663,11 @@ test_that("hp ci_method = 'weighted_arithmetic' deprecated for MACL", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   withr::with_seed(10, {
     lifecycle::expect_deprecated({
-      weighted_arithmetic <- ssd_hp(fits, ci_method = "weighted_arithmetic", proportion = FALSE)
+      weighted_arithmetic <- ssd_hp(
+        fits,
+        ci_method = "weighted_arithmetic",
+        proportion = FALSE
+      )
     })
   })
 

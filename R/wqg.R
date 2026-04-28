@@ -35,7 +35,8 @@
 #' }
 ssd_wqg_bc <- function(data, left = "Conc") {
   lifecycle::deprecate_warn(
-    "2.0.0", "ssd_wqg_bc()",
+    "2.0.0",
+    "ssd_wqg_bc()",
     details = "Please use `ssd_fit_bcanz()` and `ssd_hc_bcanz()` instead."
   )
   fits <- ssd_fit_bcanz(data, left = left)
@@ -63,7 +64,8 @@ ssd_wqg_bc <- function(data, left = "Conc") {
 #' }
 ssd_wqg_burrlioz <- function(data, left = "Conc") {
   lifecycle::deprecate_warn(
-    "2.0.0", "ssd_wqg_burrlioz()",
+    "2.0.0",
+    "ssd_wqg_burrlioz()",
     details = "Please use `ssd_fit_burrlioz()` and `ssd_hc()` instead."
   )
   fit <- ssd_fit_burrlioz(data, left = left, rescale = FALSE)

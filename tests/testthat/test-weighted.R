@@ -55,7 +55,11 @@ test_that("weighted works", {
   hc1 <- ssd_hc(fit1)
   expect_snapshot_data(hc1, "hc1")
 
-  fit1w <- ssd_fit_dists(subset(data, Weight == 1), dists = "lnorm", weight = "Weight")
+  fit1w <- ssd_fit_dists(
+    subset(data, Weight == 1),
+    dists = "lnorm",
+    weight = "Weight"
+  )
   hc1w <- ssd_hc(fit1w)
   expect_snapshot_data(hc1w, "hc1w")
 

@@ -21,17 +21,17 @@ library(tibble)
 library(usethis)
 
 dist_data <- tibble::tribble(
-  ~dist, ~bcanz, ~tails, ~npars, ~valid, ~bound,
-  "burrIII3", FALSE, TRUE, 3L, TRUE, TRUE,
-  "gamma", TRUE, TRUE, 2L, TRUE, FALSE,
-  "gompertz", FALSE, TRUE, 2L, TRUE, FALSE,
-  "invpareto", FALSE, FALSE, 2L, FALSE, FALSE,
-  "lgumbel", TRUE, TRUE, 2L, TRUE, FALSE,
-  "llogis", TRUE, TRUE, 2L, TRUE, FALSE,
-  "llogis_llogis", FALSE, TRUE, 5L, TRUE, TRUE,
-  "lnorm", TRUE, TRUE, 2L, TRUE, FALSE,
-  "lnorm_lnorm", TRUE, TRUE, 5L, TRUE, TRUE,
-  "weibull", TRUE, TRUE, 2L, TRUE, FALSE
+  ~dist           , ~bcanz , ~tails , ~npars , ~valid , ~bound ,
+  "burrIII3"      , FALSE  , TRUE   , 3L     , TRUE   , TRUE   ,
+  "gamma"         , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
+  "gompertz"      , FALSE  , TRUE   , 2L     , TRUE   , FALSE  ,
+  "invpareto"     , FALSE  , FALSE  , 2L     , FALSE  , FALSE  ,
+  "lgumbel"       , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
+  "llogis"        , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
+  "llogis_llogis" , FALSE  , TRUE   , 5L     , TRUE   , TRUE   ,
+  "lnorm"         , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
+  "lnorm_lnorm"   , TRUE   , TRUE   , 5L     , TRUE   , TRUE   ,
+  "weibull"       , TRUE   , TRUE   , 2L     , TRUE   , FALSE
 )
 
 use_data(dist_data, overwrite = TRUE)

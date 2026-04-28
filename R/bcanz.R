@@ -52,14 +52,22 @@ ssd_dists_bcanz <- function(npars = c(2L, 5L)) {
 #' @export
 #' @examples
 #' ssd_fit_bcanz(ssddata::ccme_boron)
-ssd_fit_bcanz <- function(data, left = "Conc", ..., dists = ssd_dists_bcanz(), rescale = FALSE, silent = FALSE) {
+ssd_fit_bcanz <- function(
+  data,
+  left = "Conc",
+  ...,
+  dists = ssd_dists_bcanz(),
+  rescale = FALSE,
+  silent = FALSE
+) {
   chk_data(data)
   chk_unused(...)
   chk_subset(dists, ssd_dists_bcanz())
   chk_flag(rescale)
   chk_flag(silent)
 
-  ssd_fit_dists(data,
+  ssd_fit_dists(
+    data,
     left = left,
     right = left,
     weight = NULL,
@@ -93,9 +101,18 @@ ssd_fit_bcanz <- function(data, left = "Conc", ..., dists = ssd_dists_bcanz(), r
 #' @examples
 #' fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 #' ssd_hc_bcanz(fits, nboot = 100)
-ssd_hc_bcanz <- function(x, proportion = c(0.01, 0.05, 0.1, 0.2), ..., average = TRUE, ci = FALSE, nboot = 10000, min_pboot = 0.8) {
+ssd_hc_bcanz <- function(
+  x,
+  proportion = c(0.01, 0.05, 0.1, 0.2),
+  ...,
+  average = TRUE,
+  ci = FALSE,
+  nboot = 10000,
+  min_pboot = 0.8
+) {
   chk_unused(...)
-  ssd_hc(x,
+  ssd_hc(
+    x,
     proportion = proportion,
     average = average,
     ci = ci,
@@ -127,18 +144,30 @@ ssd_hc_bcanz <- function(x, proportion = c(0.01, 0.05, 0.1, 0.2), ..., average =
 #' @examples
 #' fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 #' ssd_hp_bcanz(fits, nboot = 100)
-ssd_hp_bcanz <- function(x, conc = 1, ..., average = TRUE, ci = FALSE, nboot = 10000, min_pboot = 0.8, proportion = FALSE) {
+ssd_hp_bcanz <- function(
+  x,
+  conc = 1,
+  ...,
+  average = TRUE,
+  ci = FALSE,
+  nboot = 10000,
+  min_pboot = 0.8,
+  proportion = FALSE
+) {
   chk_unused(...)
 
   if (missing(proportion) || isFALSE(proportion)) {
     lifecycle::deprecate_soft(
-      "2.3.1", I("ssd_hp(proportion = FALSE)"), I("ssd_hp(proportion = TRUE)"),
+      "2.3.1",
+      I("ssd_hp(proportion = FALSE)"),
+      I("ssd_hp(proportion = TRUE)"),
       "Please set the `proportion` argument to `ssd_hp_bcanz()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly."
     )
   }
   chk_flag(proportion)
 
-  ssd_hp(x,
+  ssd_hp(
+    x,
     conc = conc,
     average = average,
     ci = ci,

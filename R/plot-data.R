@@ -25,15 +25,26 @@
 #' @export
 #' @examples
 #' ssd_plot_data(ssddata::ccme_boron, label = "Species", shape = "Group")
-ssd_plot_data <- function(data, left = "Conc", right = left, ...,
-                          label = NULL, shape = NULL, color = NULL, size = 2.5,
-                          xlab = "Concentration", ylab = "Species Affected",
-                          shift_x = 3, add_x = 0,
-                          big.mark = ",", 
-                          decimal.mark = getOption("OutDec", "."),
-                          suffix = "%",
-                          bounds = c(left = 1, right = 1),
-                          trans = "log10", xbreaks = waiver()) {
+ssd_plot_data <- function(
+  data,
+  left = "Conc",
+  right = left,
+  ...,
+  label = NULL,
+  shape = NULL,
+  color = NULL,
+  size = 2.5,
+  xlab = "Concentration",
+  ylab = "Species Affected",
+  shift_x = 3,
+  add_x = 0,
+  big.mark = ",",
+  decimal.mark = getOption("OutDec", "."),
+  suffix = "%",
+  bounds = c(left = 1, right = 1),
+  trans = "log10",
+  xbreaks = waiver()
+) {
   .chk_data(data, left, right, weight = NULL, missing = TRUE)
   chk_unused(...)
   chk_null_or(label, vld = vld_string)
@@ -47,7 +58,6 @@ ssd_plot_data <- function(data, left = "Conc", right = left, ...,
   chk_range(add_x, c(-1000, 1000))
   chk_string(big.mark)
   chk_string(decimal.mark)
-
 
   .chk_bounds(bounds)
 
@@ -63,17 +73,33 @@ ssd_plot_data <- function(data, left = "Conc", right = left, ...,
 
   if (!is.null(color)) {
     gp <- gp +
-      geom_ssdpoint(data = data, aes(
-        x = !!sym("left"), y = !!sym("y"), shape = !!shape,
-        color = !!color
-      ), stat = "identity") +
-      geom_ssdpoint(data = data, aes(
-        x = !!sym("right"), y = !!sym("y"), shape = !!shape,
-        color = !!color
-      ), stat = "identity") +
+      geom_ssdpoint(
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          shape = !!shape,
+          color = !!color
+        ),
+        stat = "identity"
+      ) +
+      geom_ssdpoint(
+        data = data,
+        aes(
+          x = !!sym("right"),
+          y = !!sym("y"),
+          shape = !!shape,
+          color = !!color
+        ),
+        stat = "identity"
+      ) +
       geom_ssdsegment(
-        data = data, aes(
-          x = !!sym("left"), y = !!sym("y"), xend = !!sym("right"), yend = !!sym("y"),
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          xend = !!sym("right"),
+          yend = !!sym("y"),
           color = !!color
         ),
         stat = "identity"
@@ -81,30 +107,57 @@ ssd_plot_data <- function(data, left = "Conc", right = left, ...,
   } else {
     gp <- gp +
       geom_ssdpoint(
-        data = data, aes(
-          x = !!sym("left"), y = !!sym("y"), shape = !!shape
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          shape = !!shape
         ),
         stat = "identity"
       ) +
-      geom_ssdpoint(data = data, aes(
-        x = !!sym("right"), y = !!sym("y"), shape = !!shape
-      ), stat = "identity") +
-      geom_ssdsegment(data = data, aes(
-        x = !!sym("left"), y = !!sym("y"), xend = !!sym("right"), yend = !!sym("y")
-      ), stat = "identity")
+      geom_ssdpoint(
+        data = data,
+        aes(
+          x = !!sym("right"),
+          y = !!sym("y"),
+          shape = !!shape
+        ),
+        stat = "identity"
+      ) +
+      geom_ssdsegment(
+        data = data,
+        aes(
+          x = !!sym("left"),
+          y = !!sym("y"),
+          xend = !!sym("right"),
+          yend = !!sym("y")
+        ),
+        stat = "identity"
+      )
   }
 
-  gp <- gp + plot_coord_scale(data,
-    xlab = xlab, ylab = ylab, big.mark = big.mark, decimal.mark = decimal.mark, suffix = suffix,
-    trans = trans, xbreaks = xbreaks
-  )
+  gp <- gp +
+    plot_coord_scale(
+      data,
+      xlab = xlab,
+      ylab = ylab,
+      big.mark = big.mark,
+      decimal.mark = decimal.mark,
+      suffix = suffix,
+      trans = trans,
+      xbreaks = xbreaks
+    )
 
   if (!is.null(label)) {
     data$right <- (data$right + add_x) * shift_x
-    gp <- gp + geom_text(
-      data = data, aes(x = !!sym("right"), y = !!sym("y"), label = !!label),
-      hjust = 0, size = size, fontface = "italic"
-    )
+    gp <- gp +
+      geom_text(
+        data = data,
+        aes(x = !!sym("right"), y = !!sym("y"), label = !!label),
+        hjust = 0,
+        size = size,
+        fontface = "italic"
+      )
   }
 
   gp

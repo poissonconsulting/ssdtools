@@ -24,8 +24,14 @@
 #' ssd_pal()
 ssd_pal <- function() {
   values <- c(
-    "#999999", "#E69F00", "#56B4E9", "#009E73",
-    "#0072B2", "#D55E00", "#CC79A7", "#F0E442"
+    "#999999",
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#0072B2",
+    "#D55E00",
+    "#CC79A7",
+    "#F0E442"
   )
   f <- manual_pal(values)
   attr(f, "max_n") <- length(values)
@@ -78,17 +84,24 @@ scale_fill_ssd <- function(...) {
 #' @examples
 #' ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
 #'   geom_ssdpoint()
-geom_ssdpoint <- function(mapping = NULL,
-                          data = NULL,
-                          stat = "ssdpoint",
-                          position = "identity",
-                          ...,
-                          na.rm = FALSE,
-                          show.legend = NA,
-                          inherit.aes = TRUE) {
+geom_ssdpoint <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "ssdpoint",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   layer(
-    data = data, mapping = mapping, stat = stat, geom = GeomSsdpoint,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomSsdpoint,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(na.rm = na.rm, ...)
   )
 }
@@ -106,24 +119,35 @@ geom_ssdpoint <- function(mapping = NULL,
 #' @examples
 #' ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc, xend = Conc * 2)) +
 #'   geom_ssdsegment()
-geom_ssdsegment <- function(mapping = NULL,
-                            data = NULL,
-                            stat = "ssdsegment",
-                            position = "identity",
-                            ...,
-                            arrow = NULL,
-                            arrow.fill = NULL,
-                            lineend = "butt",
-                            linejoin = "round",
-                            na.rm = FALSE,
-                            show.legend = NA,
-                            inherit.aes = TRUE) {
+geom_ssdsegment <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "ssdsegment",
+  position = "identity",
+  ...,
+  arrow = NULL,
+  arrow.fill = NULL,
+  lineend = "butt",
+  linejoin = "round",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   layer(
-    data = data, mapping = mapping, stat = stat, geom = GeomSsdsegment,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomSsdsegment,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(
-      arrow = arrow, arrow.fill = arrow.fill,
-      lineend = lineend, linejoin = linejoin, na.rm = na.rm, ...
+      arrow = arrow,
+      arrow.fill = arrow.fill,
+      lineend = lineend,
+      linejoin = linejoin,
+      na.rm = na.rm,
+      ...
     )
   )
 }
@@ -142,13 +166,15 @@ geom_ssdsegment <- function(mapping = NULL,
 #' ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
 #'   geom_ssdpoint() +
 #'   geom_hcintersect(xintercept = 1.5, yintercept = 0.05)
-geom_hcintersect <- function(mapping = NULL,
-                             data = NULL,
-                             ...,
-                             xintercept,
-                             yintercept,
-                             na.rm = FALSE,
-                             show.legend = NA) {
+geom_hcintersect <- function(
+  mapping = NULL,
+  data = NULL,
+  ...,
+  xintercept,
+  yintercept,
+  na.rm = FALSE,
+  show.legend = NA
+) {
   if (!missing(xintercept)) {
     data <- data.frame(xintercept = xintercept)
     mapping <- aes(xintercept = xintercept)
@@ -167,8 +193,13 @@ geom_hcintersect <- function(mapping = NULL,
   }
 
   layer(
-    data = data, mapping = mapping, stat = StatIdentity, geom = GeomHcintersect,
-    position = PositionIdentity, show.legend = show.legend, inherit.aes = FALSE,
+    data = data,
+    mapping = mapping,
+    stat = StatIdentity,
+    geom = GeomHcintersect,
+    position = PositionIdentity,
+    show.legend = show.legend,
+    inherit.aes = FALSE,
     params = list(na.rm = na.rm, ...)
   )
 }
@@ -186,17 +217,24 @@ geom_hcintersect <- function(mapping = NULL,
 #' @examples
 #' gp <- ggplot2::ggplot(boron_pred) +
 #'   geom_xribbon(ggplot2::aes(xmin = lcl, xmax = ucl, y = proportion))
-geom_xribbon <- function(mapping = NULL,
-                         data = NULL,
-                         stat = "identity",
-                         position = "identity",
-                         ...,
-                         na.rm = FALSE,
-                         show.legend = NA,
-                         inherit.aes = TRUE) {
+geom_xribbon <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   layer(
-    data = data, mapping = mapping, stat = stat, geom = GeomXribbon,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomXribbon,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(na.rm = na.rm, ...)
   )
 }
@@ -211,14 +249,16 @@ geom_xribbon <- function(mapping = NULL,
 #' @inheritParams ggplot2::geom_point
 #' @keywords internal
 #' @export
-geom_ssd <- function(mapping = NULL,
-                     data = NULL,
-                     stat = "ssdpoint",
-                     position = "identity",
-                     ...,
-                     na.rm = FALSE,
-                     show.legend = NA,
-                     inherit.aes = TRUE) {
+geom_ssd <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "ssdpoint",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   lifecycle::deprecate_stop("0.3.5", "geom_ssd()", "geom_ssdpoint()")
 }
 
@@ -234,13 +274,15 @@ geom_ssd <- function(mapping = NULL,
 #' @family ggplot2
 #' @keywords internal
 #' @export
-stat_ssd <- function(mapping = NULL,
-                     data = NULL,
-                     geom = "point",
-                     position = "identity",
-                     ...,
-                     na.rm = FALSE,
-                     show.legend = NA,
-                     inherit.aes = TRUE) {
+stat_ssd <- function(
+  mapping = NULL,
+  data = NULL,
+  geom = "point",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   lifecycle::deprecate_stop("0.3.5", "stat_ssd()")
 }

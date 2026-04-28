@@ -52,7 +52,9 @@ glance.fitdists <- function(x, ..., wt = FALSE) {
 
   if (vld_flag(wt) && !wt) {
     lifecycle::deprecate_soft(
-      "2.3.1", I("glance(wt = FALSE)"), I("glance(wt = TRUE)"),
+      "2.3.1",
+      I("glance(wt = FALSE)"),
+      I("glance(wt = TRUE)"),
       "Please set the `wt` argument to `glance()` to be TRUE which will rename the 'weight' column to 'wt' and then update your downstream code accordingly."
     )
   }

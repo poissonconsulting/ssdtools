@@ -32,7 +32,9 @@
 #' }
 comma_signif <- function(x, digits = 3, ..., big.mark = ",") {
   lifecycle::deprecate_soft(
-    "2.0.0", "comma_signif()", "ssd_label_comma()",
+    "2.0.0",
+    "comma_signif()",
+    "ssd_label_comma()",
     details = "Use `labels = ssd_label_comma()` instead of `labels = comma_signif` when constructing `ggplot` objects."
   )
 
@@ -44,7 +46,11 @@ comma_signif <- function(x, digits = 3, ..., big.mark = ",") {
   x <- signif(x, digits = digits)
   y <- as.character(x)
   bol <- !is.na(x) & as.numeric(x) >= 1000
-  y[bol] <- stringr::str_replace_all(y[bol], "(\\d{1,1})(\\d{3,3}(?<=\\.|$))", paste0("\\1", big.mark, "\\2"))
+  y[bol] <- stringr::str_replace_all(
+    y[bol],
+    "(\\d{1,1})(\\d{3,3}(?<=\\.|$))",
+    paste0("\\1", big.mark, "\\2")
+  )
   y
 }
 
@@ -61,9 +67,15 @@ ssd_ecd <- function(x, ties.method = "first") {
     lifecycle::deprecate_warn("2.3.0", "ssd_ecd(ties.method)")
   }
   chk_numeric(x)
-  if (!length(x)) return(numeric())
-  if (length(x) == 1L) return(0.5)
-  if (anyNA(x)) return(rep(NA_real_, length(x)))
+  if (!length(x)) {
+    return(numeric())
+  }
+  if (length(x) == 1L) {
+    return(0.5)
+  }
+  if (anyNA(x)) {
+    return(rep(NA_real_, length(x)))
+  }
   rank <- rank(x, ties.method = "first")
   stats::ppoints(length(x))[rank]
 }
@@ -79,7 +91,12 @@ ssd_ecd <- function(x, ties.method = "first") {
 #' @examples
 #' ssd_ecd_data(ssddata::ccme_boron)
 ssd_ecd_data <- function(
-    data, left = "Conc", right = left, ..., bounds = c(left = 1, right = 1)) {
+  data,
+  left = "Conc",
+  right = left,
+  ...,
+  bounds = c(left = 1, right = 1)
+) {
   .chk_data(data, left, right)
   .chk_bounds(bounds)
   chk_unused(...)

@@ -20,10 +20,21 @@
 #' @examples
 #'
 #' ssd_pllogis(1)
-ssd_pllogis <- function(q, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p = FALSE) {
-  pdist("logis",
-    q = q, location = locationlog, scale = scalelog,
-    lower.tail = lower.tail, log.p = log.p, .lgt = TRUE
+ssd_pllogis <- function(
+  q,
+  locationlog = 0,
+  scalelog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  pdist(
+    "logis",
+    q = q,
+    location = locationlog,
+    scale = scalelog,
+    lower.tail = lower.tail,
+    log.p = log.p,
+    .lgt = TRUE
   )
 }
 
@@ -32,10 +43,21 @@ ssd_pllogis <- function(q, locationlog = 0, scalelog = 1, lower.tail = TRUE, log
 #' @examples
 #'
 #' ssd_qllogis(0.5)
-ssd_qllogis <- function(p, locationlog = 0, scalelog = 1, lower.tail = TRUE, log.p = FALSE) {
-  qdist("logis",
-    p = p, location = locationlog, scale = scalelog,
-    lower.tail = lower.tail, log.p = log.p, .lgt = TRUE
+ssd_qllogis <- function(
+  p,
+  locationlog = 0,
+  scalelog = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+) {
+  qdist(
+    "logis",
+    p = p,
+    location = locationlog,
+    scale = scalelog,
+    lower.tail = lower.tail,
+    log.p = log.p,
+    .lgt = TRUE
   )
 }
 
@@ -48,7 +70,14 @@ ssd_qllogis <- function(p, locationlog = 0, scalelog = 1, lower.tail = TRUE, log
 #' })
 #' hist(x, breaks = 1000)
 ssd_rllogis <- function(n, locationlog = 0, scalelog = 1, chk = TRUE) {
-  rdist("logis", n = n, location = locationlog, scale = scalelog, .lgt = TRUE, chk = chk)
+  rdist(
+    "logis",
+    n = n,
+    location = locationlog,
+    scale = scalelog,
+    .lgt = TRUE,
+    chk = chk
+  )
 }
 
 #' @describeIn ssd_e Default Parameter Values for Log-Logistic Distribution

@@ -117,8 +117,17 @@
 .attrs_fitdists <- function(fits) {
   attrs <- attributes(fits)
   attrs[c(
-    "censoring", "cols", "control", "data", "org_data", "min_pmix", "range_shape1",
-    "range_shape2", "rescale", "weighted", "unequal"
+    "censoring",
+    "cols",
+    "control",
+    "data",
+    "org_data",
+    "min_pmix",
+    "range_shape1",
+    "range_shape2",
+    "rescale",
+    "weighted",
+    "unequal"
   )]
 }
 
