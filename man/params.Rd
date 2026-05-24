@@ -174,9 +174,9 @@ remove them with a warning.}
 
 \item{q}{vector of quantiles.}
 
-\item{range_shape1}{A numeric vector of length two of the lower and upper bounds for the shape1 parameter.}
+\item{range_shape1}{A numeric vector of length two of the lower and upper bounds for the shape1 parameter for the burrIII3 distribution.}
 
-\item{range_shape2}{shape2 parameter.}
+\item{range_shape2}{A numeric vector of length two of the lower and upper bounds for the shape2 parameter for the burrIII3 distribution.}
 
 \item{reweight}{A flag specifying whether to reweight weights by dividing by the largest weight.}
 
