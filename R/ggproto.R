@@ -122,10 +122,9 @@ GeomXribbon <- ggproto(
     ids <- cumsum(missing_pos) + 1
     ids[missing_pos] <- NA
 
-    positions <- plyr::summarise(
-      data,
-      y = c(y, rev(y)),
-      x = c(xmax, rev(xmin)),
+    positions <- data.frame(
+      y = c(data$y, rev(data$y)),
+      x = c(data$xmax, rev(data$xmin)),
       id = c(ids, rev(ids))
     )
     munched <- coord_munch(coord, positions, panel_params)
