@@ -231,23 +231,19 @@ emulti_ssd <- function() {
   })
 }
 
-value_args <- function(x) {
-  x$weight <- NULL
-  value_args <- purrr::imap_chr(x, function(x, y) paste(y, "=", x))
-  paste0(value_args, collapse = ", ")
-}
-
-pmulti_dist <- function(x, dist) {
-  fun <- paste0(x$weight, " * p", dist, "_ssd(q, ")
-  value_args <- value_args(x)
-  paste0(fun, value_args, ")")
-}
-
-pmulti_fun <- function(list) {
-  funs <- purrr::imap_chr(list, pmulti_dist)
-  fun <- paste0(funs, collapse = " + ")
-  func <- paste0("function(q, p = 0) {(", fun, ") - p}")
-  eval(parse(text = func))
+# Build the model-averaged CDF as a closure: the weighted sum of the
+# component distribution CDFs minus p, so it serves both to evaluate the
+# CDF (with p = 0) and as the objective for root finding (see root()).
+pmulti_fun <- function(dists) {
+  function(q, p = 0) {
+    terms <- purrr::imap(dists, function(pars, dist) {
+      weight <- pars$weight
+      pars$weight <- NULL
+      fun <- get(paste0("p", dist, "_ssd"), mode = "function")
+      weight * do.call(fun, c(list(q), pars))
+    })
+    purrr::reduce(terms, `+`) - p
+  }
 }
 
 normalize_weights <- function(list) {
