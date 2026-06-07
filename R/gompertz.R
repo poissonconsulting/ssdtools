@@ -141,7 +141,6 @@ rgompertz <- function(n, llocation = 0, lshape = 0) {
 }
 
 sgompertz <- function(data, pars = NULL) {
-  rlang::check_installed("VGAM")
   x <- mean_weighted_values(data)
 
   if (!is.null(pars)) {

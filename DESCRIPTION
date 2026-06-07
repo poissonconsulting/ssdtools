@@ -73,7 +73,8 @@ Imports:
     tibble,
     TMB,
     universals,
-    utils
+    utils,
+    VGAM
 Suggests:
     actuar,
     covr,
@@ -88,7 +89,6 @@ Suggests:
     testthat (>= 3.0.0),
     tidyr,
     tinytex,
-    VGAM,
     withr
 LinkingTo: 
     Rcpp,
