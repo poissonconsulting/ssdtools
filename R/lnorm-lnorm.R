@@ -135,7 +135,7 @@ slnorm_lnorm <- function(data, pars = NULL) {
   c(s1, s2, pmix)
 }
 
-blnorm_lnorm <- function(x, min_pmix, ...) {
+blnorm_lnorm <- function(min_pmix, ...) {
   list(
     lower = list(
       meanlog1 = -Inf,
