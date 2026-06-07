@@ -27,7 +27,7 @@ StatSsdpoint <- ggproto(
   "StatSsdpoint",
   Stat,
   required_aes = "x",
-  default_aes = aes(y = ..density..),
+  default_aes = aes(y = after_stat(density)),
   compute_panel = function(data, scales) {
     data$density <- ssd_ecd(data$x)
     data
@@ -40,7 +40,7 @@ StatSsdsegment <- ggproto(
   "StatSsdsegment",
   Stat,
   required_aes = c("x", "xend"),
-  default_aes = aes(y = ..density.., yend = ..density..),
+  default_aes = aes(y = after_stat(density), yend = after_stat(density)),
   compute_panel = function(data, scales) {
     data$density <- ssd_ecd(rowMeans(data[c("x", "xend")], na.rm = TRUE))
     data
