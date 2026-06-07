@@ -68,6 +68,7 @@ ssd_eweibull()
 ## Examples
 
 ``` r
+
 ssd_eburrIII3()
 #> $shape1
 #> [1] 1

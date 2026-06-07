@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started with ssdtools">
 <meta name="robots" content="noindex">
@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ssdtools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.6.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.6.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
                         <h4 data-toc-skip class="author">ssdtools
 Team</h4>
             
-            <h4 data-toc-skip class="date">2026-03-17</h4>
+            <h4 data-toc-skip class="date">2026-06-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bcgov/ssdtools/blob/main/vignettes/ssdtools.Rmd" class="external-link"><code>vignettes/ssdtools.Rmd</code></a></small>
       <div class="d-none name"><code>ssdtools.Rmd</code></div>
@@ -80,8 +80,7 @@ given concentration of a chemical. The concentration that affects 5% of
 the species is referred to as the 5% Hazard Concentration
 (<em>HC<sub>5</sub></em>). This is equivalent to a 95% protection value
 (<em>PC<sub>95</sub></em>). For more information on SSDs the reader is
-referred to <span class="citation">Posthuma, Suter II, and Traas
-(2001)</span>.</p>
+referred to <span class="citation">Posthuma et al. (2001)</span>.</p>
 <p><code>ssdtools</code> can handle left, right and interval censored
 data with two limitations. It is currently only possible to model
 average when the distributions have the same number of parameters and
@@ -468,15 +467,14 @@ plot indicate the censoring (range of possible values).</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-burnham_model_2002" class="csl-entry">
 Burnham, Kenneth P., and David R. Anderson, eds. 2002. <em>Model
 <span>Selection</span> and <span>Multimodel</span>
-<span>Inference</span></em>. New York, NY: Springer New York. <a href="https://doi.org/10.1007/b97636" class="external-link">https://doi.org/10.1007/b97636</a>.
+<span>Inference</span></em>. Springer New York. <a href="https://doi.org/10.1007/b97636" class="external-link">https://doi.org/10.1007/b97636</a>.
 </div>
 <div id="ref-fox_recent_2021" class="csl-entry">
-Fox, D. R., R. A. Dam, R. Fisher, G. E. Batley, A. R. Tillmanns, J.
-Thorley, C. J. Schwarz, D. J. Spry, and K. McTavish. 2021. <span>“Recent
+Fox, D. R., R. A. Dam, R. Fisher, et al. 2021. <span>“Recent
 <span>Developments</span> in <span>Species</span>
 <span>Sensitivity</span> <span>Distribution</span>
 <span>Modeling</span>.”</span> <em>Environmental Toxicology and
@@ -488,8 +486,7 @@ Sensitivity Distributions in Ecotoxicology</em>. CRC press. <a href="https://www
 </div>
 <div id="ref-r" class="csl-entry">
 R Core Team. 2024. <em>R: A Language and Environment for Statistical
-Computing</em>. Vienna, Austria: R Foundation for Statistical Computing.
-<a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
+Computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
 </div>
 <div id="ref-ggplot2" class="csl-entry">
 Wickham, Hadley. 2016. <em><span class="nocase">ggplot2</span>: Elegant
@@ -498,7 +495,7 @@ Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggpl
 <div id="ref-wickham_r_2016" class="csl-entry">
 Wickham, Hadley, and Garrett Grolemund. 2016. <em>R for Data Science:
 Import, Tidy, Transform, Visualize, and Model Data</em>. First edition.
-Sebastopol, CA: O’Reilly. <a href="https://r4ds.had.co.nz" class="external-link">https://r4ds.had.co.nz</a>.
+O’Reilly. <a href="https://r4ds.had.co.nz" class="external-link">https://r4ds.had.co.nz</a>.
 </div>
 </div>
 </div>
