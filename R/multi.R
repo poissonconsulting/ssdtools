@@ -60,46 +60,7 @@ ssd_pmulti <- function(
   lower.tail = TRUE,
   log.p = FALSE
 ) {
-  pdist(
-    "multi",
-    q = q,
-    burrIII3.weight = burrIII3.weight,
-    burrIII3.shape1 = burrIII3.shape1,
-    burrIII3.shape2 = burrIII3.shape2,
-    burrIII3.scale = burrIII3.scale,
-    gamma.weight = gamma.weight,
-    gamma.shape = gamma.shape,
-    gamma.scale = gamma.scale,
-    gompertz.weight = gompertz.weight,
-    gompertz.location = gompertz.location,
-    gompertz.shape = gompertz.shape,
-    lgumbel.weight = lgumbel.weight,
-    lgumbel.locationlog = lgumbel.locationlog,
-    lgumbel.scalelog = lgumbel.scalelog,
-    llogis.weight = llogis.weight,
-    llogis.locationlog = llogis.locationlog,
-    llogis.scalelog = llogis.scalelog,
-    llogis_llogis.weight = llogis_llogis.weight,
-    llogis_llogis.locationlog1 = llogis_llogis.locationlog1,
-    llogis_llogis.scalelog1 = llogis_llogis.scalelog1,
-    llogis_llogis.locationlog2 = llogis_llogis.locationlog2,
-    llogis_llogis.scalelog2 = llogis_llogis.scalelog2,
-    llogis_llogis.pmix = llogis_llogis.pmix,
-    lnorm.weight = lnorm.weight,
-    lnorm.meanlog = lnorm.meanlog,
-    lnorm.sdlog = lnorm.sdlog,
-    lnorm_lnorm.weight = lnorm_lnorm.weight,
-    lnorm_lnorm.meanlog1 = lnorm_lnorm.meanlog1,
-    lnorm_lnorm.sdlog1 = lnorm_lnorm.sdlog1,
-    lnorm_lnorm.meanlog2 = lnorm_lnorm.meanlog2,
-    lnorm_lnorm.sdlog2 = lnorm_lnorm.sdlog2,
-    lnorm_lnorm.pmix = lnorm_lnorm.pmix,
-    weibull.weight = weibull.weight,
-    weibull.shape = weibull.shape,
-    weibull.scale = weibull.scale,
-    lower.tail = lower.tail,
-    log.p = log.p
-  )
+  do.call(pdist, c(list("multi"), as.list(environment())))
 }
 
 #' @describeIn ssd_q Quantile Function for Multiple Distributions
@@ -147,46 +108,7 @@ ssd_qmulti <- function(
   lower.tail = TRUE,
   log.p = FALSE
 ) {
-  qdist(
-    "multi",
-    p = p,
-    burrIII3.weight = burrIII3.weight,
-    burrIII3.shape1 = burrIII3.shape1,
-    burrIII3.shape2 = burrIII3.shape2,
-    burrIII3.scale = burrIII3.scale,
-    gamma.weight = gamma.weight,
-    gamma.shape = gamma.shape,
-    gamma.scale = gamma.scale,
-    gompertz.weight = gompertz.weight,
-    gompertz.location = gompertz.location,
-    gompertz.shape = gompertz.shape,
-    lgumbel.weight = lgumbel.weight,
-    lgumbel.locationlog = lgumbel.locationlog,
-    lgumbel.scalelog = lgumbel.scalelog,
-    llogis.weight = llogis.weight,
-    llogis.locationlog = llogis.locationlog,
-    llogis.scalelog = llogis.scalelog,
-    llogis_llogis.weight = llogis_llogis.weight,
-    llogis_llogis.locationlog1 = llogis_llogis.locationlog1,
-    llogis_llogis.scalelog1 = llogis_llogis.scalelog1,
-    llogis_llogis.locationlog2 = llogis_llogis.locationlog2,
-    llogis_llogis.scalelog2 = llogis_llogis.scalelog2,
-    llogis_llogis.pmix = llogis_llogis.pmix,
-    lnorm.weight = lnorm.weight,
-    lnorm.meanlog = lnorm.meanlog,
-    lnorm.sdlog = lnorm.sdlog,
-    lnorm_lnorm.weight = lnorm_lnorm.weight,
-    lnorm_lnorm.meanlog1 = lnorm_lnorm.meanlog1,
-    lnorm_lnorm.sdlog1 = lnorm_lnorm.sdlog1,
-    lnorm_lnorm.meanlog2 = lnorm_lnorm.meanlog2,
-    lnorm_lnorm.sdlog2 = lnorm_lnorm.sdlog2,
-    lnorm_lnorm.pmix = lnorm_lnorm.pmix,
-    weibull.weight = weibull.weight,
-    weibull.shape = weibull.shape,
-    weibull.scale = weibull.scale,
-    lower.tail = lower.tail,
-    log.p = log.p
-  )
+  do.call(qdist, c(list("multi"), as.list(environment())))
 }
 
 #' @describeIn ssd_r Random Generation for Multiple Distributions
@@ -235,45 +157,7 @@ ssd_rmulti <- function(
   weibull.scale = 1,
   chk = TRUE
 ) {
-  rdist(
-    "multi",
-    n = n,
-    burrIII3.weight = burrIII3.weight,
-    burrIII3.shape1 = burrIII3.shape1,
-    burrIII3.shape2 = burrIII3.shape2,
-    burrIII3.scale = burrIII3.scale,
-    gamma.weight = gamma.weight,
-    gamma.shape = gamma.shape,
-    gamma.scale = gamma.scale,
-    gompertz.weight = gompertz.weight,
-    gompertz.location = gompertz.location,
-    gompertz.shape = gompertz.shape,
-    lgumbel.weight = lgumbel.weight,
-    lgumbel.locationlog = lgumbel.locationlog,
-    lgumbel.scalelog = lgumbel.scalelog,
-    llogis.weight = llogis.weight,
-    llogis.locationlog = llogis.locationlog,
-    llogis.scalelog = llogis.scalelog,
-    llogis_llogis.weight = llogis_llogis.weight,
-    llogis_llogis.locationlog1 = llogis_llogis.locationlog1,
-    llogis_llogis.scalelog1 = llogis_llogis.scalelog1,
-    llogis_llogis.locationlog2 = llogis_llogis.locationlog2,
-    llogis_llogis.scalelog2 = llogis_llogis.scalelog2,
-    llogis_llogis.pmix = llogis_llogis.pmix,
-    lnorm.weight = lnorm.weight,
-    lnorm.meanlog = lnorm.meanlog,
-    lnorm.sdlog = lnorm.sdlog,
-    lnorm_lnorm.weight = lnorm_lnorm.weight,
-    lnorm_lnorm.meanlog1 = lnorm_lnorm.meanlog1,
-    lnorm_lnorm.sdlog1 = lnorm_lnorm.sdlog1,
-    lnorm_lnorm.meanlog2 = lnorm_lnorm.meanlog2,
-    lnorm_lnorm.sdlog2 = lnorm_lnorm.sdlog2,
-    lnorm_lnorm.pmix = lnorm_lnorm.pmix,
-    weibull.weight = weibull.weight,
-    weibull.shape = weibull.shape,
-    weibull.scale = weibull.scale,
-    chk = chk
-  )
+  do.call(rdist, c(list("multi"), as.list(environment())))
 }
 
 #' @describeIn ssd_e Default Parameter Values for Multiple Distributions
@@ -393,240 +277,20 @@ qmulti_list <- function(p, list) {
   root(p, f)
 }
 
-pmulti_ssd <- function(
-  q,
-  burrIII3.weight,
-  burrIII3.shape1,
-  burrIII3.shape2,
-  burrIII3.scale,
-  gamma.weight,
-  gamma.shape,
-  gamma.scale,
-  gompertz.weight,
-  gompertz.location,
-  gompertz.shape,
-  lgumbel.weight,
-  lgumbel.locationlog,
-  lgumbel.scalelog,
-  llogis.weight,
-  llogis.locationlog,
-  llogis.scalelog,
-  llogis_llogis.weight,
-  llogis_llogis.locationlog1,
-  llogis_llogis.scalelog1,
-  llogis_llogis.locationlog2,
-  llogis_llogis.scalelog2,
-  llogis_llogis.pmix,
-  lnorm.weight,
-  lnorm.meanlog,
-  lnorm.sdlog,
-  lnorm_lnorm.weight,
-  lnorm_lnorm.meanlog1,
-  lnorm_lnorm.sdlog1,
-  lnorm_lnorm.meanlog2,
-  lnorm_lnorm.sdlog2,
-  lnorm_lnorm.pmix,
-  weibull.weight,
-  weibull.shape,
-  weibull.scale
-) {
-  list <- .relist_estimates(
-    list(
-      burrIII3.weight = burrIII3.weight,
-      burrIII3.shape1 = burrIII3.shape1,
-      burrIII3.shape2 = burrIII3.shape2,
-      burrIII3.scale = burrIII3.scale,
-      gamma.weight = gamma.weight,
-      gamma.shape = gamma.shape,
-      gamma.scale = gamma.scale,
-      gompertz.weight = gompertz.weight,
-      gompertz.location = gompertz.location,
-      gompertz.shape = gompertz.shape,
-      lgumbel.weight = lgumbel.weight,
-      lgumbel.locationlog = lgumbel.locationlog,
-      lgumbel.scalelog = lgumbel.scalelog,
-      llogis.weight = llogis.weight,
-      llogis.locationlog = llogis.locationlog,
-      llogis.scalelog = llogis.scalelog,
-      llogis_llogis.weight = llogis_llogis.weight,
-      llogis_llogis.locationlog1 = llogis_llogis.locationlog1,
-      llogis_llogis.scalelog1 = llogis_llogis.scalelog1,
-      llogis_llogis.locationlog2 = llogis_llogis.locationlog2,
-      llogis_llogis.scalelog2 = llogis_llogis.scalelog2,
-      llogis_llogis.pmix = llogis_llogis.pmix,
-      lnorm.weight = lnorm.weight,
-      lnorm.meanlog = lnorm.meanlog,
-      lnorm.sdlog = lnorm.sdlog,
-      lnorm_lnorm.weight = lnorm_lnorm.weight,
-      lnorm_lnorm.meanlog1 = lnorm_lnorm.meanlog1,
-      lnorm_lnorm.sdlog1 = lnorm_lnorm.sdlog1,
-      lnorm_lnorm.meanlog2 = lnorm_lnorm.meanlog2,
-      lnorm_lnorm.sdlog2 = lnorm_lnorm.sdlog2,
-      lnorm_lnorm.pmix = lnorm_lnorm.pmix,
-      weibull.weight = weibull.weight,
-      weibull.shape = weibull.shape,
-      weibull.scale = weibull.scale
-    )
-  )
-
-  pmulti_list(q, list)
+# Internal model-averaged p/q/r functions dispatched by name from
+# .pdist()/.qdist()/.rdist() (see pqr.R). They receive the full set of
+# distribution parameters by name via `...`; .relist_estimates() reshapes
+# the flat named arguments into the per-distribution skeleton (and is
+# order-robust, so the order the parameters arrive in does not matter).
+pmulti_ssd <- function(q, ...) {
+  pmulti_list(q, .relist_estimates(list(...)))
 }
 
-qmulti_ssd <- function(
-  q,
-  burrIII3.weight,
-  burrIII3.shape1,
-  burrIII3.shape2,
-  burrIII3.scale,
-  gamma.weight,
-  gamma.shape,
-  gamma.scale,
-  gompertz.weight,
-  gompertz.location,
-  gompertz.shape,
-  lgumbel.weight,
-  lgumbel.locationlog,
-  lgumbel.scalelog,
-  llogis.weight,
-  llogis.locationlog,
-  llogis.scalelog,
-  llogis_llogis.weight,
-  llogis_llogis.locationlog1,
-  llogis_llogis.scalelog1,
-  llogis_llogis.locationlog2,
-  llogis_llogis.scalelog2,
-  llogis_llogis.pmix,
-  lnorm.weight,
-  lnorm.meanlog,
-  lnorm.sdlog,
-  lnorm_lnorm.weight,
-  lnorm_lnorm.meanlog1,
-  lnorm_lnorm.sdlog1,
-  lnorm_lnorm.meanlog2,
-  lnorm_lnorm.sdlog2,
-  lnorm_lnorm.pmix,
-  weibull.weight,
-  weibull.shape,
-  weibull.scale
-) {
-  list <- .relist_estimates(
-    list(
-      burrIII3.weight = burrIII3.weight,
-      burrIII3.shape1 = burrIII3.shape1,
-      burrIII3.shape2 = burrIII3.shape2,
-      burrIII3.scale = burrIII3.scale,
-      gamma.weight = gamma.weight,
-      gamma.shape = gamma.shape,
-      gamma.scale = gamma.scale,
-      gompertz.weight = gompertz.weight,
-      gompertz.location = gompertz.location,
-      gompertz.shape = gompertz.shape,
-      lgumbel.weight = lgumbel.weight,
-      lgumbel.locationlog = lgumbel.locationlog,
-      lgumbel.scalelog = lgumbel.scalelog,
-      llogis.weight = llogis.weight,
-      llogis.locationlog = llogis.locationlog,
-      llogis.scalelog = llogis.scalelog,
-      llogis_llogis.weight = llogis_llogis.weight,
-      llogis_llogis.locationlog1 = llogis_llogis.locationlog1,
-      llogis_llogis.scalelog1 = llogis_llogis.scalelog1,
-      llogis_llogis.locationlog2 = llogis_llogis.locationlog2,
-      llogis_llogis.scalelog2 = llogis_llogis.scalelog2,
-      llogis_llogis.pmix = llogis_llogis.pmix,
-      lnorm.weight = lnorm.weight,
-      lnorm.meanlog = lnorm.meanlog,
-      lnorm.sdlog = lnorm.sdlog,
-      lnorm_lnorm.weight = lnorm_lnorm.weight,
-      lnorm_lnorm.meanlog1 = lnorm_lnorm.meanlog1,
-      lnorm_lnorm.sdlog1 = lnorm_lnorm.sdlog1,
-      lnorm_lnorm.meanlog2 = lnorm_lnorm.meanlog2,
-      lnorm_lnorm.sdlog2 = lnorm_lnorm.sdlog2,
-      lnorm_lnorm.pmix = lnorm_lnorm.pmix,
-      weibull.weight = weibull.weight,
-      weibull.shape = weibull.shape,
-      weibull.scale = weibull.scale
-    )
-  )
-
-  qmulti_list(q, list)
+qmulti_ssd <- function(p, ...) {
+  qmulti_list(p, .relist_estimates(list(...)))
 }
 
-rmulti_ssd <- function(
-  n,
-  burrIII3.weight,
-  burrIII3.shape1,
-  burrIII3.shape2,
-  burrIII3.scale,
-  gamma.weight,
-  gamma.shape,
-  gamma.scale,
-  gompertz.weight,
-  gompertz.location,
-  gompertz.shape,
-  lgumbel.weight,
-  lgumbel.locationlog,
-  lgumbel.scalelog,
-  llogis.weight,
-  llogis.locationlog,
-  llogis.scalelog,
-  llogis_llogis.weight,
-  llogis_llogis.locationlog1,
-  llogis_llogis.scalelog1,
-  llogis_llogis.locationlog2,
-  llogis_llogis.scalelog2,
-  llogis_llogis.pmix,
-  lnorm.weight,
-  lnorm.meanlog,
-  lnorm.sdlog,
-  lnorm_lnorm.weight,
-  lnorm_lnorm.meanlog1,
-  lnorm_lnorm.sdlog1,
-  lnorm_lnorm.meanlog2,
-  lnorm_lnorm.sdlog2,
-  lnorm_lnorm.pmix,
-  weibull.weight,
-  weibull.shape,
-  weibull.scale
-) {
+rmulti_ssd <- function(n, ...) {
   p <- runif(n)
-
-  list <- .relist_estimates(
-    list(
-      burrIII3.weight = burrIII3.weight,
-      burrIII3.shape1 = burrIII3.shape1,
-      burrIII3.shape2 = burrIII3.shape2,
-      burrIII3.scale = burrIII3.scale,
-      gamma.weight = gamma.weight,
-      gamma.shape = gamma.shape,
-      gamma.scale = gamma.scale,
-      gompertz.weight = gompertz.weight,
-      gompertz.location = gompertz.location,
-      gompertz.shape = gompertz.shape,
-      lgumbel.weight = lgumbel.weight,
-      lgumbel.locationlog = lgumbel.locationlog,
-      lgumbel.scalelog = lgumbel.scalelog,
-      llogis.weight = llogis.weight,
-      llogis.locationlog = llogis.locationlog,
-      llogis.scalelog = llogis.scalelog,
-      llogis_llogis.weight = llogis_llogis.weight,
-      llogis_llogis.locationlog1 = llogis_llogis.locationlog1,
-      llogis_llogis.scalelog1 = llogis_llogis.scalelog1,
-      llogis_llogis.locationlog2 = llogis_llogis.locationlog2,
-      llogis_llogis.scalelog2 = llogis_llogis.scalelog2,
-      llogis_llogis.pmix = llogis_llogis.pmix,
-      lnorm.weight = lnorm.weight,
-      lnorm.meanlog = lnorm.meanlog,
-      lnorm.sdlog = lnorm.sdlog,
-      lnorm_lnorm.weight = lnorm_lnorm.weight,
-      lnorm_lnorm.meanlog1 = lnorm_lnorm.meanlog1,
-      lnorm_lnorm.sdlog1 = lnorm_lnorm.sdlog1,
-      lnorm_lnorm.meanlog2 = lnorm_lnorm.meanlog2,
-      lnorm_lnorm.sdlog2 = lnorm_lnorm.sdlog2,
-      lnorm_lnorm.pmix = lnorm_lnorm.pmix,
-      weibull.weight = weibull.weight,
-      weibull.shape = weibull.shape,
-      weibull.scale = weibull.scale
-    )
-  )
-  qmulti_list(p, list)
+  qmulti_list(p, .relist_estimates(list(...)))
 }
