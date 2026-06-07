@@ -62,7 +62,7 @@ hcp_combine_samples <- function(hcp, weight, ci_method, level, nboot) {
       samples = list(combine_samples(
         .data$samples,
         weight,
-        nboot = nboot,
+        nboot = .env$nboot,
         geometric = geometric
       ))
     ) |>
