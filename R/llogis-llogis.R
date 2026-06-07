@@ -137,7 +137,7 @@ sllogis_llogis <- function(data, pars = NULL) {
   c(s1, s2, pmix)
 }
 
-bllogis_llogis <- function(x, min_pmix, ...) {
+bllogis_llogis <- function(min_pmix, ...) {
   list(
     lower = list(
       locationlog1 = -Inf,
