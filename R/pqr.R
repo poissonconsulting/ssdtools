@@ -42,7 +42,7 @@ NULL
   args <- c(q, list(...))
 
   if (any(vapply(args, length, 1L) != 1L)) {
-    stop()
+    err("`q` and the distribution parameters must each be length 1.")
   }
   if (is.nan(q)) {
     return(NaN)
@@ -104,7 +104,7 @@ pdist <- function(
   args <- c(p, list(...))
 
   if (any(vapply(args, length, 1L) != 1L)) {
-    stop()
+    err("`p` and the distribution parameters must each be length 1.")
   }
   if (is.nan(p)) {
     return(NaN)

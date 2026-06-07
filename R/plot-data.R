@@ -58,6 +58,7 @@ ssd_plot_data <- function(
   chk_range(add_x, c(-1000, 1000))
   chk_string(big.mark)
   chk_string(decimal.mark)
+  chk_string(suffix)
 
   .chk_bounds(bounds)
 

@@ -25,3 +25,4 @@
 .devcontainer
 ^\.vscode$
 ^[.]?air[.]toml$
+^\.claude$
