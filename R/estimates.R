@@ -60,6 +60,8 @@ estimates.fitdists <- function(x, all_estimates = FALSE, ...) {
 }
 
 .relist_estimates <- function(x) {
-  list <- relist(x, skeleton = emulti_ssd())
+  skeleton <- emulti_ssd()
+  x <- unlist(x)[names(unlist(skeleton))]
+  list <- relist(x, skeleton = skeleton)
   purrr::map(list, function(x) as.list(unlist(x)))
 }

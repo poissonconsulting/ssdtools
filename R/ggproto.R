@@ -114,7 +114,7 @@ GeomXribbon <- ggproto(
     # Check that aesthetics are constant
     aes <- unique(data[c("colour", "fill", "linewidth", "linetype", "alpha")])
     if (nrow(aes) > 1) {
-      err("Aesthetics can not vary with a ribbon.")
+      err("Aesthetics cannot vary with a ribbon.")
     }
     aes <- as.list(aes)
 
