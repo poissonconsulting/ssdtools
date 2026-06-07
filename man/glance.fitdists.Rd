@@ -26,8 +26,8 @@ glance(fits, wt = TRUE)
 \seealso{
 \code{\link[=ssd_gof]{ssd_gof()}}
 
-Other generics: 
-\code{\link{augment.fitdists}()},
-\code{\link{tidy.fitdists}()}
+Other generics:
+\code{\link[=augment.fitdists]{augment.fitdists()}},
+\code{\link[=tidy.fitdists]{tidy.fitdists()}}
 }
 \concept{generics}

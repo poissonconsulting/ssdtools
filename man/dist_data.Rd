@@ -27,10 +27,10 @@ A data frame of information on the implemented distributions.
 dist_data
 }
 \seealso{
-Other dists: 
-\code{\link{ssd_dists}()},
-\code{\link{ssd_dists_all}()},
-\code{\link{ssd_dists_shiny}()}
+Other dists:
+\code{\link[=ssd_dists]{ssd_dists()}},
+\code{\link[=ssd_dists_all]{ssd_dists_all()}},
+\code{\link[=ssd_dists_shiny]{ssd_dists_shiny()}}
 }
 \concept{dists}
 \keyword{internal}

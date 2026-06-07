@@ -126,11 +126,11 @@ ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Conc, xend = Conc * 2)) +
 \seealso{
 \code{\link[=ssd_plot_cdf]{ssd_plot_cdf()}}
 
-Other ggplot: 
-\code{\link{geom_hcintersect}()},
-\code{\link{geom_ssdpoint}()},
-\code{\link{geom_xribbon}()},
-\code{\link{scale_colour_ssd}()},
-\code{\link{ssd_pal}()}
+Other ggplot:
+\code{\link[=geom_hcintersect]{geom_hcintersect()}},
+\code{\link[=geom_ssdpoint]{geom_ssdpoint()}},
+\code{\link[=geom_xribbon]{geom_xribbon()}},
+\code{\link[=scale_colour_ssd]{scale_colour_ssd()}},
+\code{\link[=ssd_pal]{ssd_pal()}}
 }
 \concept{ggplot}

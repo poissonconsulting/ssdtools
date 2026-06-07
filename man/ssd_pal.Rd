@@ -16,11 +16,11 @@ Color-blind Palette for SSD Plots
 ssd_pal()
 }
 \seealso{
-Other ggplot: 
-\code{\link{geom_hcintersect}()},
-\code{\link{geom_ssdpoint}()},
-\code{\link{geom_ssdsegment}()},
-\code{\link{geom_xribbon}()},
-\code{\link{scale_colour_ssd}()}
+Other ggplot:
+\code{\link[=geom_hcintersect]{geom_hcintersect()}},
+\code{\link[=geom_ssdpoint]{geom_ssdpoint()}},
+\code{\link[=geom_ssdsegment]{geom_ssdsegment()}},
+\code{\link[=geom_xribbon]{geom_xribbon()}},
+\code{\link[=scale_colour_ssd]{scale_colour_ssd()}}
 }
 \concept{ggplot}

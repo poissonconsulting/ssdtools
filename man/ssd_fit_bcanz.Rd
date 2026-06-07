@@ -39,8 +39,8 @@ ssd_fit_bcanz(ssddata::ccme_boron)
 \seealso{
 \code{\link[=ssd_fit_dists]{ssd_fit_dists()}}
 
-Other BCANZ: 
-\code{\link{ssd_hc_bcanz}()},
-\code{\link{ssd_hp_bcanz}()}
+Other BCANZ:
+\code{\link[=ssd_hc_bcanz]{ssd_hc_bcanz()}},
+\code{\link[=ssd_hp_bcanz]{ssd_hp_bcanz()}}
 }
 \concept{BCANZ}
