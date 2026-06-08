@@ -186,14 +186,13 @@ adjust_data <- function(data, rescale, reweight, odds_max, silent) {
 }
 
 mean_weighted_values <- function(data, weight = TRUE) {
-  data <- as.matrix(data[c("left", "right")])
-  x <- rowMeans(data, na.rm = TRUE)
+  x <- rowMeans(as.matrix(data[c("left", "right")]), na.rm = TRUE)
   if (!weight) {
     return(x)
   }
-  x <- x[weight > 0]
-  weight <- weight[weight > 0]
-  weight <- weight / min(weight)
-  weight <- round(weight)
-  rep(x, weight)
+  w <- data$weight
+  x <- x[w > 0]
+  w <- w[w > 0]
+  w <- round(w / min(w))
+  rep(x, w)
 }

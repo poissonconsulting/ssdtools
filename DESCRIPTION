@@ -51,6 +51,7 @@ Depends:
 Imports:
     abind,
     chk,
+    dplyr,
     furrr,
     generics,
     ggplot2,
@@ -61,7 +62,6 @@ Imports:
     grid,
     lifecycle,
     parallel,
-    plyr,
     purrr,
     Rcpp,
     readr,
@@ -73,27 +73,22 @@ Imports:
     tibble,
     TMB,
     universals,
-    utils
+    utils,
+    VGAM
 Suggests:
     actuar,
     covr,
-    dplyr,
     EnvStats,
     extraDistr,
     fitdistrplus,
     grDevices,
     knitr,
     latex2exp,
-    magrittr,
-    mle.tools,
     patchwork,
-    reshape2,
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
-    tidyselect,
     tinytex,
-    VGAM,
     withr
 LinkingTo: 
     Rcpp,
@@ -106,4 +101,4 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3.9000
+Config/roxygen2/version: 8.0.0.9000

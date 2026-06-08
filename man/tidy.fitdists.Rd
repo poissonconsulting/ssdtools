@@ -29,8 +29,8 @@ tidy(fits, all = TRUE)
 \seealso{
 \code{\link[=coef.fitdists]{coef.fitdists()}}
 
-Other generics: 
-\code{\link{augment.fitdists}()},
-\code{\link{glance.fitdists}()}
+Other generics:
+\code{\link[=augment.fitdists]{augment.fitdists()}},
+\code{\link[=glance.fitdists]{glance.fitdists()}}
 }
 \concept{generics}

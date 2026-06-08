@@ -33,5 +33,5 @@ ggplot2::ggplot(data = ssddata::anon_e, ggplot2::aes(x = Conc / 10)) +
   ggplot2::scale_x_log10(labels = ssd_label_comma())
 }
 \seealso{
-\code{\link[scales:label_number]{scales::label_comma()}}
+\code{\link[scales:label_comma]{scales::label_comma()}}
 }

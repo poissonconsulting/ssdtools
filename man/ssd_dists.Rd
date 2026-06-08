@@ -30,9 +30,9 @@ ssd_dists(tails = FALSE)
 ssd_dists(npars = 5)
 }
 \seealso{
-Other dists: 
+Other dists:
 \code{\link{dist_data}},
-\code{\link{ssd_dists_all}()},
-\code{\link{ssd_dists_shiny}()}
+\code{\link[=ssd_dists_all]{ssd_dists_all()}},
+\code{\link[=ssd_dists_shiny]{ssd_dists_shiny()}}
 }
 \concept{dists}

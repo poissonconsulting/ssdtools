@@ -17,9 +17,9 @@ in the shinyssdtools.
 ssd_dists_shiny()
 }
 \seealso{
-Other dists: 
+Other dists:
 \code{\link{dist_data}},
-\code{\link{ssd_dists}()},
-\code{\link{ssd_dists_all}()}
+\code{\link[=ssd_dists]{ssd_dists()}},
+\code{\link[=ssd_dists_all]{ssd_dists_all()}}
 }
 \concept{dists}

@@ -49,8 +49,8 @@ ssd_hp_bcanz(fits, nboot = 100)
 \seealso{
 \code{\link[=ssd_hp]{ssd_hp()}}.
 
-Other BCANZ: 
-\code{\link{ssd_fit_bcanz}()},
-\code{\link{ssd_hc_bcanz}()}
+Other BCANZ:
+\code{\link[=ssd_fit_bcanz]{ssd_fit_bcanz()}},
+\code{\link[=ssd_hc_bcanz]{ssd_hc_bcanz()}}
 }
 \concept{BCANZ}

@@ -24,6 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Joe Thorley \email{joe@poissonconsulting.ca} (\href{https://orcid.org/0000-0002-7683-4592}{ORCID})
   \item Rebecca Fisher \email{R.Fisher@aims.gov.au}
   \item David Fox \email{david.fox@environmetrics.net.au}
   \item Carl Schwarz

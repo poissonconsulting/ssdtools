@@ -27,8 +27,8 @@ ssd_wqg_bc(ssddata::ccme_boron)
 \seealso{
 \code{\link[=ssd_fit_bcanz]{ssd_fit_bcanz()}} and \code{\link[=ssd_hc]{ssd_hc()}}
 
-Other wqg: 
-\code{\link{ssd_wqg_burrlioz}()}
+Other wqg:
+\code{\link[=ssd_wqg_burrlioz]{ssd_wqg_burrlioz()}}
 }
 \concept{wqg}
 \keyword{internal}

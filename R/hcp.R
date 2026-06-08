@@ -29,7 +29,7 @@ hcp_unscale <- function(hcp, rescale) {
 }
 
 ## no_hcp is returned without tidying so must be complete
-no_hcp <- function(hc) {
+no_hcp <- function() {
   tibble(
     dist = character(0),
     value = numeric(0),
@@ -74,8 +74,8 @@ clean_hcp <- function(
     hcp$pboot <- 1
   }
 
-  if (any(hcp$pboot < min_pboot)) {
-    fail <- hcp$pboot < min_pboot
+  fail <- !is.na(hcp$pboot) & hcp$pboot < min_pboot
+  if (any(fail)) {
     hcp$lcl[fail] <- NA_real_
     hcp$ucl[fail] <- NA_real_
     hcp$se[fail] <- NA_real_
