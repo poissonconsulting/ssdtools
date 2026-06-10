@@ -353,6 +353,53 @@ lines(conc, F(conc, 1, 4), col = "#1F1CF2")
 legend("topleft", "(B)", bty = "n")
 ```
 
+#### Log-triangular distribution
+
+Like the *lognormal* and *log-logistic* distributions, the log-triangular distribution is defined on the log scale, that is: if $X$ has a log-triangular distribution, then $Y = \ln (X)$ has a symmetric [triangular](https://en.wikipedia.org/wiki/Triangular_distribution) distribution with mode $\mu$ (the `locationlog` parameter) and half-width $s$ (the `scalelog` parameter), so that $Y$ is supported on $[\mu - s, \mu + s]$.
+
+<div style="text-align: center; font-size: 1.2em; color: black; border: 1px solid black; padding: 10px; border-radius: 5px;">
+  <b><u>Triangular Distribution</u></b>
+
+  $${f_Y}\left( {y;\mu ,s} \right) = \frac{s - \left| y - \mu \right|}{s^2}; \quad \left| y - \mu \right| \le s, \; s > 0, \; -\infty < \mu < \infty$$
+
+  $${F_Y}\left( {y;\mu ,s} \right) = \begin{cases} \dfrac{\left( y - \mu + s \right)^2}{2 s^2} & \mu - s \le y \le \mu \\[2ex] 1 - \dfrac{\left( \mu + s - y \right)^2}{2 s^2} & \mu < y \le \mu + s \end{cases}$$
+
+</div>
+
+<br>
+
+The log-triangular distribution is symmetric on the log scale, like the log-normal and log-logistic distributions, but has bounded support and, unlike them, no tails: its density decreases linearly to zero at the support limits.
+It is included to provide a candidate distribution with finite support and a sharply peaked mode.
+The log-triangular distribution can be fitted using `ssdtools` by supplying the string `ltriangle` to the `dists` argument in the `ssd_fit_dists` call.
+
+```{r echo=FALSE,fig.align='center',fig.width=9,fig.height=5,fig.cap="Sample log-triangular probability density (A) and cumulative probability (B) functions.", fig.alt="A two panel plot showing several realisations of the log-triangular probability density function on the left panel and the cumulative density function of the distribution on the right panel."}
+par(mfrow = c(1, 2))
+
+f <- function(x, mu, s) {
+  y <- (s - abs(log(x) - mu)) / s^2 / x
+  y[abs(log(x) - mu) > s] <- 0
+  y
+}
+
+conc <- seq(0.01, 10, by = 0.005)
+plot(conc, f(conc, 1, 1.5), type = "l", ylab = "Probability density", xlab = "Concentration", col = "#FF5733", ylim = c(0, 1.1))
+lines(conc, f(conc, 0.5, 1), col = "#F2A61C")
+lines(conc, f(conc, 1.5, 2), col = "#1CADF2")
+lines(conc, f(conc, 0, 1), col = "#1F1CF2")
+legend("topleft", "(A)", bty = "n")
+
+F <- function(x, mu, s) {
+  z <- (log(x) - mu) / s
+  y <- ifelse(z <= -1, 0, ifelse(z <= 0, (z + 1)^2 / 2, ifelse(z < 1, 1 - (1 - z)^2 / 2, 1)))
+  y
+}
+plot(conc, F(conc, 1, 1.5), type = "l", ylab = "Cumulative probability", xlab = "Concentration", col = "#FF5733", ylim = c(0, 1.1))
+lines(conc, F(conc, 0.5, 1), col = "#F2A61C")
+lines(conc, F(conc, 1.5, 2), col = "#1CADF2")
+lines(conc, F(conc, 0, 1), col = "#1F1CF2")
+legend("topleft", "(B)", bty = "n")
+```
+
 #### Gamma distribution
 The two-parameter  [gamma](https://en.wikipedia.org/wiki/Gamma_distribution) distribution has the following *pdf* and *cdf*.
 

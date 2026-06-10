@@ -331,6 +331,12 @@ Use NA to refer to the existing minimum or maximum limits.
 
 \item{lnorm_lnorm.pmix}{pmix parameter for the log-normal log-normal mixture distribution.}
 
+\item{ltriangle.weight}{weight parameter for the log-triangular distribution.}
+
+\item{ltriangle.locationlog}{location parameter for the log-triangular distribution.}
+
+\item{ltriangle.scalelog}{scale parameter for the log-triangular distribution.}
+
 \item{weibull.weight}{weight parameter for the Weibull distribution.}
 
 \item{weibull.shape}{shape parameter for the Weibull distribution.}
