@@ -67,6 +67,12 @@ ssd_rmulti(
   gompertz.weight = 0,
   gompertz.location = 1,
   gompertz.shape = 1,
+  invpareto.weight = 0,
+  invpareto.shape = 3,
+  invpareto.scale = 1,
+  invpareto_eur.weight = 0,
+  invpareto_eur.shape = 3,
+  invpareto_eur.scale = 1,
   lgumbel.weight = 0,
   lgumbel.locationlog = 0,
   lgumbel.scalelog = 1,
@@ -158,6 +164,18 @@ ssd_rweibull(n, shape = 1, scale = 1, chk = TRUE)
 \item{gompertz.location}{location parameter for the Gompertz distribution.}
 
 \item{gompertz.shape}{shape parameter for the Gompertz distribution.}
+
+\item{invpareto.weight}{weight parameter for the North American inverse Pareto distribution.}
+
+\item{invpareto.shape}{shape parameter for the North American inverse Pareto distribution.}
+
+\item{invpareto.scale}{scale parameter for the North American inverse Pareto distribution.}
+
+\item{invpareto_eur.weight}{weight parameter for the European inverse Pareto distribution.}
+
+\item{invpareto_eur.shape}{shape parameter for the European inverse Pareto distribution.}
+
+\item{invpareto_eur.scale}{scale parameter for the European inverse Pareto distribution.}
 
 \item{lgumbel.weight}{weight parameter for the log-Gumbel distribution.}
 

@@ -661,7 +661,8 @@ We see from the *pdf* plots that the alternative, *European* version of the inve
 
 Because it is *unbounded* above, the European version of the inverse Pareto distribution is a more realistic stand-alone SSD than the North American version.
 It is fitted by `ssdtools` when the string `invpareto_eur` is supplied to the `dists` argument, and uses the same `shape` and `scale` parameterisation as `actuar::dinvpareto()`.
-As with the North American `invpareto`, the European `invpareto_eur` is offered as a user-selectable distribution but is not included in the default candidate set and must be fitted in isolation rather than as part of a model-averaged set.
+Both the North American `invpareto` and the European `invpareto_eur` are offered as user-selectable distributions that can be fitted on their own or as part of a model-averaged set, although neither is included in the default candidate set.
+Note that the North American `invpareto` is bounded above, so model-averaged estimates that include it should be interpreted with caution in the upper tail.
 
 We note in passing that *both* versions of these Pareto and inverse Pareto distrbutions are available in `R`.
 For example, the `R`package `extraDistr` has North American versions, while the `actuar` package has European versions.

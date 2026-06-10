@@ -104,9 +104,11 @@ test_that("invpareto_eur ssd_hp gives cis with ccme_boron", {
   expect_snapshot_data(hp, "hp_boron")
 })
 
-test_that("invpareto_eur must be fitted in isolation", {
-  expect_error(
-    ssd_fit_dists(ssddata::ccme_boron, dists = c("lnorm", "invpareto_eur")),
-    "must be fitted in isolation"
+test_that("invpareto_eur can be fitted alongside other distributions", {
+  fit <- ssd_fit_dists(
+    ssddata::ccme_boron,
+    dists = c("lnorm", "invpareto_eur")
   )
+  expect_s3_class(fit, "fitdists")
+  expect_identical(names(fit), c("lnorm", "invpareto_eur"))
 })
