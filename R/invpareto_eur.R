@@ -15,12 +15,12 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-#' @describeIn ssd_p Cumulative Distribution Function for North American Inverse Pareto Distribution
+#' @describeIn ssd_p Cumulative Distribution Function for European Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
-#' ssd_pinvpareto(1)
-ssd_pinvpareto <- function(
+#' ssd_pinvpareto_eur(1)
+ssd_pinvpareto_eur <- function(
   q,
   shape = 3,
   scale = 1,
@@ -28,7 +28,7 @@ ssd_pinvpareto <- function(
   log.p = FALSE
 ) {
   pdist(
-    "invpareto",
+    "invpareto_eur",
     q = q,
     shape = shape,
     scale = scale,
@@ -37,12 +37,12 @@ ssd_pinvpareto <- function(
   )
 }
 
-#' @describeIn ssd_q Quantile Function for North American Inverse Pareto Distribution
+#' @describeIn ssd_q Quantile Function for European Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
-#' ssd_qinvpareto(0.5)
-ssd_qinvpareto <- function(
+#' ssd_qinvpareto_eur(0.5)
+ssd_qinvpareto_eur <- function(
   p,
   shape = 3,
   scale = 1,
@@ -50,7 +50,7 @@ ssd_qinvpareto <- function(
   log.p = FALSE
 ) {
   qdist(
-    "invpareto",
+    "invpareto_eur",
     p = p,
     shape = shape,
     scale = scale,
@@ -59,58 +59,52 @@ ssd_qinvpareto <- function(
   )
 }
 
-#' @describeIn ssd_r Random Generation for North American Inverse Pareto Distribution
+#' @describeIn ssd_r Random Generation for European Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
 #' withr::with_seed(50, {
-#'   x <- ssd_rinvpareto(10000)
+#'   x <- ssd_rinvpareto_eur(10000)
 #' })
 #' hist(x, breaks = 1000)
-ssd_rinvpareto <- function(n, shape = 3, scale = 1, chk = TRUE) {
-  rdist("invpareto", n = n, shape = shape, scale = scale, chk = chk)
+ssd_rinvpareto_eur <- function(n, shape = 3, scale = 1, chk = TRUE) {
+  rdist("invpareto_eur", n = n, shape = shape, scale = scale, chk = chk)
 }
 
-#' @describeIn ssd_e Default Parameter Values for North American Inverse Pareto Distribution
+#' @describeIn ssd_e Default Parameter Values for European Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
-#' ssd_einvpareto()
-ssd_einvpareto <- function() {
+#' ssd_einvpareto_eur()
+ssd_einvpareto_eur <- function() {
   list(shape = 3, scale = 1)
 }
 
-sinvpareto <- function(data, pars = NULL) {
-  scale <- max(data$right)
-  shape <- 1 / mean(log(scale / data$right))
-
-  n <- length(data$right)
-  scale <- scale * (shape * n) / (shape * n - 1)
-  shape <- 1 / mean(log(scale / data$right))
-
-  spars <- list(log_scale = log(scale), log_shape = log(shape))
+sinvpareto_eur <- function(data, pars = NULL) {
   if (!is.null(pars)) {
-    # use new bias corrected order statistic
-    pars$log_scale <- spars$log_scale
     return(pars)
   }
-  spars
+  # The European inverse Pareto has no closed-form mle, so use the median as
+  # an initial scale; with shape = 1 this matches the empirical median exactly
+  # (F(scale) = 0.5) and provides a stable starting point for optimisation.
+  scale <- stats::median(data$right, na.rm = TRUE)
+  if (!is.finite(scale) || scale <= 0) {
+    scale <- 1
+  }
+  list(log_shape = log(1), log_scale = log(scale))
 }
 
-minvpareto <- function() {
-  list(log_scale = factor(NA))
-}
-
-pinvpareto_ssd <- function(q, shape, scale) {
+pinvpareto_eur_ssd <- function(q, shape, scale) {
   if (shape <= 0 || scale <= 0) {
     return(NaN)
   }
-  pow((q / scale), shape)
+  pow(q / (q + scale), shape)
 }
 
-qinvpareto_ssd <- function(p, shape, scale) {
+qinvpareto_eur_ssd <- function(p, shape, scale) {
   if (shape <= 0 || scale <= 0) {
     return(NaN)
   }
-  pow(p, 1 / shape) * scale
+  u <- pow(p, 1 / shape)
+  scale * u / (1 - u)
 }

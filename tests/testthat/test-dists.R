@@ -23,6 +23,7 @@ test_that("dists all", {
       "gamma",
       "gompertz",
       "invpareto",
+      "invpareto_eur",
       "lgumbel",
       "llogis",
       "llogis_llogis",
