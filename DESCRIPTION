@@ -49,7 +49,6 @@ BugReports: https://github.com/bcgov/ssdtools/issues
 Depends:
     R (>= 4.1)
 Imports:
-    abind,
     chk,
     dplyr,
     furrr,
