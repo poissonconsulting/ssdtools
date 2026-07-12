@@ -166,61 +166,91 @@ import(chk)
 import(ggplot2)
 import(rlang)
 importFrom(Rcpp,sourceCpp)
-importFrom(TMB,MakeADFun)
-importFrom(TMB,sdreport)
-importFrom(furrr,furrr_options)
-importFrom(furrr,future_map)
-importFrom(generics,augment)
-importFrom(generics,glance)
-importFrom(generics,tidy)
-importFrom(ggplot2,autoplot)
-importFrom(ggplot2,sym)
-importFrom(ggplot2,waiver)
+importFrom(TMB,
+  MakeADFun,
+  sdreport
+)
+importFrom(furrr,
+  furrr_options,
+  future_map
+)
+importFrom(generics,
+  augment,
+  glance,
+  tidy
+)
+importFrom(ggplot2,
+  autoplot,
+  sym,
+  waiver
+)
 importFrom(glue,glue)
-importFrom(goftest,ad.test)
-importFrom(goftest,cvm.test)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(graphics,title)
-importFrom(grid,gList)
-importFrom(grid,gTree)
-importFrom(grid,gpar)
-importFrom(grid,grobName)
-importFrom(grid,polygonGrob)
-importFrom(grid,segmentsGrob)
-importFrom(lifecycle,deprecate_soft)
-importFrom(lifecycle,deprecate_stop)
-importFrom(lifecycle,deprecate_warn)
-importFrom(lifecycle,deprecated)
-importFrom(lifecycle,expect_defunct)
-importFrom(lifecycle,expect_deprecated)
-importFrom(parallel,nextRNGStream)
-importFrom(parallel,nextRNGSubStream)
-importFrom(purrr,list_assign)
-importFrom(purrr,transpose)
-importFrom(scales,label_percent)
-importFrom(scales,manual_pal)
-importFrom(scales,trans_breaks)
+importFrom(goftest,
+  ad.test,
+  cvm.test
+)
+importFrom(graphics,
+  par,
+  plot,
+  title
+)
+importFrom(grid,
+  gList,
+  gTree,
+  gpar,
+  grobName,
+  polygonGrob,
+  segmentsGrob
+)
+importFrom(lifecycle,
+  deprecate_soft,
+  deprecate_stop,
+  deprecate_warn,
+  deprecated,
+  expect_defunct,
+  expect_deprecated
+)
+importFrom(parallel,
+  nextRNGStream,
+  nextRNGSubStream
+)
+importFrom(purrr,
+  list_assign,
+  transpose
+)
+importFrom(scales,
+  label_percent,
+  manual_pal,
+  trans_breaks
+)
 importFrom(ssddata,gm_mean)
-importFrom(stats,coef)
-importFrom(stats,complete.cases)
-importFrom(stats,ks.test)
-importFrom(stats,logLik)
-importFrom(stats,nobs)
-importFrom(stats,optim)
-importFrom(stats,plogis)
-importFrom(stats,predict)
-importFrom(stats,qlogis)
-importFrom(stats,runif)
-importFrom(stats,sd)
-importFrom(stats,setNames)
-importFrom(stats,uniroot)
-importFrom(stats,weighted.mean)
+importFrom(stats,
+  coef,
+  complete.cases,
+  ks.test,
+  logLik,
+  nobs,
+  optim,
+  plogis,
+  predict,
+  qlogis,
+  runif,
+  sd,
+  setNames,
+  uniroot,
+  weighted.mean
+)
 importFrom(stringr,str_order)
-importFrom(tibble,as_tibble)
-importFrom(tibble,tibble)
-importFrom(universals,estimates)
-importFrom(universals,npars)
-importFrom(utils,capture.output)
-importFrom(utils,relist)
+importFrom(tibble,
+  as_tibble,
+  tibble
+)
+importFrom(universals,
+  estimates,
+  npars
+)
+importFrom(utils,
+  capture.output,
+  relist
+)
 useDynLib(ssdtools, .registration=TRUE); useDynLib(ssdtools_TMBExports)
