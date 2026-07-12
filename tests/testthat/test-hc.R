@@ -1216,14 +1216,16 @@ test_that("hc ci_method = 'weighted_arithmetic' deprecated for MACL", {
 
 test_that("ssd_hc fitdists arithmetic_samples ci", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
-  hc <- ssd_hc(
-    fits,
-    ci_method = "arithmetic_samples",
-    est_method = "arithmetic",
-    nboot = 10,
-    average = TRUE,
-    ci = TRUE
-  )
+  withr::with_seed(102, {
+    hc <- ssd_hc(
+      fits,
+      ci_method = "arithmetic_samples",
+      est_method = "arithmetic",
+      nboot = 10,
+      average = TRUE,
+      ci = TRUE
+    )
+  })
   expect_s3_class(hc, "tbl_df")
   expect_snapshot_data(hc, "hc_arithmetic_samples")
 })
