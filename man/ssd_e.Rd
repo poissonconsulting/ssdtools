@@ -27,8 +27,6 @@ ssd_einvpareto()
 
 ssd_elgumbel()
 
-ssd_elgumbel()
-
 ssd_ellogis_llogis()
 
 ssd_ellogis()
@@ -54,8 +52,6 @@ Default Parameter Estimates
 
 \item \code{ssd_einvpareto()}: Default Parameter Values for Inverse Pareto Distribution
 
-\item \code{ssd_elgumbel()}: Default Parameter Values for Log-Gumbel Distribution
-
 \item \code{ssd_elgumbel()}: Default Parameter Values for log-Gumbel Distribution
 
 \item \code{ssd_ellogis_llogis()}: Default Parameter Values for Log-Logistic/Log-Logistic Mixture Distribution
@@ -78,8 +74,6 @@ ssd_eburrIII3()
 ssd_egamma()
 
 ssd_egompertz()
-
-ssd_einvpareto()
 
 ssd_einvpareto()
 

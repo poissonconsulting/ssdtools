@@ -55,7 +55,6 @@ combine_samples <- function(samples, weight, nboot, geometric) {
 hcp_combine_samples <- function(hcp, weight, ci_method, level, nboot) {
   geometric <- ci_method == "geometric_samples"
 
-  nboot1 <- nboot
   hcp <- hcp |>
     dplyr::bind_rows() |>
     dplyr::group_by(.data$value) |>
@@ -63,7 +62,7 @@ hcp_combine_samples <- function(hcp, weight, ci_method, level, nboot) {
       samples = list(combine_samples(
         .data$samples,
         weight,
-        nboot = nboot1,
+        nboot = .env$nboot,
         geometric = geometric
       ))
     ) |>

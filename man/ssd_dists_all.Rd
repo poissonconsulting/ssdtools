@@ -19,9 +19,9 @@ Gets a character vector of the names of all the available distributions.
 ssd_dists_all()
 }
 \seealso{
-Other dists: 
+Other dists:
 \code{\link{dist_data}},
-\code{\link{ssd_dists}()},
-\code{\link{ssd_dists_shiny}()}
+\code{\link[=ssd_dists]{ssd_dists()}},
+\code{\link[=ssd_dists_shiny]{ssd_dists_shiny()}}
 }
 \concept{dists}

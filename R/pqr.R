@@ -42,7 +42,7 @@ NULL
   args <- c(q, list(...))
 
   if (any(vapply(args, length, 1L) != 1L)) {
-    stop()
+    err("`q` and the distribution parameters must each be length 1.")
   }
   if (is.nan(q)) {
     return(NaN)
@@ -104,7 +104,7 @@ pdist <- function(
   args <- c(p, list(...))
 
   if (any(vapply(args, length, 1L) != 1L)) {
-    stop()
+    err("`p` and the distribution parameters must each be length 1.")
   }
   if (is.nan(p)) {
     return(NaN)
@@ -238,8 +238,7 @@ mdist <- function(dist) {
 
 tdist <- function(dist, data, pars, pvalue, test = "ks", y = "y") {
   x <- mean_weighted_values(data, weight = FALSE)
-  fun <- paste0("ssd_p", dist)
-  fun <- eval(parse(text = fun))
+  fun <- match.fun(paste0("ssd_p", dist))
   args <- list(x, fun)
   names(args) <- c("x", y)
   args <- c(args, pars)

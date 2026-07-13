@@ -36,11 +36,11 @@ ggplot2::ggplot(ssddata::ccme_boron, ggplot2::aes(x = Species, y = Conc, fill = 
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
 }
 \seealso{
-Other ggplot: 
-\code{\link{geom_hcintersect}()},
-\code{\link{geom_ssdpoint}()},
-\code{\link{geom_ssdsegment}()},
-\code{\link{geom_xribbon}()},
-\code{\link{ssd_pal}()}
+Other ggplot:
+\code{\link[=geom_hcintersect]{geom_hcintersect()}},
+\code{\link[=geom_ssdpoint]{geom_ssdpoint()}},
+\code{\link[=geom_ssdsegment]{geom_ssdsegment()}},
+\code{\link[=geom_xribbon]{geom_xribbon()}},
+\code{\link[=ssd_pal]{ssd_pal()}}
 }
 \concept{ggplot}

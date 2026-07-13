@@ -16,7 +16,7 @@
 # summary fitdists with left censored, rescaled, weighted data
 
     Distribution 'lnorm'
-      meanlog 0.6239
+      meanlog 0.623898
       sdlog 1.31089
     
     Parameters estimated from 28 rows of inconsistently censored, unequally weighted and rescaled (8.408) data.

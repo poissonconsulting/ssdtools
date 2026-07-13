@@ -24,8 +24,8 @@ augment(fits)
 \seealso{
 \code{\link[=ssd_data]{ssd_data()}}
 
-Other generics: 
-\code{\link{glance.fitdists}()},
-\code{\link{tidy.fitdists}()}
+Other generics:
+\code{\link[=glance.fitdists]{glance.fitdists()}},
+\code{\link[=tidy.fitdists]{tidy.fitdists()}}
 }
 \concept{generics}

@@ -98,7 +98,7 @@ sburrIII3 <- function(data, pars = NULL) {
   list(log_scale = 0, log_shape1 = 0, log_shape2 = 0)
 }
 
-bburrIII3 <- function(x, range_shape1, range_shape2, ...) {
+bburrIII3 <- function(range_shape1, range_shape2, ...) {
   log_range_shape1 <- log(range_shape1)
   log_range_shape2 <- log(range_shape2)
   list(

@@ -155,10 +155,12 @@ ssd_plot <- function(
 
   if (!is.null(hc)) {
     chk_vector(hc)
+    chk_numeric(hc)
     chk_gt(length(hc))
     chk_subset(hc, pred$proportion)
   }
   chk_string(big.mark)
+  chk_string(decimal.mark)
   chk_string(suffix)
   .chk_bounds(bounds)
   chk_subset(trans, c("log10", "log", "identity"))

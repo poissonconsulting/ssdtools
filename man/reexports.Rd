@@ -24,14 +24,14 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{generics}{\code{\link[generics]{augment}}, \code{\link[generics]{glance}}, \code{\link[generics]{tidy}}}
+  \item{generics}{\code{\link[generics:augment]{augment()}}, \code{\link[generics:glance]{glance()}}, \code{\link[generics:tidy]{tidy()}}}
 
-  \item{ggplot2}{\code{\link[ggplot2]{autoplot}}, \code{\link[ggplot2]{waiver}}}
+  \item{ggplot2}{\code{\link[ggplot2:autoplot]{autoplot()}}, \code{\link[ggplot2:waiver]{waiver()}}}
 
-  \item{graphics}{\code{\link[graphics:plot.default]{plot}}}
+  \item{graphics}{\code{\link[graphics:plot]{plot}}}
 
-  \item{stats}{\code{\link[stats]{coef}}, \code{\link[stats]{logLik}}, \code{\link[stats]{nobs}}, \code{\link[stats]{predict}}}
+  \item{stats}{\code{\link[stats:coef]{coef()}}, \code{\link[stats:logLik]{logLik()}}, \code{\link[stats:nobs]{nobs()}}, \code{\link[stats:predict]{predict()}}}
 
-  \item{universals}{\code{\link[universals]{estimates}}, \code{\link[universals]{npars}}}
+  \item{universals}{\code{\link[universals:estimates]{estimates()}}, \code{\link[universals:npars]{npars()}}}
 }}
 

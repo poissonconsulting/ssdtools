@@ -50,15 +50,6 @@ ssd_plgumbel <- function(
   )
 }
 
-#' @describeIn ssd_e Default Parameter Values for Log-Gumbel Distribution
-#' @export
-#' @examples
-#'
-#' ssd_einvpareto()
-ssd_elgumbel <- function() {
-  list(locationlog = 0, scalelog = 1)
-}
-
 #' Cumulative Distribution Function for Log-Gumbel Distribution
 #' `r lifecycle::badge("deprecated")`
 #'

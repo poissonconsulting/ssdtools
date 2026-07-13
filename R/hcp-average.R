@@ -25,7 +25,7 @@ hcp_noci <- function(value, est_method, ci_method, ...) {
   tibble(
     value = value,
     est_method = est_method,
-    ci_method = ci_method,
+    ci_method = ci_method
   )
 }
 

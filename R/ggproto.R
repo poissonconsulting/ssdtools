@@ -27,7 +27,7 @@ StatSsdpoint <- ggproto(
   "StatSsdpoint",
   Stat,
   required_aes = "x",
-  default_aes = aes(y = ..density..),
+  default_aes = aes(y = after_stat(density)),
   compute_panel = function(data, scales) {
     data$density <- ssd_ecd(data$x)
     data
@@ -40,7 +40,7 @@ StatSsdsegment <- ggproto(
   "StatSsdsegment",
   Stat,
   required_aes = c("x", "xend"),
-  default_aes = aes(y = ..density.., yend = ..density..),
+  default_aes = aes(y = after_stat(density), yend = after_stat(density)),
   compute_panel = function(data, scales) {
     data$density <- ssd_ecd(rowMeans(data[c("x", "xend")], na.rm = TRUE))
     data
@@ -114,7 +114,7 @@ GeomXribbon <- ggproto(
     # Check that aesthetics are constant
     aes <- unique(data[c("colour", "fill", "linewidth", "linetype", "alpha")])
     if (nrow(aes) > 1) {
-      err("Aesthetics can not vary with a ribbon.")
+      err("Aesthetics cannot vary with a ribbon.")
     }
     aes <- as.list(aes)
 
@@ -122,10 +122,9 @@ GeomXribbon <- ggproto(
     ids <- cumsum(missing_pos) + 1
     ids[missing_pos] <- NA
 
-    positions <- plyr::summarise(
-      data,
-      y = c(y, rev(y)),
-      x = c(xmax, rev(xmin)),
+    positions <- data.frame(
+      y = c(data$y, rev(data$y)),
+      x = c(data$xmax, rev(data$xmin)),
       id = c(ids, rev(ids))
     )
     munched <- coord_munch(coord, positions, panel_params)

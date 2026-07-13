@@ -113,11 +113,11 @@ gp <- ggplot2::ggplot(boron_pred) +
 \seealso{
 \code{\link[=ssd_plot_cdf]{ssd_plot_cdf()}}
 
-Other ggplot: 
-\code{\link{geom_hcintersect}()},
-\code{\link{geom_ssdpoint}()},
-\code{\link{geom_ssdsegment}()},
-\code{\link{scale_colour_ssd}()},
-\code{\link{ssd_pal}()}
+Other ggplot:
+\code{\link[=geom_hcintersect]{geom_hcintersect()}},
+\code{\link[=geom_ssdpoint]{geom_ssdpoint()}},
+\code{\link[=geom_ssdsegment]{geom_ssdsegment()}},
+\code{\link[=scale_colour_ssd]{scale_colour_ssd()}},
+\code{\link[=ssd_pal]{ssd_pal()}}
 }
 \concept{ggplot}
