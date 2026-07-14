@@ -65,6 +65,56 @@ test_that("predict cis fitburrlioz", {
 })
 
 
+test_that("predict passes samples through to ssd_hc", {
+  fits <- ssd_fit_dists(ssddata::ccme_boron)
+
+  withr::with_seed(50, {
+    pred <- predict(fits, ci = TRUE, nboot = 10L, samples = TRUE)
+  })
+  withr::with_seed(50, {
+    hc <- ssd_hc(
+      fits,
+      proportion = 1:99 / 100,
+      ci = TRUE,
+      nboot = 10L,
+      samples = TRUE
+    )
+  })
+  expect_true("samples" %in% names(pred))
+  expect_true(any(lengths(pred$samples) > 0))
+  expect_equal(pred$samples, hc$samples)
+})
+
+test_that("predict passes save_to through to ssd_hc", {
+  dir <- withr::local_tempdir()
+
+  fits <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  withr::with_seed(102, {
+    pred <- predict(
+      fits,
+      proportion = c(0.05, 0.5),
+      nboot = 3,
+      ci = TRUE,
+      ci_method = "multi_fixed",
+      save_to = dir
+    )
+  })
+  expect_s3_class(pred, "tbl")
+  expect_identical(
+    list.files(dir),
+    c(
+      "data_000000000_lnorm.csv",
+      "data_000000001_lnorm.csv",
+      "data_000000002_lnorm.csv",
+      "data_000000003_lnorm.csv",
+      "estimates_000000000_lnorm.rds",
+      "estimates_000000001_lnorm.rds",
+      "estimates_000000002_lnorm.rds",
+      "estimates_000000003_lnorm.rds"
+    )
+  )
+})
+
 test_that("predict matches ssd_hc with and without average", {
   data <- ssddata::ccme_glyphosate
 
