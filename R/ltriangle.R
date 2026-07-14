@@ -99,6 +99,11 @@ sltriangle <- function(data, pars = NULL) {
   location <- mean(logx, na.rm = TRUE)
   # half-width must exceed the largest deviation so the support covers the data
   halfwidth <- max(abs(logx - location), na.rm = TRUE)
+  # fall back to a small positive value when the data have no spread on the
+  # log scale so the starting value stays finite
+  if (!is.finite(halfwidth) || halfwidth <= 0) {
+    halfwidth <- 0.1
+  }
 
   list(
     locationlog = location,
