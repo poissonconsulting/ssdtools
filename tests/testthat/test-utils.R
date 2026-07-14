@@ -15,14 +15,14 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-test_that("ssd_ecd", {
-  expect_equal(ssd_ecd(numeric()), numeric())
-  expect_equal(ssd_ecd(NA_real_), 0.5)
-  expect_equal(ssd_ecd(1), 0.5)
-  expect_equal(ssd_ecd(1:2), c(0.277777777777778, 0.722222222222222))
-  expect_equal(ssd_ecd(c(1, NA_real_)), c(NA_real_, NA_real_))
+test_that("ssd_ecdf", {
+  expect_equal(ssd_ecdf(numeric()), numeric())
+  expect_equal(ssd_ecdf(NA_real_), 0.5)
+  expect_equal(ssd_ecdf(1), 0.5)
+  expect_equal(ssd_ecdf(1:2), c(0.277777777777778, 0.722222222222222))
+  expect_equal(ssd_ecdf(c(1, NA_real_)), c(NA_real_, NA_real_))
   expect_equal(
-    ssd_ecd(1:10),
+    ssd_ecdf(1:10),
     c(
       0.0609756097560976,
       0.158536585365854,
@@ -36,18 +36,30 @@ test_that("ssd_ecd", {
       0.939024390243902
     )
   )
-  expect_equal(ssd_ecd(1:100), seq(0.005, 0.995, by = 0.01))
+  expect_equal(ssd_ecdf(1:100), seq(0.005, 0.995, by = 0.01))
 })
 
-test_that("ssd_ecd ties.method argument deprecated", {
+test_that("ssd_ecdf ties.method argument deprecated", {
   lifecycle::expect_deprecated(expect_equal(
-    ssd_ecd(1, ties.method = "first"),
+    ssd_ecdf(1, ties.method = "first"),
     0.5
   ))
 })
 
-test_that("ssd_ecd_data", {
-  expect_snapshot_output(ssd_ecd_data(ssddata::ccme_boron))
+test_that("ssd_ecdf_data", {
+  expect_snapshot_output(ssd_ecdf_data(ssddata::ccme_boron))
+})
+
+test_that("ssd_ecd deprecated for ssd_ecdf", {
+  lifecycle::expect_deprecated(ecd <- ssd_ecd(1:10))
+  withr::local_options(lifecycle_verbosity = "quiet")
+  expect_equal(ecd, ssd_ecdf(1:10))
+})
+
+test_that("ssd_ecd_data deprecated for ssd_ecdf_data", {
+  lifecycle::expect_deprecated(ecd <- ssd_ecd_data(ssddata::ccme_boron))
+  withr::local_options(lifecycle_verbosity = "quiet")
+  expect_equal(ecd, ssd_ecdf_data(ssddata::ccme_boron))
 })
 
 test_that("comma_signif", {

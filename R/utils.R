@@ -54,17 +54,17 @@ comma_signif <- function(x, digits = 3, ..., big.mark = ",") {
   y
 }
 
-#' Empirical Cumulative Density
+#' Empirical Cumulative Distribution Function
 #'
 #' @inheritParams base::rank
-#' @return A numeric vector of the empirical cumulative density.
+#' @return A numeric vector of the empirical cumulative distribution function.
 #' @export
 #'
 #' @examples
-#' ssd_ecd(1:10)
-ssd_ecd <- function(x, ties.method = "first") {
+#' ssd_ecdf(1:10)
+ssd_ecdf <- function(x, ties.method = "first") {
   if (!missing(ties.method)) {
-    lifecycle::deprecate_warn("2.3.0", "ssd_ecd(ties.method)")
+    lifecycle::deprecate_warn("2.3.0", "ssd_ecdf(ties.method)")
   }
   chk_numeric(x)
   if (!length(x)) {
@@ -80,17 +80,41 @@ ssd_ecd <- function(x, ties.method = "first") {
   stats::ppoints(length(x))[rank]
 }
 
-#' Empirical Cumulative Density for Species Sensitivity Data
+#' Empirical Cumulative Density
+#' `r lifecycle::badge("deprecated")`
 #'
-#' @inheritParams params
-#' @return A numeric vector of the empirical cumulative density for the rows
-#' in data.
-#' @seealso [`ssd_ecd()`] and [`ssd_data()`]
+#' Deprecated for [`ssd_ecdf()`].
+#'
+#' @inheritParams base::rank
+#' @return A numeric vector of the empirical cumulative distribution function.
+#' @seealso [`ssd_ecdf()`]
+#' @keywords internal
 #' @export
 #'
 #' @examples
-#' ssd_ecd_data(ssddata::ccme_boron)
-ssd_ecd_data <- function(
+#' \dontrun{
+#' ssd_ecd(1:10)
+#' }
+ssd_ecd <- function(x, ties.method = "first") {
+  lifecycle::deprecate_soft("2.7.0", "ssd_ecd()", "ssd_ecdf()")
+  if (missing(ties.method)) {
+    ssd_ecdf(x)
+  } else {
+    ssd_ecdf(x, ties.method = ties.method)
+  }
+}
+
+#' Empirical Cumulative Distribution Function for Species Sensitivity Data
+#'
+#' @inheritParams params
+#' @return A numeric vector of the empirical cumulative distribution function
+#' for the rows in data.
+#' @seealso [`ssd_ecdf()`] and [`ssd_data()`]
+#' @export
+#'
+#' @examples
+#' ssd_ecdf_data(ssddata::ccme_boron)
+ssd_ecdf_data <- function(
   data,
   left = "Conc",
   right = left,
@@ -108,7 +132,34 @@ ssd_ecd_data <- function(
   data <- process_data(data, left = left, right = right)
   data <- bound_data(data, bounds)
   x <- rowMeans(log(data[c("left", "right")]))
-  ssd_ecd(x)
+  ssd_ecdf(x)
+}
+
+#' Empirical Cumulative Density for Species Sensitivity Data
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Deprecated for [`ssd_ecdf_data()`].
+#'
+#' @inheritParams params
+#' @return A numeric vector of the empirical cumulative distribution function
+#' for the rows in data.
+#' @seealso [`ssd_ecdf_data()`] and [`ssd_data()`]
+#' @keywords internal
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' ssd_ecd_data(ssddata::ccme_boron)
+#' }
+ssd_ecd_data <- function(
+  data,
+  left = "Conc",
+  right = left,
+  ...,
+  bounds = c(left = 1, right = 1)
+) {
+  lifecycle::deprecate_soft("2.7.0", "ssd_ecd_data()", "ssd_ecdf_data()")
+  ssd_ecdf_data(data, left = left, right = right, ..., bounds = bounds)
 }
 
 #' Sort Species Sensitivity Data
@@ -122,12 +173,12 @@ ssd_ecd_data <- function(
 #' @inheritParams params
 #'
 #' @return data sorted by the empirical cumulative density.
-#' @seealso [`ssd_ecd_data()`] and [`ssd_data()`]
+#' @seealso [`ssd_ecdf_data()`] and [`ssd_data()`]
 #' @export
 #'
 #' @examples
 #' ssd_sort_data(ssddata::ccme_boron)
 ssd_sort_data <- function(data, left = "Conc", right = left) {
-  ecd <- ssd_ecd_data(data, left = left, right = right)
+  ecd <- ssd_ecdf_data(data, left = left, right = right)
   data[order(ecd), , drop = FALSE]
 }
