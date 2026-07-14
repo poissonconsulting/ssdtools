@@ -659,6 +659,25 @@ test_that("hp est_method = FALSE deprecated and overrides est_method", {
   expect_identical(false, arithmetic)
 })
 
+test_that("hp duplicate conc values return one row per input value in order", {
+  fits <- ssd_fit_dists(ssddata::ccme_boron)
+
+  hp <- ssd_hp(fits, conc = c(1, 10, 20), proportion = TRUE)
+  hp_dup <- ssd_hp(fits, conc = c(1, 10, 20, 1), proportion = TRUE)
+
+  expect_identical(nrow(hp_dup), 4L)
+  expect_identical(hp_dup$conc, c(1, 10, 20, 1))
+  expect_equal(hp_dup$est, c(hp$est, hp$est[1]))
+})
+
+test_that("hp duplicate conc values unaffected when average = FALSE", {
+  fits <- ssd_fit_dists(ssddata::ccme_boron)
+
+  hp <- ssd_hp(fits, conc = c(1, 10, 1), average = FALSE, proportion = TRUE)
+  expect_identical(nrow(hp), 18L)
+  expect_identical(unique(hp$conc), c(1, 10))
+})
+
 test_that("hp ci_method = 'weighted_arithmetic' deprecated for MACL", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
   withr::with_seed(10, {
