@@ -49,3 +49,34 @@ test_that("ltriangle predict returns finite estimates across the full range", {
   expect_identical(nrow(pred), 99L)
   expect_true(all(is.finite(pred$est)))
 })
+
+test_that("ltriangle fit is invariant to scaling the concentrations", {
+  data <- ssddata::ccme_boron
+  fit <- ssd_fit_dists(data, dists = "ltriangle")
+
+  data_scaled <- data
+  data_scaled$Conc <- data_scaled$Conc * 1000
+  fit_scaled <- ssd_fit_dists(data_scaled, dists = "ltriangle")
+
+  est <- estimates(fit)
+  est_scaled <- estimates(fit_scaled)
+
+  # scaling concentrations by a constant only shifts locationlog by its log and
+  # leaves scalelog unchanged, so hazard concentrations scale by the constant.
+  # The scale-relative density floor keeps this invariance across magnitudes.
+  expect_equal(
+    est_scaled$ltriangle.scalelog,
+    est$ltriangle.scalelog,
+    tolerance = 1e-5
+  )
+  expect_equal(
+    est_scaled$ltriangle.locationlog,
+    est$ltriangle.locationlog + log(1000),
+    tolerance = 1e-5
+  )
+  expect_equal(
+    ssd_hc(fit_scaled, proportion = 0.05)$est,
+    ssd_hc(fit, proportion = 0.05)$est * 1000,
+    tolerance = 1e-4
+  )
+})
