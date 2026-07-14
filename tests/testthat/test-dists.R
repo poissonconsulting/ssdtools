@@ -42,7 +42,6 @@ test_that("dists shiny", {
         "burrIII3",
         "gamma",
         "gompertz",
-        "invpareto_eur",
         "lgumbel",
         "llogis",
         "llogis_llogis",
