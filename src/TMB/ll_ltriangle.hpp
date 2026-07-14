@@ -85,8 +85,11 @@ Type ll_ltriangle(objective_function<Type>* obj) {
         Type absdev = CppAD::CondExpGe(dev, Type(0.0), dev, -dev);
         Type inside = scalelog - absdev;
         // floor the density argument to keep the likelihood finite (and act as a
-        // soft barrier) if a candidate support fails to cover a data point.
-        Type floored = CppAD::CondExpGt(inside, Type(1e-8), inside, Type(1e-8));
+        // soft barrier) if a candidate support fails to cover a data point. The
+        // floor is scaled to `scalelog` (the peak density argument) so the soft
+        // barrier behaves consistently regardless of the magnitude of the data.
+        Type floor = Type(1e-8) * scalelog;
+        Type floored = CppAD::CondExpGt(inside, floor, inside, floor);
         nll -= weight(i) * (log(floored) - Type(2.0) * log(scalelog) - log(left(i)));
      };
      if(left(i) < right(i)){    // censored values
