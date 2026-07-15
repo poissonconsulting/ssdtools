@@ -73,22 +73,21 @@ test_that("invpareto_eur mle matches actuar mle with ccme_boron", {
   expect_equal(est$invpareto_eur.scale, exp(opt$par[2]), tolerance = 1e-4)
 })
 
-test_that("invpareto_eur gives cis with ccme_boron", {
+# The exact bootstrap confidence-interval snapshots for ssd_hc()/ssd_hp() are
+# not reproducible across platforms, so they are kept in the ssdtests package.
+# Here we assert the structural properties of the confidence limits instead.
+test_that("invpareto_eur ssd_hc returns finite ordered confidence limits", {
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "invpareto_eur")
   expect_s3_class(fit, "fitdists")
   withr::with_seed(50, {
-    hc <- ssd_hc(
-      fit,
-      nboot = 100,
-      ci = TRUE,
-      ci_method = "multi_fixed",
-      samples = TRUE
-    )
+    hc <- ssd_hc(fit, nboot = 100, ci = TRUE, ci_method = "multi_fixed")
   })
-  expect_snapshot_data(hc, "hc_boron")
+  expect_identical(nrow(hc), 1L)
+  expect_true(all(is.finite(c(hc$est, hc$se, hc$lcl, hc$ucl))))
+  expect_true(hc$lcl <= hc$est && hc$est <= hc$ucl)
 })
 
-test_that("invpareto_eur ssd_hp gives cis with ccme_boron", {
+test_that("invpareto_eur ssd_hp returns finite ordered confidence limits", {
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "invpareto_eur")
   expect_s3_class(fit, "fitdists")
   withr::with_seed(50, {
@@ -97,11 +96,12 @@ test_that("invpareto_eur ssd_hp gives cis with ccme_boron", {
       nboot = 100,
       ci = TRUE,
       ci_method = "multi_fixed",
-      samples = TRUE,
       proportion = FALSE
     )
   })
-  expect_snapshot_data(hp, "hp_boron")
+  expect_identical(nrow(hp), 1L)
+  expect_true(all(is.finite(c(hp$est, hp$se, hp$lcl, hp$ucl))))
+  expect_true(hp$lcl <= hp$est && hp$est <= hp$ucl)
 })
 
 test_that("invpareto_eur must be fitted in isolation", {
