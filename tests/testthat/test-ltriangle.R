@@ -80,3 +80,29 @@ test_that("ltriangle fit is invariant to scaling the concentrations", {
     tolerance = 1e-4
   )
 })
+
+test_that("ltriangle fits the endosulfan species sensitivity data", {
+  # endosulfan acute toxicity values (Hose and Van den Brink 2004), a public
+  # species sensitivity dataset from the fitdistrplus package. The triangular
+  # distribution is fitted to log-transformed toxicity data by the US EPA SSD
+  # Toolbox, so this exercises ltriangle on data it is used for in practice.
+  skip_if_not_installed("fitdistrplus")
+
+  env <- new.env()
+  utils::data("endosulfan", package = "fitdistrplus", envir = env)
+  data <- data.frame(Conc = env$endosulfan$ATV)
+
+  fit <- ssd_fit_dists(data, dists = "ltriangle")
+  expect_s3_class(fit, "fitdists")
+
+  est <- estimates(fit)
+  expect_equal(est$ltriangle.locationlog, 2.972006, tolerance = 1e-3)
+  expect_equal(est$ltriangle.scalelog, 8.020607, tolerance = 1e-3)
+
+  glance <- glance(fit, wt = TRUE)
+  expect_identical(glance$nobs, 104L)
+  expect_identical(glance$npars, 2L)
+
+  hc <- ssd_hc(fit, proportion = 0.05)
+  expect_equal(hc$est, 0.08108457, tolerance = 1e-3)
+})
