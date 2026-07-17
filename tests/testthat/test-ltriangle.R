@@ -106,3 +106,73 @@ test_that("ltriangle fits the endosulfan species sensitivity data", {
   hc <- ssd_hc(fit, proportion = 0.05)
   expect_equal(hc$est, 0.08108457, tolerance = 1e-3)
 })
+
+test_that("ltriangle reproduces the US EPA SSD Toolbox triangular fit to the permethrin acute data", {
+  # Permethrin acute LC50 data (PermethrinAcuteData.xlsx), reproduced from the US
+  # EPA SSD Toolbox v1.0 User's Manual (EPA/600/R-18/116, Table 2), originally
+  # from Fojut et al. (2012, Table 10). The SSD Toolbox is a work of the US
+  # federal government and is in the public domain (17 U.S.C. sec. 105);
+  data <- tibble::tribble(
+    ~Genus         , ~species          , ~LC50  ,
+    "Ceriodaphnia" , "dubia"           , 0.25   ,
+    "Ceriodaphnia" , "dubia"           , 0.652  ,
+    "Ceriodaphnia" , "dubia"           , 0.788  ,
+    "Ceriodaphnia" , "dubia"           , 0.622  ,
+    "Ceriodaphnia" , "dubia"           , 0.772  ,
+    "Ceriodaphnia" , "dubia"           , 0.745  ,
+    "Ceriodaphnia" , "dubia"           , 0.858  ,
+    "Ceriodaphnia" , "dubia"           , 0.571  ,
+    "Ceriodaphnia" , "dubia"           , 0.58   ,
+    "Ceriodaphnia" , "dubia"           , 0.609  ,
+    "Ceriodaphnia" , "dubia"           , 0.57   ,
+    "Ceriodaphnia" , "dubia"           , 0.827  ,
+    "Ceriodaphnia" , "dubia"           , 0.585  ,
+    "Ceriodaphnia" , "dubia"           , 0.849  ,
+    "Ceriodaphnia" , "dubia"           , 0.889  ,
+    "Ceriodaphnia" , "dubia"           , 0.865  ,
+    "Chironomus"   , "dilutus"         , 0.189  ,
+    "Danio"        , "rerio"           , 2.5    ,
+    "Daphnia"      , "magna"           , 0.32   ,
+    "Erimonax"     , "monachus"        , 1.7    ,
+    "Etheostoma"   , "fonticola"       , 3.34   ,
+    "Etheostoma"   , "lepidum"         , 2.71   ,
+    "Hyalella"     , "azteca"          , 0.0211 ,
+    "Ictalurus"    , "punctatus"       , 5.4    ,
+    "Notropis"     , "mekistocholas"   , 4.16   ,
+    "Oncorhynchus" , "apache"          , 1.71   ,
+    "Oncorhynchus" , "clarki henshawi" , 1.58   ,
+    "Oncorhynchus" , "mykiss"          , 7      ,
+    "Oreonectes"   , "immunis"         , 0.21   ,
+    "Pimephales"   , "promelas"        , 9.38   ,
+    "Procambarus"  , "blandingi"       , 0.21   ,
+    "Procloeon"    , "Sp."             , 0.0896 ,
+    "Salmo"        , "salar"           , 1.5    ,
+    "Xyrauchen"    , "texanus"         , 5.95
+  )
+
+  gm <- tapply(
+    data$LC50,
+    paste(data$Genus, data$species),
+    function(x) exp(mean(log(x)))
+  )
+  conc <- data.frame(Conc = as.numeric(gm))
+
+  fit <- ssd_fit_dists(conc, dists = "ltriangle")
+  expect_s3_class(fit, "fitdists")
+
+  glance <- glance(fit, wt = TRUE)
+  expect_identical(glance$nobs, 19L)
+  expect_identical(glance$npars, 2L)
+
+  est <- estimates(fit)
+  expect_equal(est$ltriangle.locationlog, -0.1815457, tolerance = 1e-4)
+  expect_equal(est$ltriangle.scalelog, 4.092351, tolerance = 1e-4)
+
+  a <- (est$ltriangle.locationlog - est$ltriangle.scalelog) / log(10)
+  b <- (est$ltriangle.locationlog + est$ltriangle.scalelog) / log(10)
+  expect_equal(a, -1.85613, tolerance = 1e-4)
+  expect_equal(b, 1.698441, tolerance = 1e-4)
+
+  hc <- ssd_hc(fit, proportion = 0.05)
+  expect_equal(hc$est, 0.05080394, tolerance = 1e-4)
+})
