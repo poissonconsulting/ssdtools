@@ -23,7 +23,7 @@ generics::glance
   npars <- npars(x)
   log_lik <- logLik(x)
   aic <- 2 * npars - 2 * log_lik
-  if (isTRUE(nobs < npars + 2)) {
+  if (isTRUE(nobs <= npars)) {
     aicc <- Inf
   } else {
     aicc <- aic + 2 * npars * (npars + 1) / (nobs - npars - 1)
