@@ -31,6 +31,7 @@ dist_data <- tibble::tribble(
   "llogis_llogis" , FALSE  , TRUE   , 5L     , TRUE   , TRUE   ,
   "lnorm"         , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
   "lnorm_lnorm"   , TRUE   , TRUE   , 5L     , TRUE   , TRUE   ,
+  "ltriangle"     , FALSE  , FALSE  , 2L     , TRUE   , FALSE  ,
   "weibull"       , TRUE   , TRUE   , 2L     , TRUE   , FALSE
 )
 

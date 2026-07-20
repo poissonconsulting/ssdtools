@@ -28,6 +28,7 @@ test_that("dists all", {
       "llogis_llogis",
       "lnorm",
       "lnorm_lnorm",
+      "ltriangle",
       "weibull"
     )
   )
@@ -61,7 +62,10 @@ test_that("dists can select none", {
 })
 
 test_that("dists without tails", {
-  expect_identical(ssd_dists(tails = FALSE, valid = NULL), "invpareto")
+  expect_identical(
+    ssd_dists(tails = FALSE, valid = NULL),
+    c("invpareto", "ltriangle")
+  )
 })
 
 test_that("dists 5 pars", {
