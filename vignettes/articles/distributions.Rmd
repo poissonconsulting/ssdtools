@@ -539,7 +539,8 @@ legend("topleft", "(B)", bty = "n")
 
 #### Inverse Pareto distribution
 
-The inverse Pareto distribution can be fitted using `ssdtools` by supplying the string `invpareto`  to the `dists` argument in the `ssd_fit_dists` call. 
+Two versions of the inverse Pareto distribution are implemented in `ssdtools`, distinguished by their parameterisation (see below).
+The North American version can be fitted by supplying the string `invpareto` to the `dists` argument in the `ssd_fit_dists` call, while the European version can be fitted by supplying the string `invpareto_eur`.
 
 While the inverse Pareto distribution is implemented in the `Burrlioz 2.0` software, it is important to understand that it is done so only as one of the limiting Burr distributions (see [technical details](https://bcgov.github.io/ssdtools/articles/E_additional-technical-details.html)).
 The inverse Pareto is not offered as a stand-alone option in the `Burrlioz 2.0` software. We have spent considerable time and effort exploring the properties of the inverse Pareto distribution, including deriving bias correction equations and alternative methods for deriving confidence intervals [@fox_methodologies_2022]. 
@@ -589,6 +590,7 @@ and the *mle* of $\alpha$ is: \[\hat \alpha  = {\left[ {\ln \left( {\frac{g}{{\h
 Thus, it doesn't matter whether you're fitting a Pareto or inverse Pareto distribution to your data - the parameter estimates are the <u>same</u>.
 
 Because it is *bounded*, the North American version of the (Inverse)Pareto distribution is not useful as a stand-alone SSD - more so for the *inverse Pareto* distribution since it is bounded from *above*.
+This North American version is the one fitted by `ssdtools` when the string `invpareto` is supplied to the `dists` argument.
 
 ```{r echo=FALSE,fig.align='center',fig.width=9,fig.height=5,fig.cap="Sample North American Pareto probability density (A) and cumulative probability (B) functions.", fig.alt="A two panel plot showing several realisations of the North American Pareto probability density function on the left panel and the cumulative density function of distribution on the right panel."}
 par(mfrow = c(1, 2))
@@ -657,7 +659,12 @@ We see from the *pdf* plots that the alternative, *European* version of the inve
 
 <br>
 
-We note in passing that *both* versions of these Pareto and inverse Pareto distrbutions are available in `R`. 
+Because it is *unbounded* above, the European version of the inverse Pareto distribution is a more realistic stand-alone SSD than the North American version.
+It is fitted by `ssdtools` when the string `invpareto_eur` is supplied to the `dists` argument, and uses the same `shape` and `scale` parameterisation as `actuar::dinvpareto()`.
+Both the North American `invpareto` and the European `invpareto_eur` are offered as user-selectable distributions that can be fitted on their own or as part of a model-averaged set, although neither is included in the default candidate set.
+Note that the North American `invpareto` is bounded above, so model-averaged estimates that include it should be interpreted with caution in the upper tail.
+
+We note in passing that *both* versions of these Pareto and inverse Pareto distrbutions are available in `R`.
 For example, the `R`package `extraDistr` has North American versions, while the `actuar` package has European versions.
 
 ```{r echo=FALSE,fig.align='center',fig.width=9,fig.height=5,fig.cap="Sample European Pareto probability density (A) and cumulative probability (B) functions.", fig.alt="A two panel plot showing several realisations of the European Pareto probability density function on the left panel and the cumulative density function of distribution on the right panel."}

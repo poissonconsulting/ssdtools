@@ -26,6 +26,7 @@ dist_data <- tibble::tribble(
   "gamma"         , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
   "gompertz"      , FALSE  , TRUE   , 2L     , TRUE   , FALSE  ,
   "invpareto"     , FALSE  , FALSE  , 2L     , FALSE  , FALSE  ,
+  "invpareto_eur" , FALSE  , TRUE   , 2L     , FALSE  , FALSE  ,
   "lgumbel"       , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
   "llogis"        , TRUE   , TRUE   , 2L     , TRUE   , FALSE  ,
   "llogis_llogis" , FALSE  , TRUE   , 5L     , TRUE   , TRUE   ,

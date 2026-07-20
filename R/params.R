@@ -172,9 +172,12 @@
 #' @param gompertz.weight weight parameter for the Gompertz distribution.
 #' @param gompertz.location location parameter for the Gompertz distribution.
 #' @param gompertz.shape shape parameter for the Gompertz distribution.
-#' @param invpareto.weight weight parameter for the inverse Pareto distribution.
-#' @param invpareto.shape shape parameter for the inverse Pareto distribution.
-#' @param invpareto.scale scale parameter for the inverse Pareto distribution.
+#' @param invpareto.weight weight parameter for the North American inverse Pareto distribution.
+#' @param invpareto.shape shape parameter for the North American inverse Pareto distribution.
+#' @param invpareto.scale scale parameter for the North American inverse Pareto distribution.
+#' @param invpareto_eur.weight weight parameter for the European inverse Pareto distribution.
+#' @param invpareto_eur.shape shape parameter for the European inverse Pareto distribution.
+#' @param invpareto_eur.scale scale parameter for the European inverse Pareto distribution.
 #' @param lgumbel.weight weight parameter for the log-Gumbel distribution.
 #' @param lgumbel.locationlog location parameter for the log-Gumbel distribution.
 #' @param lgumbel.scalelog scale parameter for the log-Gumbel distribution.

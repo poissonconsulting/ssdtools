@@ -283,11 +283,17 @@ Use NA to refer to the existing minimum or maximum limits.
 
 \item{gompertz.shape}{shape parameter for the Gompertz distribution.}
 
-\item{invpareto.weight}{weight parameter for the inverse Pareto distribution.}
+\item{invpareto.weight}{weight parameter for the North American inverse Pareto distribution.}
 
-\item{invpareto.shape}{shape parameter for the inverse Pareto distribution.}
+\item{invpareto.shape}{shape parameter for the North American inverse Pareto distribution.}
 
-\item{invpareto.scale}{scale parameter for the inverse Pareto distribution.}
+\item{invpareto.scale}{scale parameter for the North American inverse Pareto distribution.}
+
+\item{invpareto_eur.weight}{weight parameter for the European inverse Pareto distribution.}
+
+\item{invpareto_eur.shape}{shape parameter for the European inverse Pareto distribution.}
+
+\item{invpareto_eur.scale}{scale parameter for the European inverse Pareto distribution.}
 
 \item{lgumbel.weight}{weight parameter for the log-Gumbel distribution.}
 
