@@ -97,8 +97,8 @@ reference:
   - ssd_at_boundary
   - ssd_ci_methods
   - ssd_computable
-  - ssd_ecd
-  - ssd_ecd_data
+  - ssd_ecdf
+  - ssd_ecdf_data
   - ssd_est_methods
   - ssd_exposure
   - ssd_is_censored
@@ -110,6 +110,8 @@ reference:
   - comma_signif
   - geom_ssd
   - is_censored
+  - ssd_ecd
+  - ssd_ecd_data
   - ssd_wqg_bc
   - ssd_wqg_burrlioz
   - ssd_hc_burrlioz
