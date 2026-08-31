@@ -2,21 +2,7 @@
 
 # ssdtools 2.7.0.9000
 
-- Merge pull request #193 from poissonconsulting/joethorley/cran-2.7.0.
-
-  Regroup the 2.7.0 NEWS and record the CRAN submission
-
-- Merge pull request #192 from poissonconsulting/joethorley/cran-2.7.0.
-
-  Prepare ssdtools 2.7.0 for CRAN
-
-- Merge pull request #189 from poissonconsulting/joethorley/news-9003.
-
-  Move the #482 NEWS bullets to 2.6.0.9003
-
-- Merge pull request #188 from poissonconsulting/joethorley/issue482.
-
-  Remove dependency on ggtext (#482)
+- Switching to development version.
 
 
 # ssdtools 2.7.0
