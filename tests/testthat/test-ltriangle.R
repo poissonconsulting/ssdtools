@@ -226,3 +226,30 @@ test_that("ltriangle fits interval censored data lying outside the initial suppo
   expect_true(is.finite(est$ltriangle.scalelog))
   expect_true(is.finite(glance(fit, wt = TRUE)$log_lik))
 })
+
+test_that("ltriangle fitted support covers a left-censored non-detect below the data", {
+  # A non-detect (left = 0, right = detection limit) below the candidate
+  # support has interval mass exactly 0 with zero gradient, so without a
+  # distance barrier on the censored branch the fit sits on a flat plateau and
+  # silently excludes the most sensitive observation.
+  withr::with_seed(42, {
+    conc <- exp(stats::rnorm(30, log(10), 0.1))
+  })
+  data <- data.frame(
+    Conc = c(conc, 0),
+    Right = c(conc, 1),
+    Species = paste0("sp", seq_len(31))
+  )
+
+  fit <- ssd_fit_dists(
+    data,
+    left = "Conc",
+    right = "Right",
+    dists = "ltriangle"
+  )
+  est <- estimates(fit)
+  lower <- exp(est$ltriangle.locationlog - est$ltriangle.scalelog)
+
+  expect_lt(lower, 1)
+  expect_gt(ssd_hp(fit, conc = 1, ci = FALSE, proportion = TRUE)$est, 0)
+})

@@ -123,16 +123,37 @@ Type ll_ltriangle(objective_function<Type>* obj) {
           (softlog_ltriangle(t, eps_dens) - log(scale) - log(left(i)));
      };
      if(left(i) < right(i)){    // censored values
+        // `dist` is the distance on the log scale from the mode to the nearest
+        // point of the censoring interval, zero when the mode lies inside it.
+        Type dist = Type(0.0);
         pleft = 0;
-        if(left(i)>0){ pleft = ptri_ltriangle(log(left(i)), locationlog, scale); };
+        if(left(i)>0){
+           Type logleft = log(left(i));
+           pleft = ptri_ltriangle(logleft, locationlog, scale);
+           Type dleft = logleft - locationlog;
+           dist = CppAD::CondExpGt(dleft, dist, dleft, dist);
+        };
         pright = 1;
         using std::isfinite;
-        if(isfinite(right(i))){ pright = ptri_ltriangle(log(right(i)), locationlog, scale); };
+        if(isfinite(right(i))){
+           Type logright = log(right(i));
+           pright = ptri_ltriangle(logright, locationlog, scale);
+           Type dright = locationlog - logright;
+           dist = CppAD::CondExpGt(dright, dist, dright, dist);
+        };
         // Unlike the unbounded distributions, `ptri_ltriangle` returns exactly
         // 0 and exactly 1 outside the support, so the interval mass reaches
-        // exactly 0 whenever a censored interval lies entirely outside the
-        // candidate support. Soften log() so the objective stays finite.
-        nll -= weight(i) * softlog_ltriangle(pright - pleft, eps_mass);
+        // exactly 0, with zero gradient, whenever a censoring interval lies
+        // entirely outside the candidate support. Soften log() so the
+        // objective stays finite, and add the same scale-free linear barrier
+        // as the uncensored branch on the interval's distance outside the
+        // support, so that excluding a censored observation is never
+        // profitable. `tc` is positive iff the interval overlaps the support.
+        Type tc = Type(1.0) - dist / scale;
+        tc = CppAD::CondExpGt(tc, tmin, tc, tmin);
+        Type barrier = CppAD::CondExpLt(tc, Type(0.0), tc / eps_dens, Type(0.0));
+        nll -= weight(i) *
+          (softlog_ltriangle(pright - pleft, eps_mass) + barrier);
      };
 
   };
