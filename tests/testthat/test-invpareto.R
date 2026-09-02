@@ -244,20 +244,18 @@ test_that("invpareto with extreme data", {
 
 test_that("ssd_qinvpareto returns the upper support limit at p = 1", {
   # The inverse Pareto distribution is bounded above at `scale`, so the
-  # quantile at p = 1 is `scale` rather than Inf (#195).
-  expect_equal(ssd_qinvpareto(1, shape = 1, scale = 5), 5)
-  expect_equal(ssd_qinvpareto(1, shape = 3, scale = 2), 2)
-  expect_equal(ssd_qinvpareto(0, shape = 1, scale = 5), 0)
+  # quantile at p = 1 is `scale` rather than Inf
+  # (poissonconsulting/ssdtools#195).
+  expect_identical(ssd_qinvpareto(1, shape = 1, scale = 5), 5)
+  expect_identical(ssd_qinvpareto(1, shape = 3, scale = 2), 2)
+  expect_identical(ssd_pinvpareto(5, shape = 1, scale = 5), 1)
 })
 
-test_that("ssd_qinvpareto round trips through ssd_pinvpareto at the support limit", {
-  expect_equal(ssd_pinvpareto(5, shape = 1, scale = 5), 1)
-  expect_equal(
-    ssd_qinvpareto(
-      ssd_pinvpareto(5, shape = 1, scale = 5),
-      shape = 1,
-      scale = 5
-    ),
-    5
-  )
+test_that("ssd_pinvpareto is clamped to [0, 1] outside the support", {
+  # (q / scale)^shape is only a CDF on [0, scale]; above the upper support
+  # limit it exceeds 1 and for negative q with odd shape it is negative
+  # (poissonconsulting/ssdtools#195).
+  expect_identical(ssd_pinvpareto(10, shape = 3, scale = 5), 1)
+  expect_identical(ssd_pinvpareto(c(6, 10), shape = 1, scale = 5), c(1, 1))
+  expect_identical(ssd_pinvpareto(-1, shape = 3, scale = 5), 0)
 })
