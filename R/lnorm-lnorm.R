@@ -171,8 +171,7 @@ qlnorm_lnorm_ssd <- function(p, meanlog1, sdlog1, meanlog2, sdlog2, pmix) {
   f <- function(x, p) {
     plnorm_lnorm_ssd(x, meanlog1, sdlog1, meanlog2, sdlog2, pmix) - p
   }
-  # a mixture of two log-normal distributions is supported on (0, Inf), but
-  # `root()` extends the uniroot bracket rather than diverging
+  # a mixture of two log-normal distributions is supported on (0, Inf)
   endpoints(p, f, lower = 0, upper = Inf)
 }
 

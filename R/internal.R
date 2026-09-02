@@ -36,14 +36,17 @@ safely <- function(.f) {
 
 pow <- function(x, y) x^y
 
-# Solve `f` for the interior probabilities and substitute the exact quantiles at
-# p = 0 and p = 1, which `root()` cannot reach when the support is unbounded.
+# Solve `f` for the interior probabilities and substitute the exact quantiles
+# `lower` and `upper` at p = 0 and p = 1. `root()` extends the uniroot bracket
+# rather than diverging, so at an unbounded endpoint it returns a saturated
+# finite value instead of Inf.
 endpoints <- function(p, f, lower, upper) {
   q <- rep(NA_real_, length(p))
-  interior <- !is.na(p) & p > 0 & p < 1
+  q[is.nan(p)] <- NaN
+  q[which(p == 0)] <- lower
+  q[which(p == 1)] <- upper
+  interior <- which(p > 0 & p < 1)
   q[interior] <- root(p[interior], f)
-  q[!is.na(p) & p == 0] <- lower
-  q[!is.na(p) & p == 1] <- upper
   q
 }
 

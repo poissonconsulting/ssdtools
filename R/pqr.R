@@ -118,8 +118,7 @@ pdist <- function(
 
 .qdist <- function(dist, p, ...) {
   fun <- paste0("q", dist, "_ssd")
-  q <- mapply(.qd, p, ..., MoreArgs = list(fun = fun))
-  q
+  mapply(.qd, p, ..., MoreArgs = list(fun = fun))
 }
 
 qdist <- function(
