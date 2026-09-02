@@ -176,3 +176,53 @@ test_that("ltriangle reproduces the US EPA SSD Toolbox triangular fit to the per
   hc <- ssd_hc(fit, proportion = 0.05)
   expect_equal(hc$est, 0.05080394, tolerance = 1e-4)
 })
+
+test_that("ltriangle fitted support covers an extreme low outlier", {
+  # The log-triangular distribution has bounded support, so a candidate support
+  # that fails to cover an observation assigns it zero density. The likelihood
+  # barrier in ll_ltriangle.hpp must make that unprofitable, otherwise the fit
+  # silently discards the most sensitive species and reports it as having zero
+  # probability of occurring.
+  withr::with_seed(42, {
+    conc <- c(exp(stats::rnorm(30, log(10), 0.1)), 10 * 1e-7)
+  })
+  data <- data.frame(Conc = conc, Species = paste0("sp", seq_along(conc)))
+
+  fit <- ssd_fit_dists(data, dists = "ltriangle")
+  est <- estimates(fit)
+  lower <- exp(est$ltriangle.locationlog - est$ltriangle.scalelog)
+  upper <- exp(est$ltriangle.locationlog + est$ltriangle.scalelog)
+
+  expect_lt(lower, min(data$Conc))
+  expect_gt(upper, max(data$Conc))
+  expect_true(is.finite(ssd_hc(fit, proportion = 0.05, ci = FALSE)$est))
+  # the excluded observation previously had an estimated hazard of exactly 0
+  expect_gt(
+    ssd_hp(fit, conc = min(data$Conc), ci = FALSE, proportion = TRUE)$est,
+    0
+  )
+})
+
+test_that("ltriangle fits interval censored data lying outside the initial support", {
+  # `ptri_ltriangle()` returns exactly 0 and exactly 1 outside the support, so
+  # the censored interval mass reaches exactly 0 and log() would be non-finite.
+  withr::with_seed(42, {
+    conc <- exp(stats::rnorm(20, log(10), 0.1))
+  })
+  data <- data.frame(
+    Conc = c(conc, 1e-8),
+    Right = c(conc, 1e-6),
+    Species = paste0("sp", seq_len(21))
+  )
+
+  fit <- ssd_fit_dists(
+    data,
+    left = "Conc",
+    right = "Right",
+    dists = "ltriangle"
+  )
+  est <- estimates(fit)
+  expect_true(is.finite(est$ltriangle.locationlog))
+  expect_true(is.finite(est$ltriangle.scalelog))
+  expect_true(is.finite(glance(fit, wt = TRUE)$log_lik))
+})
