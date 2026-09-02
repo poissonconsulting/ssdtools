@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# ssdtools 2.7.0.9000
+
+- Switching to development version.
+
+
 # ssdtools 2.7.0
 
 ## Bug Fixes
