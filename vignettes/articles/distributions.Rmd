@@ -370,6 +370,9 @@ Like the *lognormal* and *log-logistic* distributions, the log-triangular distri
 
 The log-triangular distribution is symmetric on the log scale, like the log-normal and log-logistic distributions, but has bounded support and, unlike them, no tails: its density decreases linearly to zero at the support limits.
 It is included to provide a candidate distribution with finite support and a sharply peaked mode.
+The log-triangular distribution entered SSD modelling through the US EPA water quality criteria guidelines [@stephan_1985], and @vanstraalen_2002 advocated it as a threshold SSD on the grounds that its bounded lower support provides a no-effect concentration directly, rather than requiring a cut-off such as the HC5 to be imposed on an unbounded distribution.
+It is one of the six distributions supported by the US EPA SSD Toolbox [@etterson_ssdtoolbox_2020].
+The bounded support means the estimated hazard of a concentration below the lower support limit is exactly zero, which is a property of the distribution rather than an artefact of the fit, and warrants care when the most sensitive species falls near that limit.
 The log-triangular distribution is experimental and is not part of the default BCANZ set (`ssd_dists_bcanz()`), so it is only fitted when explicitly requested.
 The log-triangular distribution can be fitted using `ssdtools` by supplying the string `ltriangle` to the `dists` argument in the `ssd_fit_dists` call.
 
