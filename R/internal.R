@@ -36,6 +36,17 @@ safely <- function(.f) {
 
 pow <- function(x, y) x^y
 
+# Solve `f` for the interior probabilities and substitute the exact quantiles at
+# p = 0 and p = 1, which `root()` cannot reach when the support is unbounded.
+endpoints <- function(p, f, lower, upper) {
+  q <- rep(NA_real_, length(p))
+  interior <- !is.na(p) & p > 0 & p < 1
+  q[interior] <- root(p[interior], f)
+  q[!is.na(p) & p == 0] <- lower
+  q[!is.na(p) & p == 1] <- upper
+  q
+}
+
 root <- function(p, f) {
   q <- rep(NA_real_, length(p))
   for (i in seq_along(p)) {

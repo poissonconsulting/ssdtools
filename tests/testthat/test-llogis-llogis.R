@@ -50,3 +50,22 @@ test_that("ssd_rllogis_llogis allows reversed distributions", {
   })
   expect_equal(r1, r2)
 })
+
+test_that("qlogis_logis_ssd returns infinite endpoints rather than saturating", {
+  # `root()` extends the uniroot bracket rather than diverging, so it returned
+  # finite saturated values at the endpoints (#195).
+  args <- list(
+    location1 = 0,
+    scale1 = 1,
+    location2 = 1,
+    scale2 = 1,
+    pmix = 0.5
+  )
+  expect_identical(do.call(qlogis_logis_ssd, c(list(p = 0), args)), -Inf)
+  expect_identical(do.call(qlogis_logis_ssd, c(list(p = 1), args)), Inf)
+})
+
+test_that("ssd_qllogis_llogis is unchanged at the endpoints", {
+  expect_identical(ssd_qllogis_llogis(0), 0)
+  expect_identical(ssd_qllogis_llogis(1), Inf)
+})

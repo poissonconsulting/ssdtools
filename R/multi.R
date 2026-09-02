@@ -270,7 +270,10 @@ qmulti_list <- function(p, list) {
   nlist <- normalize_weights(list)
 
   f <- pmulti_fun(nlist)
-  root(p, f)
+  # every distribution available for model averaging is supported on (0, Inf),
+  # so the mixture is too, but `root()` extends the uniroot bracket rather than
+  # diverging
+  endpoints(p, f, lower = 0, upper = Inf)
 }
 
 # Internal model-averaged p/q/r functions dispatched by name from

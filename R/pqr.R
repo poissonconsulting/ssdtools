@@ -100,7 +100,7 @@ pdist <- function(
   p
 }
 
-.qd <- function(p, ..., fun, .lgt) {
+.qd <- function(p, ..., fun) {
   args <- c(p, list(...))
 
   if (any(vapply(args, length, 1L) != 1L)) {
@@ -113,21 +113,12 @@ pdist <- function(
     return(NA_real_)
   }
 
-  if (p == 0) {
-    if (!.lgt) {
-      return(0)
-    }
-    return(-Inf)
-  }
-  if (p == 1) {
-    return(Inf)
-  }
   do.call(fun, args = args)
 }
 
-.qdist <- function(dist, p, ..., .lgt) {
+.qdist <- function(dist, p, ...) {
   fun <- paste0("q", dist, "_ssd")
-  q <- mapply(.qd, p, ..., MoreArgs = list(fun = fun, .lgt = .lgt))
+  q <- mapply(.qd, p, ..., MoreArgs = list(fun = fun))
   q
 }
 
@@ -152,7 +143,7 @@ qdist <- function(
 
   nvld <- !is.na(p) & !(p >= 0 & p <= 1)
   p[nvld] <- NA_real_
-  q <- .qdist(dist, p = p, ..., .lgt = .lgt)
+  q <- .qdist(dist, p = p, ...)
   q[nvld] <- NaN
   if (.lgt) {
     q <- exp(q)

@@ -72,7 +72,15 @@ ep <- function(text) {
   invisible(eval(parse(text = text)))
 }
 
-test_dist <- function(dist, qroottolerance = 1.490116e-08, multi = FALSE) {
+# `lower` and `upper` are the support endpoints on the concentration scale,
+# which are finite for the distributions with bounded support.
+test_dist <- function(
+  dist,
+  qroottolerance = 1.490116e-08,
+  multi = FALSE,
+  lower = 0,
+  upper = Inf
+) {
   if (!multi) {
     ep(glue::glue("expect_identical(ssd_p{dist}(numeric(0)), numeric(0))"))
     ep(glue::glue("expect_identical(ssd_p{dist}(NA), NA_real_)"))
@@ -129,18 +137,22 @@ test_dist <- function(dist, qroottolerance = 1.490116e-08, multi = FALSE) {
     ))
   }
 
+  # `ssd_qmulti()` requires a positive weight before it can return a quantile,
+  # which the other multi assertions below also supply
+  wt <- if (multi) ", lnorm.weight = 1" else ""
+
   ep(glue::glue("expect_identical(ssd_q{dist}(numeric(0)), numeric(0))"))
   ep(glue::glue("expect_identical(ssd_q{dist}(NA), NA_real_)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(NaN), NaN)"))
-  ep(glue::glue("expect_identical(ssd_q{dist}(0), 0)"))
-  ep(glue::glue("expect_identical(ssd_q{dist}(1), Inf)"))
+  ep(glue::glue("expect_equal(ssd_q{dist}(0{wt}), {deparse(lower)})"))
+  ep(glue::glue("expect_equal(ssd_q{dist}(1{wt}), {deparse(upper)})"))
   ep(glue::glue("expect_identical(ssd_q{dist}(-1), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(2), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(-Inf), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(Inf), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(0.75, log.p = TRUE), NaN)"))
   ep(glue::glue(
-    "expect_identical(ssd_q{dist}(c(NA, NaN, 0, Inf, -Inf)), c(NA, NaN, 0, NaN, NaN))"
+    "expect_equal(ssd_q{dist}(c(NA, NaN, 0, Inf, -Inf){wt}), c(NA, NaN, {deparse(lower)}, NaN, NaN))"
   ))
 
   if (!multi) {

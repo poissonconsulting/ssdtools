@@ -16,7 +16,7 @@
 #    limitations under the License.
 
 test_that("invpareto", {
-  test_dist("invpareto")
+  test_dist("invpareto", upper = 1)
   expect_snapshot_value(ssd_pinvpareto(0.5), style = "deparse")
   expect_snapshot_value(ssd_qinvpareto(0.125), style = "deparse")
   withr::with_seed(50, {
@@ -239,5 +239,25 @@ test_that("invpareto with extreme data", {
       invpareto.scale = 1.03020756694085,
       invpareto.shape = 26.0278618888664
     )
+  )
+})
+
+test_that("ssd_qinvpareto returns the upper support limit at p = 1", {
+  # The inverse Pareto distribution is bounded above at `scale`, so the
+  # quantile at p = 1 is `scale` rather than Inf (#195).
+  expect_equal(ssd_qinvpareto(1, shape = 1, scale = 5), 5)
+  expect_equal(ssd_qinvpareto(1, shape = 3, scale = 2), 2)
+  expect_equal(ssd_qinvpareto(0, shape = 1, scale = 5), 0)
+})
+
+test_that("ssd_qinvpareto round trips through ssd_pinvpareto at the support limit", {
+  expect_equal(ssd_pinvpareto(5, shape = 1, scale = 5), 1)
+  expect_equal(
+    ssd_qinvpareto(
+      ssd_pinvpareto(5, shape = 1, scale = 5),
+      shape = 1,
+      scale = 5
+    ),
+    5
   )
 })
