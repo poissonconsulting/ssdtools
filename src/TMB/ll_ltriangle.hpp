@@ -20,6 +20,12 @@
 // triangular with mode locationlog and half-width scalelog, i.e. support
 // [locationlog - scalelog, locationlog + scalelog].
 //
+// The log-likelihood is only piecewise smooth: the |log(y) - locationlog| term
+// puts a kink at every observation. This is inherent to the triangular family
+// rather than an artefact of this implementation, and the kink set has measure
+// zero in the parameter space, so L-BFGS-B copes, but a future reader should
+// not assume the smoothness guarantees of the other distributions.
+//
 // Input data are left(1...n) right(1...n) weight(1...n)
 // where
 //    n = sample size (inferred from the vectors)
@@ -36,7 +42,7 @@
 //    locationlog  - mode on the log(Concentration) scale
 //    log_scalelog - log(scalelog) on the log(Concentration) scale, i.e. scalelog=exp(log_scalelog)
 
-/// @file ll_triangle.hpp
+/// @file ll_ltriangle.hpp
 
 #ifndef ll_ltriangle_hpp
 #define ll_ltriangle_hpp
@@ -44,7 +50,7 @@
 // Cumulative distribution function of the symmetric triangular distribution
 // with mode `location` and half-width `scale`, evaluated at x.
 template<class Type>
-Type ptri(Type x, Type location, Type scale) {
+Type ptri_ltriangle(Type x, Type location, Type scale) {
   Type z = (x - location) / scale;
   Type lower = (z + Type(1.0)) * (z + Type(1.0)) / Type(2.0); // -1 < z <= 0
   Type upper = Type(1.0) - (Type(1.0) - z) * (Type(1.0) - z) / Type(2.0); // 0 < z < 1
@@ -52,6 +58,17 @@ Type ptri(Type x, Type location, Type scale) {
   return CppAD::CondExpLe(
     z, Type(-1.0), Type(0.0),
     CppAD::CondExpGe(z, Type(1.0), Type(1.0), mid));
+}
+
+// Softened logarithm: log(x) above `eps`, and the C1 linear extension of log()
+// below it. Continuous with a continuous first derivative at `eps`, finite for
+// every finite argument, and decreasing without bound as the argument falls, so
+// it acts as a barrier rather than as a floor. `x` must already be clamped from
+// below so that the linear extension stays finite.
+template<class Type>
+Type softlog_ltriangle(Type x, Type eps) {
+  Type floored = CppAD::CondExpGt(x, eps, x, eps);
+  return CppAD::CondExpGt(x, eps, log(floored), log(eps) + (x - eps) / eps);
 }
 
 #undef TMB_OBJECTIVE_PTR
@@ -71,6 +88,16 @@ Type ll_ltriangle(objective_function<Type>* obj) {
   Type scalelog;
   scalelog = exp(log_scalelog);  // convert to [0,Inf] scale
 
+  // `scalelog` is unbounded below, so guard against it underflowing to zero,
+  // which would make both the dimensionless deviation and log(scalelog)
+  // non-finite.
+  Type tiny = Type(1e-300);
+  Type scale = CppAD::CondExpGt(scalelog, tiny, scalelog, tiny);
+
+  Type eps_dens = Type(1e-6);    // softlog threshold for the density
+  Type eps_mass = Type(1e-10);   // softlog threshold for censored interval mass
+  Type tmin = Type(-1e9);        // clamp keeping the density extension finite
+
   Type nll = 0;  // negative log-likelihood
   int n_data = left.size(); // number of data values
   Type pleft;    // probability that concentration < left(i)  used for censored data
@@ -80,25 +107,53 @@ Type ll_ltriangle(objective_function<Type>* obj) {
      if(left(i) == right(i)){   // uncensored values
         // pdf of the symmetric triangular on the log scale is
         //   (scalelog - |log(y) - locationlog|) / scalelog^2
-        // transformed to the concentration scale via the 1/y Jacobian (- log(left)).
+        // transformed to the concentration scale via the 1/y Jacobian
+        // (- log(left)). Writing this in terms of the dimensionless
+        //   t = 1 - |log(y) - locationlog| / scalelog
+        // gives log(t) - log(scalelog) - log(y), so replacing log() by
+        // `softlog_ltriangle` makes the out-of-support penalty scale free: it
+        // grows without bound as the candidate support shrinks away from a data
+        // point, rather than flattening at a constant, which would make
+        // excluding the point profitable.
         Type dev = log(left(i)) - locationlog;
         Type absdev = CppAD::CondExpGe(dev, Type(0.0), dev, -dev);
-        Type inside = scalelog - absdev;
-        // floor the density argument to keep the likelihood finite (and act as a
-        // soft barrier) if a candidate support fails to cover a data point. The
-        // floor is scaled to `scalelog` (the peak density argument) so the soft
-        // barrier behaves consistently regardless of the magnitude of the data.
-        Type floor = Type(1e-8) * scalelog;
-        Type floored = CppAD::CondExpGt(inside, floor, inside, floor);
-        nll -= weight(i) * (log(floored) - Type(2.0) * log(scalelog) - log(left(i)));
+        Type t = Type(1.0) - absdev / scale;
+        t = CppAD::CondExpGt(t, tmin, t, tmin);
+        nll -= weight(i) *
+          (softlog_ltriangle(t, eps_dens) - log(scale) - log(left(i)));
      };
      if(left(i) < right(i)){    // censored values
+        // `dist` is the distance on the log scale from the mode to the nearest
+        // point of the censoring interval, zero when the mode lies inside it.
+        Type dist = Type(0.0);
         pleft = 0;
-        if(left(i)>0){ pleft = ptri(log(left(i)), locationlog, scalelog); };
+        if(left(i)>0){
+           Type logleft = log(left(i));
+           pleft = ptri_ltriangle(logleft, locationlog, scale);
+           Type dleft = logleft - locationlog;
+           dist = CppAD::CondExpGt(dleft, dist, dleft, dist);
+        };
         pright = 1;
         using std::isfinite;
-        if(isfinite(right(i))){ pright = ptri(log(right(i)), locationlog, scalelog); };
-        nll -= weight(i)*log(pright-pleft);
+        if(isfinite(right(i))){
+           Type logright = log(right(i));
+           pright = ptri_ltriangle(logright, locationlog, scale);
+           Type dright = locationlog - logright;
+           dist = CppAD::CondExpGt(dright, dist, dright, dist);
+        };
+        // Unlike the unbounded distributions, `ptri_ltriangle` returns exactly
+        // 0 and exactly 1 outside the support, so the interval mass reaches
+        // exactly 0, with zero gradient, whenever a censoring interval lies
+        // entirely outside the candidate support. Soften log() so the
+        // objective stays finite, and add the same scale-free linear barrier
+        // as the uncensored branch on the interval's distance outside the
+        // support, so that excluding a censored observation is never
+        // profitable. `tc` is positive iff the interval overlaps the support.
+        Type tc = Type(1.0) - dist / scale;
+        tc = CppAD::CondExpGt(tc, tmin, tc, tmin);
+        Type barrier = CppAD::CondExpLt(tc, Type(0.0), tc / eps_dens, Type(0.0));
+        nll -= weight(i) *
+          (softlog_ltriangle(pright - pleft, eps_mass) + barrier);
      };
 
   };
