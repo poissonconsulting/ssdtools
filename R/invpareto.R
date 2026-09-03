@@ -105,7 +105,8 @@ pinvpareto_ssd <- function(q, shape, scale) {
   if (shape <= 0 || scale <= 0) {
     return(NaN)
   }
-  pow((q / scale), shape)
+  # the support is (0, scale], so the CDF is exactly 0 below and 1 above it
+  ifelse(q <= 0, 0, ifelse(q >= scale, 1, pow((q / scale), shape)))
 }
 
 qinvpareto_ssd <- function(p, shape, scale) {
