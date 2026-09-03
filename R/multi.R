@@ -279,7 +279,16 @@ qmulti_list <- function(p, list) {
   nlist <- normalize_weights(list)
 
   f <- pmulti_fun(nlist)
-  root(p, f)
+  # the mixture is supported on the union of its components' supports, and each
+  # component's quantile function reports its own limits exactly at p = 0 and 1
+  limits <- purrr::imap(nlist, function(pars, dist) {
+    pars$weight <- NULL
+    fun <- get(paste0("q", dist, "_ssd"), mode = "function")
+    do.call(fun, c(list(c(0, 1)), pars))
+  })
+  lower <- min(purrr::map_dbl(limits, 1))
+  upper <- max(purrr::map_dbl(limits, 2))
+  endpoints(p, f, lower = lower, upper = upper)
 }
 
 # Internal model-averaged p/q/r functions dispatched by name from

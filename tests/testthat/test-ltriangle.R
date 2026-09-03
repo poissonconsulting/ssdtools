@@ -16,7 +16,8 @@
 #    limitations under the License.
 
 test_that("ltriangle", {
-  test_dist("ltriangle")
+  # bounded support: the defaults locationlog = 0, scalelog = 3 give exp(-3), exp(3)
+  test_dist("ltriangle", lower = exp(-3), upper = exp(3))
   expect_equal(ssd_pltriangle(1), 0.5)
   expect_equal(ssd_qltriangle(0.5), 1)
   expect_snapshot_value(ssd_pltriangle(2), style = "deparse")
