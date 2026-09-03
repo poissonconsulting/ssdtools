@@ -4,19 +4,17 @@
 \alias{ssd_ecdf}
 \title{Empirical Cumulative Distribution Function}
 \usage{
-ssd_ecdf(x, ties.method = "first")
+ssd_ecdf(x)
 }
 \arguments{
-\item{x}{a numeric, complex, character or logical vector.}
-
-\item{ties.method}{a character string specifying how ties are treated,
-    see \sQuote{Details}; can be abbreviated.}
+\item{x}{A numeric vector.}
 }
 \value{
 A numeric vector of the empirical cumulative distribution function.
 }
 \description{
-Empirical Cumulative Distribution Function
+Calculates the empirical cumulative distribution function of a numeric
+vector using plotting positions, with ties ranked in order of occurrence.
 }
 \examples{
 ssd_ecdf(1:10)

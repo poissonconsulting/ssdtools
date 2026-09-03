@@ -39,11 +39,12 @@ test_that("ssd_ecdf", {
   expect_equal(ssd_ecdf(1:100), seq(0.005, 0.995, by = 0.01))
 })
 
-test_that("ssd_ecdf ties.method argument deprecated", {
-  lifecycle::expect_deprecated(expect_equal(
-    ssd_ecdf(1, ties.method = "first"),
-    0.5
-  ))
+test_that("ssd_ecdf has no ties.method argument", {
+  expect_error(ssd_ecdf(1, ties.method = "first"), "unused argument")
+})
+
+test_that("ssd_ecd ties.method argument is defunct", {
+  lifecycle::expect_defunct(ssd_ecd(1, ties.method = "first"))
 })
 
 test_that("ssd_ecdf_data", {
@@ -60,6 +61,10 @@ test_that("ssd_ecd_data deprecated for ssd_ecdf_data", {
   lifecycle::expect_deprecated(ecd <- ssd_ecd_data(ssddata::ccme_boron))
   withr::local_options(lifecycle_verbosity = "quiet")
   expect_equal(ecd, ssd_ecdf_data(ssddata::ccme_boron))
+})
+
+test_that("comma_signif is deprecated", {
+  lifecycle::expect_deprecated(comma_signif(1))
 })
 
 test_that("comma_signif", {

@@ -31,7 +31,7 @@
 #' comma_signif(c(0.1, 1, 10, 1000, 10000))
 #' }
 comma_signif <- function(x, digits = 3, ..., big.mark = ",") {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "2.0.0",
     "comma_signif()",
     "ssd_label_comma()",
@@ -56,16 +56,16 @@ comma_signif <- function(x, digits = 3, ..., big.mark = ",") {
 
 #' Empirical Cumulative Distribution Function
 #'
-#' @inheritParams base::rank
+#' Calculates the empirical cumulative distribution function of a numeric
+#' vector using plotting positions, with ties ranked in order of occurrence.
+#'
+#' @param x A numeric vector.
 #' @return A numeric vector of the empirical cumulative distribution function.
 #' @export
 #'
 #' @examples
 #' ssd_ecdf(1:10)
-ssd_ecdf <- function(x, ties.method = "first") {
-  if (!missing(ties.method)) {
-    lifecycle::deprecate_warn("2.3.0", "ssd_ecdf(ties.method)")
-  }
+ssd_ecdf <- function(x) {
   chk_numeric(x)
   if (!length(x)) {
     return(numeric())
@@ -96,12 +96,11 @@ ssd_ecdf <- function(x, ties.method = "first") {
 #' ssd_ecd(1:10)
 #' }
 ssd_ecd <- function(x, ties.method = "first") {
-  lifecycle::deprecate_soft("2.7.0", "ssd_ecd()", "ssd_ecdf()")
-  if (missing(ties.method)) {
-    ssd_ecdf(x)
-  } else {
-    ssd_ecdf(x, ties.method = ties.method)
+  if (!missing(ties.method)) {
+    lifecycle::deprecate_stop("2.3.0", "ssd_ecd(ties.method)")
   }
+  lifecycle::deprecate_soft("2.8.0", "ssd_ecd()", "ssd_ecdf()")
+  ssd_ecdf(x)
 }
 
 #' Empirical Cumulative Distribution Function for Species Sensitivity Data
@@ -158,7 +157,7 @@ ssd_ecd_data <- function(
   ...,
   bounds = c(left = 1, right = 1)
 ) {
-  lifecycle::deprecate_soft("2.7.0", "ssd_ecd_data()", "ssd_ecdf_data()")
+  lifecycle::deprecate_soft("2.8.0", "ssd_ecd_data()", "ssd_ecdf_data()")
   ssd_ecdf_data(data, left = left, right = right, ..., bounds = bounds)
 }
 
