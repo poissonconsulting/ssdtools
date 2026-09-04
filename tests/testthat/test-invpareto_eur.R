@@ -104,14 +104,15 @@ test_that("invpareto_eur ssd_hp returns finite ordered confidence limits", {
   expect_true(hp$lcl <= hp$est && hp$est <= hp$ucl)
 })
 
-test_that("invpareto_eur must be fitted in isolation", {
-  expect_error(
-    ssd_fit_dists(ssddata::ccme_boron, dists = c("lnorm", "invpareto_eur")),
-    "must be fitted in isolation"
-  )
-  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "invpareto_eur")
-  expect_s3_class(fit, "fitdists")
-  expect_identical(names(fit), "invpareto_eur")
+test_that("invpareto_eur has a valid likelihood and can be model averaged", {
+  # Unlike the bounded North American form, whose scale sits on the data
+  # maximum, the European form has a regular interior MLE.
+  expect_true("invpareto_eur" %in% ssd_dists_all())
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = c("invpareto_eur", "lnorm"))
+  expect_identical(names(fit), c("invpareto_eur", "lnorm"))
+  hc <- ssd_hc(fit, ci = FALSE)
+  expect_true(is.finite(hc$est))
+  expect_identical(hc$dists[[1]], c("invpareto_eur", "lnorm"))
 })
 
 test_that("ssd_pinvpareto_eur is exactly 0 for non-positive concentrations", {
