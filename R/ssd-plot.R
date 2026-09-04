@@ -171,7 +171,7 @@ ssd_plot <- function(
 
   data <- process_data(data, left, right, weight = NULL)
   data <- bound_data(data, bounds)
-  data$y <- ssd_ecd_data(data, "left", "right", bounds = bounds)
+  data$y <- ssd_ecdf_data(data, "left", "right", bounds = bounds)
 
   label <- if (!is.null(label)) sym(label) else label
   shape <- if (!is.null(shape)) sym(shape) else shape
