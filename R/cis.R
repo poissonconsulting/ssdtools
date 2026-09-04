@@ -21,7 +21,7 @@ xcis_estimates <- function(x, args, n, what, level, samples) {
   } else {
     args$p <- x
   }
-  ests <- do.call(what, args)
+  ests <- do.call(ns_fun(what), args)
   names(ests) <- n
   quantile <- unname(quantile(ests, probs = probs(level)))
   samples <- if (samples) ests else numeric(0)

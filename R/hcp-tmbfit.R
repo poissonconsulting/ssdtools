@@ -94,7 +94,7 @@ hcp_tmbfit2 <- function(
     what <- paste0("ssd_p", dist)
   }
 
-  est <- do.call(what, args)
+  est <- do.call(ns_fun(what), args)
   if (!ci) {
     return(no_ci_hcp(
       value = value,
