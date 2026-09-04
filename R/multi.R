@@ -201,7 +201,7 @@ ssd_pmulti_fitdists <- function(q, fitdists, lower.tail = TRUE, log.p = FALSE) {
   args$q <- q
   args$lower.tail <- lower.tail
   args$log.p <- log.p
-  do.call("ssd_pmulti", args)
+  do.call(ssd_pmulti, args)
 }
 
 #' @describeIn ssd_q Quantile Function for Multiple Distributions
@@ -217,7 +217,7 @@ ssd_qmulti_fitdists <- function(p, fitdists, lower.tail = TRUE, log.p = FALSE) {
   args$p <- p
   args$lower.tail <- lower.tail
   args$log.p <- log.p
-  do.call("ssd_qmulti", args)
+  do.call(ssd_qmulti, args)
 }
 
 #' @describeIn ssd_r Random Generation for Multiple Distributions
@@ -232,13 +232,12 @@ ssd_rmulti_fitdists <- function(n, fitdists, chk = TRUE) {
   args <- estimates(fitdists)
   args$n <- n
   args$chk <- chk
-  do.call("ssd_rmulti", args)
+  do.call(ssd_rmulti, args)
 }
 
 emulti_ssd <- function() {
   dists <- ssd_dists_all()
-  edists <- paste0("ssd_e", dists, ("()"))
-  es <- purrr::map(edists, function(x) eval(parse(text = x)))
+  es <- purrr::map(dists, function(dist) ns_fun(paste0("ssd_e", dist))())
   names(es) <- dists
   es <- purrr::map(es, function(x) c(list(weight = 0), x))
   dists_bcanz <- ssd_dists_bcanz()
@@ -257,7 +256,7 @@ pmulti_fun <- function(dists) {
     terms <- purrr::imap(dists, function(pars, dist) {
       weight <- pars$weight
       pars$weight <- NULL
-      fun <- get(paste0("p", dist, "_ssd"), mode = "function")
+      fun <- ns_fun(paste0("p", dist, "_ssd"))
       weight * do.call(fun, c(list(q), pars))
     })
     purrr::reduce(terms, `+`) - p
@@ -288,7 +287,16 @@ qmulti_list <- function(p, list) {
   nlist <- normalize_weights(list)
 
   f <- pmulti_fun(nlist)
-  root(p, f)
+  # the mixture is supported on the union of its components' supports, and each
+  # component's quantile function reports its own limits exactly at p = 0 and 1
+  limits <- purrr::imap(nlist, function(pars, dist) {
+    pars$weight <- NULL
+    fun <- ns_fun(paste0("q", dist, "_ssd"))
+    do.call(fun, c(list(c(0, 1)), pars))
+  })
+  lower <- min(purrr::map_dbl(limits, 1))
+  upper <- max(purrr::map_dbl(limits, 2))
+  endpoints(p, f, lower = lower, upper = upper)
 }
 
 # Internal model-averaged p/q/r functions dispatched by name from

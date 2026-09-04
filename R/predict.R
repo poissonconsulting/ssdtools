@@ -45,6 +45,8 @@ predict.fitdists <- function(
   ci_method = "weighted_samples",
   parametric = TRUE,
   delta = 9.21,
+  samples = FALSE,
+  save_to = NULL,
   control = NULL
 ) {
   chk_unused(...)
@@ -63,6 +65,8 @@ predict.fitdists <- function(
     delta = delta,
     parametric = parametric,
     ci_method = ci_method,
+    samples = samples,
+    save_to = save_to,
     control = control
   )
 }

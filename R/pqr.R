@@ -58,7 +58,7 @@ NULL
   inf <- !is.na(q) & is.infinite(q)
   pos <- is.na(q) | q > 0
   q[inf] <- NA_real_
-  fun <- paste0("p", dist, "_ssd")
+  fun <- ns_fun(paste0("p", dist, "_ssd"))
   p <- mapply(.pd, q, ..., MoreArgs = list(fun = fun))
   p[inf & pos] <- 1
   p[inf & !pos] <- 0
@@ -100,7 +100,7 @@ pdist <- function(
   p
 }
 
-.qd <- function(p, ..., fun, .lgt) {
+.qd <- function(p, ..., fun) {
   args <- c(p, list(...))
 
   if (any(vapply(args, length, 1L) != 1L)) {
@@ -113,22 +113,12 @@ pdist <- function(
     return(NA_real_)
   }
 
-  if (p == 0) {
-    if (!.lgt) {
-      return(0)
-    }
-    return(-Inf)
-  }
-  if (p == 1) {
-    return(Inf)
-  }
   do.call(fun, args = args)
 }
 
-.qdist <- function(dist, p, ..., .lgt) {
-  fun <- paste0("q", dist, "_ssd")
-  q <- mapply(.qd, p, ..., MoreArgs = list(fun = fun, .lgt = .lgt))
-  q
+.qdist <- function(dist, p, ...) {
+  fun <- ns_fun(paste0("q", dist, "_ssd"))
+  mapply(.qd, p, ..., MoreArgs = list(fun = fun))
 }
 
 qdist <- function(
@@ -152,7 +142,7 @@ qdist <- function(
 
   nvld <- !is.na(p) & !(p >= 0 & p <= 1)
   p[nvld] <- NA_real_
-  q <- .qdist(dist, p = p, ..., .lgt = .lgt)
+  q <- .qdist(dist, p = p, ...)
   q[nvld] <- NaN
   if (.lgt) {
     q <- exp(q)
@@ -161,14 +151,14 @@ qdist <- function(
 }
 
 .rdist <- function(dist, n, ...) {
-  fun <- paste0("r", dist, "_ssd")
+  fun <- ns_fun(paste0("r", dist, "_ssd"))
   args <- list(...)
 
-  if (exists(fun, mode = "function")) {
+  if (!is.null(fun)) {
     args$n <- n
     return(do.call(fun, args))
   }
-  qfun <- paste0("q", dist, "_ssd")
+  qfun <- ns_fun(paste0("q", dist, "_ssd"))
   q <- do.call(qfun, c(p = 0.5, args))
   if (is.nan(q)) {
     return(rep(NaN, n))
@@ -208,13 +198,13 @@ rdist <- function(dist, n, ..., .lgt = FALSE, chk) {
 
 sdist <- function(dist, data, pars) {
   data$right[is.infinite(data$right)] <- NA_real_
-  fun <- paste0("s", dist)
+  fun <- ns_fun(paste0("s", dist))
   do.call(fun, list(data = data, pars = pars))
 }
 
 bdist <- function(dist, data, min_pmix, range_shape1, range_shape2) {
-  fun <- paste0("b", dist)
-  if (!exists(fun, mode = "function")) {
+  fun <- ns_fun(paste0("b", dist))
+  if (is.null(fun)) {
     return(list(lower = -Inf, upper = Inf))
   }
   do.call(
@@ -229,14 +219,7 @@ bdist <- function(dist, data, min_pmix, range_shape1, range_shape2) {
 }
 
 mdist <- function(dist) {
-  # Scope to ssdtools only — attached packages (e.g. actuar::mlnorm) must not
-  # satisfy this hook (#479).
-  fun <- get0(
-    paste0("m", dist),
-    envir = asNamespace("ssdtools"),
-    mode = "function",
-    inherits = FALSE
-  )
+  fun <- ns_fun(paste0("m", dist))
   if (is.null(fun)) {
     return(list())
   }
@@ -245,11 +228,16 @@ mdist <- function(dist) {
 
 tdist <- function(dist, data, pars, pvalue, test = "ks", y = "y") {
   x <- mean_weighted_values(data, weight = FALSE)
-  fun <- match.fun(paste0("ssd_p", dist))
+  fun <- ns_fun(paste0("ssd_p", dist))
   args <- list(x, fun)
   names(args) <- c("x", y)
   args <- c(args, pars)
-  test <- paste0(test, ".test")
+  test <- switch(
+    test,
+    ks = stats::ks.test,
+    ad = goftest::ad.test,
+    cvm = goftest::cvm.test
+  )
   suppressWarnings(test <- do.call(test, args))
   if (pvalue) {
     return(test$p.value)

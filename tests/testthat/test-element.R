@@ -15,20 +15,23 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-#' Data from fitdists Object
-#'
-#' Get a tibble of the original data.
-#'
-#' @inheritParams params
-#'
-#' @return A tibble of the original data.
-#' @seealso [`augment.fitdists()`],  [`ssd_ecdf_data()`] and [`ssd_sort_data()`]
-#' @export
-#'
-#' @examples
-#' fits <- ssd_fit_dists(ssddata::ccme_boron)
-#' ssd_data(fits)
-ssd_data <- function(x) {
-  chk_s3_class(x, "fitdists")
-  .org_data_fitdists(x)
-}
+test_that("ssd_element_text_hc inherits from element_text", {
+  element <- ssd_element_text_hc()
+  expect_s3_class(element, "element_text_hc")
+  expect_s3_class(element, "element_text")
+})
+
+test_that("ssd_element_text_hc bolds multi-line labels only", {
+  grob <- ggplot2::element_grob(
+    ssd_element_text_hc(),
+    label = c("1", "\n1.26", "10"),
+    hjust = 0.5,
+    vjust = 1
+  )
+  expect_identical(unname(grob$children[[1]]$gp$font), c(1L, 2L, 1L))
+})
+
+test_that("ssd_element_text_hc is used by ssd_plot", {
+  gp <- ssd_plot(ssddata::ccme_boron, ssdtools::boron_pred)
+  expect_s3_class(gp@theme$axis.text.x, "element_text_hc")
+})
