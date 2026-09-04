@@ -228,3 +228,27 @@ test_that("ssd_pmulti same as pmulti_list", {
   hc2 <- do.call("pmulti_list", args2)
   expect_identical(hc1, hc2)
 })
+
+test_that("qmulti_list derives the mixture support from its components", {
+  # A mixture weighted entirely on a bounded component has that component's
+  # finite support limit, not Inf (poissonconsulting/ssdtools#195).
+  bounded <- list(invpareto = list(weight = 1, shape = 3, scale = 5))
+  expect_identical(qmulti_list(c(0, 1), bounded), c(0, 5))
+
+  mixed <- list(
+    invpareto = list(weight = 0.5, shape = 3, scale = 5),
+    lnorm = list(weight = 0.5, meanlog = 0, sdlog = 1)
+  )
+  expect_identical(qmulti_list(c(0, 1), mixed), c(0, Inf))
+})
+
+test_that("a single-component mixture reproduces that component's endpoints", {
+  for (dist in ssd_dists_all()) {
+    weight <- stats::setNames(list(1), paste0(dist, ".weight"))
+    expect_identical(
+      do.call(ssd_qmulti, c(list(c(0, 1)), weight)),
+      get(paste0("ssd_q", dist))(c(0, 1)),
+      info = dist
+    )
+  }
+})

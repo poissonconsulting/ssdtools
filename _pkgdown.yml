@@ -71,6 +71,7 @@ reference:
   - scale_fill_ssd
   - scale_color_ssd
   - scale_colour_ssd
+  - ssd_element_text_hc
   - ssd_label_comma
   - ssd_label_comma_hc
   - ssd_pal
@@ -97,8 +98,8 @@ reference:
   - ssd_at_boundary
   - ssd_ci_methods
   - ssd_computable
-  - ssd_ecd
-  - ssd_ecd_data
+  - ssd_ecdf
+  - ssd_ecdf_data
   - ssd_est_methods
   - ssd_exposure
   - ssd_is_censored
@@ -110,6 +111,8 @@ reference:
   - comma_signif
   - geom_ssd
   - is_censored
+  - ssd_ecd
+  - ssd_ecd_data
   - ssd_wqg_bc
   - ssd_wqg_burrlioz
   - ssd_hc_burrlioz

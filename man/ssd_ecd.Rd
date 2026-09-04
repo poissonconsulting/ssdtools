@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{ssd_ecd}
 \alias{ssd_ecd}
-\title{Empirical Cumulative Density}
+\title{Empirical Cumulative Density
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 ssd_ecd(x, ties.method = "first")
 }
@@ -13,11 +14,17 @@ ssd_ecd(x, ties.method = "first")
     see \sQuote{Details}; can be abbreviated.}
 }
 \value{
-A numeric vector of the empirical cumulative density.
+A numeric vector of the empirical cumulative distribution function.
 }
 \description{
-Empirical Cumulative Density
+Deprecated for \code{\link[=ssd_ecdf]{ssd_ecdf()}}.
 }
 \examples{
+\dontrun{
 ssd_ecd(1:10)
 }
+}
+\seealso{
+\code{\link[=ssd_ecdf]{ssd_ecdf()}}
+}
+\keyword{internal}
