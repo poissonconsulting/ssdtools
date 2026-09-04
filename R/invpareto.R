@@ -80,17 +80,31 @@ ssd_einvpareto <- function() {
   list(shape = 3, scale = 1)
 }
 
+# The scale is not estimated by maximum likelihood, which would place it on the
+# largest observation, but fixed (see `minvpareto()`) at the largest observation
+# inflated by the factor (n * shape + 1) / (n * shape), where shape is the
+# conditional MLE at the maximum. E[max] = scale * n * shape / (n * shape + 1)
+# for the power-function distribution, so the factor is the exact unbiasing
+# correction for known shape (Johnson, Kotz and Balakrishnan 1994, Ch. 20;
+# Malik 1970) and is bounded above by 2. The shape is then the conditional MLE
+# at the corrected scale; it remains biased upwards in small samples.
 sinvpareto <- function(data, pars = NULL) {
-  scale <- max(data$right)
-  shape <- 1 / mean(log(scale / data$right))
+  right <- data$right
+  if (any(!is.finite(right))) {
+    err(
+      "The inverse Pareto distribution requires a finite largest concentration and so cannot be fitted to right-censored data."
+    )
+  }
+  scale <- max(right)
+  shape <- 1 / mean(log(scale / right))
 
-  n <- length(data$right)
-  scale <- scale * (shape * n) / (shape * n - 1)
-  shape <- 1 / mean(log(scale / data$right))
+  n <- length(right)
+  scale <- scale * (shape * n + 1) / (shape * n)
+  shape <- 1 / mean(log(scale / right))
 
   spars <- list(log_scale = log(scale), log_shape = log(shape))
   if (!is.null(pars)) {
-    # use new bias corrected order statistic
+    # the scale is fixed, so it must come from the (bootstrap) data
     pars$log_scale <- spars$log_scale
     return(pars)
   }
