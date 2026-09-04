@@ -254,3 +254,54 @@ test_that("ltriangle fitted support covers a left-censored non-detect below the 
   expect_lt(lower, 1)
   expect_gt(ssd_hp(fit, conc = 1, ci = FALSE, proportion = TRUE)$est, 0)
 })
+
+test_that("ssd_qltriangle returns the support limits at p = 0 and p = 1", {
+  # Bounded on both sides, so the extreme quantiles are exp(locationlog -+
+  # scalelog) rather than 0 and Inf (poissonconsulting/ssdtools#195).
+  expect_identical(ssd_qltriangle(c(0, 1)), exp(c(-3, 3)))
+  expect_identical(
+    ssd_qltriangle(c(0, 1), locationlog = 1, scalelog = 2),
+    exp(c(-1, 3))
+  )
+})
+
+test_that("ssd_pltriangle is exactly 0 below and 1 above the support", {
+  expect_identical(ssd_pltriangle(c(0, 0.01, 100, Inf)), c(0, 0, 1, 1))
+  expect_identical(ssd_pltriangle(exp(c(-3, 3))), c(0, 1))
+  expect_identical(pltriangle_ssd(c(0.01, 100), 0, 3), c(0, 1))
+})
+
+test_that("ssd_qltriangle round trips through ssd_pltriangle at the support limits", {
+  limits <- exp(c(-3, 3))
+  expect_equal(ssd_qltriangle(ssd_pltriangle(limits)), limits)
+})
+
+test_that("a mixture weighted on ltriangle has its finite support limits", {
+  expect_identical(
+    ssd_qmulti(
+      c(0, 1),
+      ltriangle.weight = 1,
+      ltriangle.locationlog = 1,
+      ltriangle.scalelog = 2
+    ),
+    exp(c(-1, 3))
+  )
+  # any unbounded component makes the mixture unbounded again
+  expect_identical(
+    ssd_qmulti(c(0, 1), ltriangle.weight = 0.5, lnorm.weight = 0.5),
+    c(0, Inf)
+  )
+})
+
+test_that("ltriangle hazard concentrations at proportion 0 and 1 are the fitted support", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "ltriangle")
+  est <- estimates(fit)
+  support <- exp(est$ltriangle.locationlog + c(-1, 1) * est$ltriangle.scalelog)
+
+  hc <- ssd_hc(fit, proportion = c(0, 1), ci = FALSE)
+  expect_equal(hc$est, support)
+  expect_identical(
+    ssd_hp(fit, conc = support, ci = FALSE, proportion = TRUE)$est,
+    c(0, 1)
+  )
+})
