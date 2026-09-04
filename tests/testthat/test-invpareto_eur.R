@@ -113,3 +113,11 @@ test_that("invpareto_eur must be fitted in isolation", {
   expect_s3_class(fit, "fitdists")
   expect_identical(names(fit), "invpareto_eur")
 })
+
+test_that("ssd_pinvpareto_eur is exactly 0 for non-positive concentrations", {
+  # (q / (q + scale))^shape is only a CDF for q > 0; for negative q it is
+  # negative, or positive for an even shape (poissonconsulting/ssdtools#195).
+  expect_identical(ssd_pinvpareto_eur(c(-2, -0.5, 0)), c(0, 0, 0))
+  expect_identical(ssd_pinvpareto_eur(-0.5, shape = 2), 0)
+  expect_identical(pinvpareto_eur_ssd(c(-0.5, 0, 1), 3, 1), c(0, 0, 0.125))
+})

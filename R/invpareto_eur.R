@@ -98,7 +98,8 @@ pinvpareto_eur_ssd <- function(q, shape, scale) {
   if (shape <= 0 || scale <= 0) {
     return(NaN)
   }
-  pow(q / (q + scale), shape)
+  # the support is (0, Inf), so the CDF is exactly 0 for non-positive q
+  ifelse(q <= 0, 0, pow(q / (q + scale), shape))
 }
 
 qinvpareto_eur_ssd <- function(p, shape, scale) {
