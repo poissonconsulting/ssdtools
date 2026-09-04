@@ -5,7 +5,7 @@
 \alias{dist_data}
 \title{Distribution Data}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 10 rows and 6 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 11 rows and 6 columns.
 }
 \usage{
 dist_data
@@ -17,7 +17,7 @@ A data frame of information on the implemented distributions.
 \describe{
 \item{dist}{The distribution (chr).}
 \item{bcanz}{Whether the distribution belongs to the set of distributions approved by BC, Canada, Australia and New Zealand for official guidelines (flag).}
-\item{tails}{Whether the distribution has both tails (flag).}
+\item{tails}{Whether the distribution has both unbounded tails (flag).}
 \item{npars}{The number of parameters (int).}
 \item{valid}{Whether the distribution has a valid likelihood that allows it to be fit with other distributions for modeling averaging (flag).}
 \item{bound}{Whether one or more parameters have boundaries (flag).}
