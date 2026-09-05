@@ -233,15 +233,24 @@ emulti_ssd <- function() {
 # Build the model-averaged CDF as a closure: the weighted sum of the
 # component distribution CDFs minus p, so it serves both to evaluate the
 # CDF (with p = 0) and as the objective for root finding (see root()).
+# The returned closure is evaluated a dozen or so times per uniroot() solve, so
+# the distribution functions are resolved and the weights separated from the
+# parameters once here rather than on every evaluation.
 pmulti_fun <- function(dists) {
+  funs <- purrr::imap(dists, function(pars, dist) {
+    ns_fun(paste0("p", dist, "_ssd"))
+  })
+  weights <- purrr::map_dbl(dists, "weight")
+  pars <- purrr::map(dists, function(x) {
+    x$weight <- NULL
+    x
+  })
   function(q, p = 0) {
-    terms <- purrr::imap(dists, function(pars, dist) {
-      weight <- pars$weight
-      pars$weight <- NULL
-      fun <- ns_fun(paste0("p", dist, "_ssd"))
-      weight * do.call(fun, c(list(q), pars))
-    })
-    purrr::reduce(terms, `+`) - p
+    total <- 0
+    for (i in seq_along(funs)) {
+      total <- total + weights[[i]] * do.call(funs[[i]], c(list(q), pars[[i]]))
+    }
+    total - p
   }
 }
 
