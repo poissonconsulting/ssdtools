@@ -156,15 +156,11 @@ ssd_hp_bcanz <- function(
 ) {
   chk_unused(...)
 
-  if (missing(proportion) || isFALSE(proportion)) {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      I("ssd_hp(proportion = FALSE)"),
-      I("ssd_hp(proportion = TRUE)"),
-      "Please set the `proportion` argument to `ssd_hp_bcanz()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly."
-    )
-  }
-  chk_flag(proportion)
+  proportion <- .hp_proportion(
+    proportion,
+    missing(proportion) || isFALSE(proportion),
+    "ssd_hp_bcanz"
+  )
 
   ssd_hp(
     x,

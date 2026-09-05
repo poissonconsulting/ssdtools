@@ -67,6 +67,73 @@ ssd_hc <- function(x, ...) {
 
 # Resolve the deprecated `percent` argument into a `proportion` and
 # validate it. Shared by the ssd_hc() and predict() methods.
+# Shared argument handling for ssd_hc() and ssd_hp(). `fun` names the calling
+# function in the deprecation messages. lifecycle::deprecate_soft() only warns
+# when the deprecated function was called from the global environment or from a
+# test, and it works that out from its calling frames, so each helper passes
+# the frames of the exported function (`env`) and of its caller (`user_env`)
+# rather than its own.
+.hcp_est_method <- function(est_method, multi_est, fun) {
+  env <- parent.frame()
+  user_env <- parent.frame(2)
+  if (lifecycle::is_present(multi_est)) {
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      paste0(fun, "(multi_est)"),
+      paste0(fun, "(est_method)"),
+      env = env,
+      user_env = user_env
+    )
+    chk_flag(multi_est)
+    est_method <- if (multi_est) "multi" else "arithmetic"
+  }
+  chk_string(est_method)
+  chk_subset(est_method, ssd_est_methods())
+  est_method
+}
+
+.hcp_ci_method <- function(ci_method, fun) {
+  env <- parent.frame()
+  user_env <- parent.frame(2)
+  chk_string(ci_method)
+  if (ci_method == "weighted_arithmetic") {
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      I(paste0(fun, "(ci_method = 'weighted_arithmetic')")),
+      I(paste0(fun, "(ci_method = 'MACL')")),
+      env = env,
+      user_env = user_env
+    )
+    ci_method <- "MACL"
+  }
+  chk_subset(ci_method, ssd_ci_methods())
+  ci_method
+}
+
+# `deprecated` is whether to warn that percentages are still the default and
+# `fun` names the function whose argument the user should set.
+.hp_proportion <- function(proportion, deprecated, fun, id = NULL) {
+  env <- parent.frame()
+  user_env <- parent.frame(2)
+  if (deprecated) {
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      I("ssd_hp(proportion = FALSE)"),
+      I("ssd_hp(proportion = TRUE)"),
+      paste0(
+        "Please set the `proportion` argument to `",
+        fun,
+        "()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly."
+      ),
+      id = id,
+      env = env,
+      user_env = user_env
+    )
+  }
+  chk_flag(proportion)
+  proportion
+}
+
 .hc_proportion <- function(percent, proportion) {
   if (lifecycle::is_present(percent)) {
     lifecycle::deprecate_soft(
@@ -147,32 +214,8 @@ ssd_hc.fitdists <- function(
   chk_unused(...)
 
   proportion <- .hc_proportion(percent, proportion)
-
-  if (lifecycle::is_present(multi_est)) {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      "ssd_hc(multi_est)",
-      "ssd_hc(est_method)"
-    )
-
-    chk_flag(multi_est)
-
-    est_method <- if (multi_est) "multi" else "arithmetic"
-  }
-  chk_string(est_method)
-  chk_subset(est_method, ssd_est_methods())
-
-  chk_string(ci_method)
-  if (ci_method == "weighted_arithmetic") {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      I("ssd_hc(ci_method = 'weighted_arithmetic')"),
-      I("ssd_hc(ci_method = 'MACL')")
-    )
-
-    ci_method <- "MACL"
-  }
-  chk_subset(ci_method, ssd_ci_methods())
+  est_method <- .hcp_est_method(est_method, multi_est, "ssd_hc")
+  ci_method <- .hcp_ci_method(ci_method, "ssd_hc")
 
   hcp <- hcp(
     x = x,

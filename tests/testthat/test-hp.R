@@ -630,3 +630,19 @@ test_that("hp ci_method = 'weighted_arithmetic' deprecated for MACL", {
 
   expect_identical(macl, weighted_arithmetic)
 })
+
+test_that("ssd_hp validates est_method and ci_method up front like ssd_hc", {
+  fits <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  expect_error(
+    ssd_hp(fits, 1, est_method = "foo", proportion = TRUE),
+    "`est_method` must match"
+  )
+  expect_error(
+    ssd_hp(fits, 1, ci_method = "foo", proportion = TRUE),
+    "`ci_method` must match"
+  )
+  expect_error(
+    ssd_hc(fits, est_method = "foo"),
+    "`est_method` must match"
+  )
+})
