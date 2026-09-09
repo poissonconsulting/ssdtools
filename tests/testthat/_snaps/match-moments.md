@@ -36,6 +36,10 @@
     locationlog    scalelog 
        1.006641    2.535937 
     
+    $ltriangle3
+    locationlog    scalelog        skew 
+            0.2         2.5         0.5 
+    
     $weibull
        shape    scale 
     1.352319 4.502075 

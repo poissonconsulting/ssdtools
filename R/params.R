@@ -132,6 +132,7 @@
 #' @param sdlog1 standard deviation on log scale parameter.
 #' @param sdlog2 standard deviation on log scale parameter.
 #' @param select A character vector of the distributions to select.
+#' @param skew skewness parameter between -1 and 1 (0 is symmetric).
 #' @param shape	shape parameter.
 #' @param shape1 shape1 parameter.
 #' @param shape2 shape2 parameter.
@@ -199,6 +200,10 @@
 #' @param ltriangle.weight weight parameter for the log-triangular distribution.
 #' @param ltriangle.locationlog location parameter for the log-triangular distribution.
 #' @param ltriangle.scalelog scale parameter for the log-triangular distribution.
+#' @param ltriangle3.weight weight parameter for the log-asymmetric-triangular distribution.
+#' @param ltriangle3.locationlog location parameter for the log-asymmetric-triangular distribution.
+#' @param ltriangle3.scalelog scale parameter for the log-asymmetric-triangular distribution.
+#' @param ltriangle3.skew skewness parameter for the log-asymmetric-triangular distribution.
 #' @param weibull.weight weight parameter for the Weibull distribution.
 #' @param weibull.shape shape parameter for the Weibull distribution.
 #' @param weibull.scale scale parameter for the Weibull distribution.

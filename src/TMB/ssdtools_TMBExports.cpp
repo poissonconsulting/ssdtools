@@ -30,6 +30,7 @@
 #include "ll_lnorm.hpp"
 #include "ll_lnorm_lnorm.hpp"
 #include "ll_ltriangle.hpp"
+#include "ll_ltriangle3.hpp"
 #include "ll_weibull.hpp"
 
 template<class Type>
@@ -55,6 +56,8 @@ Type objective_function<Type>::operator() () {
     return ll_lnorm_lnorm(this);
   } else if(model == "ll_ltriangle") {
     return ll_ltriangle(this);
+  } else if(model == "ll_ltriangle3") {
+    return ll_ltriangle3(this);
   } else if(model == "ll_weibull") {
     return ll_weibull(this);
   } else {
