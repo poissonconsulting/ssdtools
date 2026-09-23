@@ -31,9 +31,22 @@ ggname <- function(prefix, grob) {
   grob
 }
 
+# Look up a function by name in the ssdtools namespace only. Dispatching by
+# string through do.call(), get(), exists() or match.fun() searches the whole
+# search path, so an attached package exporting a function of the same name
+# (e.g. actuar::mlnorm) could satisfy or mask an ssdtools hook (#479).
+# Returns NULL when `name` is not an ssdtools function.
+ns_fun <- function(name) {
+  get0(
+    name,
+    envir = asNamespace("ssdtools"),
+    mode = "function",
+    inherits = FALSE
+  )
+}
+
 is_bounds <- function(dist) {
-  fun <- paste0("b", dist)
-  exists(fun, mode = "function")
+  !is.null(ns_fun(paste0("b", dist)))
 }
 
 odds <- function(x) {

@@ -31,7 +31,7 @@ sample_nonparametric <- function(data) {
 }
 
 sample_parametric <- function(dist, args, weighted, censoring) {
-  what <- paste0("ssd_r", dist)
+  what <- ns_fun(paste0("ssd_r", dist))
   args$chk <- FALSE
   sample <- do.call(what, args)
   data <- data.frame(left = sample, right = sample)

@@ -56,7 +56,7 @@ estimates.fitdists <- function(x, all_estimates = FALSE, ...) {
   })
   args <- y
   args$.x <- wall
-  do.call("list_assign", args)
+  do.call(list_assign, args)
 }
 
 .relist_estimates <- function(x) {

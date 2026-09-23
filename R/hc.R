@@ -48,7 +48,7 @@ ssd_hc <- function(x, ...) {
 }
 
 .ssd_hc_dist <- function(x, dist, proportion) {
-  fun <- paste0("ssd_q", dist)
+  fun <- ns_fun(paste0("ssd_q", dist))
   args <- list(p = proportion)
   args <- c(as.list(x), args)
   est <- do.call(fun, args)
