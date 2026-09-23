@@ -405,6 +405,59 @@ lines(conc, F(conc, 0, 1), col = "#1F1CF2")
 legend("topleft", "(B)", bty = "n")
 ```
 
+#### Log-asymmetric-triangular distribution
+
+The log-asymmetric-triangular distribution generalises the log-triangular distribution by allowing the mode to sit anywhere within the support: if $X$ has a log-asymmetric-triangular distribution, then $Y = \ln (X)$ has a [triangular](https://en.wikipedia.org/wiki/Triangular_distribution) distribution with mode $\mu$ (the `locationlog` parameter), half-width $s$ (the `scalelog` parameter) and skewness $\kappa$ (the `skew` parameter), so that $Y$ is supported on $[a, b]$ where $a = \mu - (1 - \kappa) s$ and $b = \mu + (1 + \kappa) s$.
+The total width of the support is $2s$ regardless of $\kappa$.
+When $\kappa = 0$ the distribution is the log-triangular distribution, positive values of $\kappa$ lengthen the upper limb and negative values lengthen the lower limb, and $\kappa = \pm 1$ gives a right-triangular density with the mode at one limit of the support.
+
+<div style="text-align: center; font-size: 1.2em; color: black; border: 1px solid black; padding: 10px; border-radius: 5px;">
+  <b><u>Asymmetric Triangular Distribution</u></b>
+
+  $${f_Y}\left( {y;\mu ,s,\kappa} \right) = \begin{cases} \dfrac{y - a}{s \left( \mu - a \right)} & a \le y \le \mu \\[2ex] \dfrac{b - y}{s \left( b - \mu \right)} & \mu < y \le b \end{cases}; \quad s > 0, \; -1 \le \kappa \le 1, \; -\infty < \mu < \infty$$
+
+  $${F_Y}\left( {y;\mu ,s,\kappa} \right) = \begin{cases} \dfrac{\left( y - a \right)^2}{2 s \left( \mu - a \right)} & a \le y \le \mu \\[2ex] 1 - \dfrac{\left( b - y \right)^2}{2 s \left( b - \mu \right)} & \mu < y \le b \end{cases}$$
+
+</div>
+
+<br>
+
+The log-asymmetric-triangular distribution shares the bounded support and absence of tails of the log-triangular distribution while allowing the density to fall to zero at different rates below and above the mode.
+It is experimental and is not part of the default BCANZ set (`ssd_dists_bcanz()`) that `ssd_fit_dists()` fits by default, although it is included in `ssd_dists()` and `ssd_dists_all()`.
+Because the density of a right triangle is positive at the limit of its support, the maximum likelihood fit for many datasets places the mode at the smallest or largest observation with `skew` at its bound of -1 or 1.
+Such fits are flagged by `ssd_at_boundary()` and are excluded by `ssd_fit_dists()` unless `at_boundary_ok = TRUE`.
+As for the log-triangular distribution, the log-likelihood has a kink at every observation, so the optimizer can stop at a local optimum, the standard errors reported by `tidy()` are unreliable and bootstrap confidence intervals should be used.
+The log-asymmetric-triangular distribution can be fitted using `ssdtools` by supplying the string `ltriangle3` to the `dists` argument in the `ssd_fit_dists` call.
+
+```{r echo=FALSE,fig.align='center',fig.width=9,fig.height=5,fig.cap="Sample log-asymmetric-triangular probability density (A) and cumulative probability (B) functions.", fig.alt="A two panel plot showing several realisations of the log-asymmetric-triangular probability density function on the left panel and the cumulative density function of the distribution on the right panel."}
+par(mfrow = c(1, 2))
+
+f <- function(x, mu, s, k) {
+  a <- mu - (1 - k) * s
+  b <- mu + (1 + k) * s
+  y <- log(x)
+  d <- ifelse(y <= mu, (y - a) / (s * (mu - a)), (b - y) / (s * (b - mu))) / x
+  d[y < a | y > b] <- 0
+  d
+}
+
+conc <- seq(0.01, 10, by = 0.005)
+plot(conc, f(conc, 1, 1.5, 0), type = "l", ylab = "Probability density", xlab = "Concentration", col = "#FF5733", ylim = c(0, 1.1))
+lines(conc, f(conc, 1, 1.5, 0.5), col = "#F2A61C")
+lines(conc, f(conc, 1, 1.5, -0.5), col = "#1CADF2")
+lines(conc, f(conc, 0.5, 1, 1), col = "#1F1CF2")
+legend("topleft", "(A)", bty = "n")
+
+F <- function(x, mu, s, k) {
+  ssd_pltriangle3(x, locationlog = mu, scalelog = s, skew = k)
+}
+plot(conc, F(conc, 1, 1.5, 0), type = "l", ylab = "Cumulative probability", xlab = "Concentration", col = "#FF5733", ylim = c(0, 1.1))
+lines(conc, F(conc, 1, 1.5, 0.5), col = "#F2A61C")
+lines(conc, F(conc, 1, 1.5, -0.5), col = "#1CADF2")
+lines(conc, F(conc, 0.5, 1, 1), col = "#1F1CF2")
+legend("topleft", "(B)", bty = "n")
+```
+
 #### Gamma distribution
 The two-parameter  [gamma](https://en.wikipedia.org/wiki/Gamma_distribution) distribution has the following *pdf* and *cdf*.
 

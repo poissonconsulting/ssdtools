@@ -206,6 +206,8 @@ remove them with a warning.}
 
 \item{select}{A character vector of the distributions to select.}
 
+\item{skew}{skewness parameter between -1 and 1 (0 is symmetric).}
+
 \item{shape}{shape parameter.}
 
 \item{shape1}{shape1 parameter.}
@@ -336,6 +338,14 @@ Use NA to refer to the existing minimum or maximum limits.
 \item{ltriangle.locationlog}{location parameter for the log-triangular distribution.}
 
 \item{ltriangle.scalelog}{scale parameter for the log-triangular distribution.}
+
+\item{ltriangle3.weight}{weight parameter for the log-asymmetric-triangular distribution.}
+
+\item{ltriangle3.locationlog}{location parameter for the log-asymmetric-triangular distribution.}
+
+\item{ltriangle3.scalelog}{scale parameter for the log-asymmetric-triangular distribution.}
+
+\item{ltriangle3.skew}{skewness parameter for the log-asymmetric-triangular distribution.}
 
 \item{weibull.weight}{weight parameter for the Weibull distribution.}
 

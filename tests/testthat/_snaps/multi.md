@@ -245,6 +245,18 @@
       $ltriangle.scalelog
       [1] 3
       
+      $ltriangle3.weight
+      [1] 0
+      
+      $ltriangle3.locationlog
+      [1] 0
+      
+      $ltriangle3.scalelog
+      [1] 3
+      
+      $ltriangle3.skew
+      [1] 0
+      
       $weibull.weight
       [1] 0.1666667
       
