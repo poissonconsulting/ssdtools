@@ -65,39 +65,14 @@ ssd_hp.fitdists <- function(
   chk_numeric(conc)
   chk_unused(...)
 
-  if (lifecycle::is_present(multi_est)) {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      "ssd_hp(multi_est)",
-      "ssd_hp(est_method)"
-    )
-
-    chk_flag(multi_est)
-
-    est_method <- if (multi_est) "multi" else "arithmetic"
-  }
-
-  chk_string(ci_method)
-  if (ci_method == "weighted_arithmetic") {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      I("ssd_hp(ci_method = 'weighted_arithmetic')"),
-      I("ssd_hp(ci_method = 'MACL')")
-    )
-
-    ci_method <- "MACL"
-  }
-
-  if (missing(proportion)) {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      I("ssd_hp(proportion = FALSE)"),
-      I("ssd_hp(proportion = TRUE)"),
-      "Please set the `proportion` argument to `ssd_hp()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly.",
-      id = "ssd_hp"
-    )
-  }
-  chk_flag(proportion)
+  est_method <- .hcp_est_method(est_method, multi_est, "ssd_hp")
+  ci_method <- .hcp_ci_method(ci_method, "ssd_hp")
+  proportion <- .hp_proportion(
+    proportion,
+    missing(proportion),
+    "ssd_hp",
+    id = "ssd_hp"
+  )
 
   hcp <- hcp(
     x = x,
@@ -151,16 +126,12 @@ ssd_hp.fitburrlioz <- function(
   chk_flag(ci)
   chk_unused(...)
 
-  if (missing(proportion)) {
-    lifecycle::deprecate_soft(
-      "2.3.1",
-      I("ssd_hp(proportion = FALSE)"),
-      I("ssd_hp(proportion = TRUE)"),
-      "Please set the `proportion` argument to `ssd_hp()` to be TRUE which will cause it to return hazard proportions instead of percentages then update your downstream code accordingly.",
-      id = "ssd_hp"
-    )
-  }
-  chk_flag(proportion)
+  proportion <- .hp_proportion(
+    proportion,
+    missing(proportion),
+    "ssd_hp",
+    id = "ssd_hp"
+  )
 
   fun <- if (names(x) == "burrIII3") fit_burrlioz else fit_tmb
 

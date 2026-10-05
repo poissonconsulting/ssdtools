@@ -1240,3 +1240,23 @@ test_that("hc duplicate proportion values return one row per input value in orde
   expect_identical(hc_dup$proportion, c(0.05, 0.1, 0.2, 0.05))
   expect_equal(hc_dup$est, c(hc$est, hc$est[1]))
 })
+
+test_that("shared argument helpers warn from the caller's frame", {
+  # lifecycle::deprecate_soft() decides whether to warn from its calling
+  # frames, so a helper must pass the exported function's frames through;
+  # lifecycle::expect_deprecated() forces verbosity and would not detect a
+  # silent regression here.
+  withr::local_options(lifecycle_verbosity = "warning")
+  fits <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  expect_warning(ssd_hc(fits, multi_est = TRUE), "multi_est")
+  expect_warning(
+    ssd_hc(fits, ci_method = "weighted_arithmetic"),
+    "weighted_arithmetic"
+  )
+  expect_warning(
+    ssd_hp(fits, 1, ci_method = "weighted_arithmetic", proportion = TRUE),
+    "weighted_arithmetic"
+  )
+  expect_warning(ssd_hp(fits, 1), "proportion = FALSE")
+  expect_warning(ssd_hp_bcanz(fits, 1), "ssd_hp_bcanz")
+})
