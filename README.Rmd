@@ -83,9 +83,14 @@ library(ggplot2)
 
 theme_set(theme_bw())
 
-ssd_plot(ssddata::ccme_boron, boron_pred,
-  shape = "Group", color = "Group", label = "Species",
-  xlab = "Concentration (mg/L)", ribbon = TRUE
+ssd_plot(
+  ssddata::ccme_boron,
+  boron_pred,
+  shape = "Group",
+  color = "Group",
+  label = "Species",
+  xlab = "Concentration (mg/L)",
+  ribbon = TRUE
 ) +
   expand_limits(x = 3000) +
   scale_colour_ssd()
@@ -178,7 +183,7 @@ guidance on MINOR version updates.
 
 ## References
 
-Posthuma, L., Suter II, G.W., and Traas, T.P. 2001. Species Sensitivity Distributions in Ecotoxicology. CRC Press.
+Posthuma, L., Suter II, G.W., and Traas, T.P. 2001. Species Sensitivity Distributions in Ecotoxicology. CRC Press..
 
 <div id="refs"></div>
 
