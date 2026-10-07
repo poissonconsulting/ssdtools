@@ -236,6 +236,15 @@
       $lnorm_lnorm.pmix
       [1] 0.5
       
+      $ltriangle.weight
+      [1] 0
+      
+      $ltriangle.locationlog
+      [1] 0
+      
+      $ltriangle.scalelog
+      [1] 3
+      
       $weibull.weight
       [1] 0.1666667
       

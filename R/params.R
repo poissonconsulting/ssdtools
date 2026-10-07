@@ -196,6 +196,9 @@
 #' @param lnorm_lnorm.meanlog2 meanlog2 parameter for the log-normal log-normal mixture distribution.
 #' @param lnorm_lnorm.sdlog2 sdlog2 parameter for the log-normal log-normal mixture distribution.
 #' @param lnorm_lnorm.pmix pmix parameter for the log-normal log-normal mixture distribution.
+#' @param ltriangle.weight weight parameter for the log-triangular distribution.
+#' @param ltriangle.locationlog location parameter for the log-triangular distribution.
+#' @param ltriangle.scalelog scale parameter for the log-triangular distribution.
 #' @param weibull.weight weight parameter for the Weibull distribution.
 #' @param weibull.shape shape parameter for the Weibull distribution.
 #' @param weibull.scale scale parameter for the Weibull distribution.
