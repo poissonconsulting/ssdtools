@@ -226,8 +226,8 @@ test_that("invpareto with extreme data", {
     estimates(fit98),
     list(
       invpareto.weight = 1,
-      invpareto.scale = 2.61422908501617,
-      invpareto.shape = 26.0909009531098
+      invpareto.scale = 2.61422869319004,
+      invpareto.shape = 26.0910029835227
     )
   )
 
@@ -236,8 +236,8 @@ test_that("invpareto with extreme data", {
     estimates(fit99r),
     list(
       invpareto.weight = 1,
-      invpareto.scale = 1.03020756694085,
-      invpareto.shape = 26.0278618888664
+      invpareto.scale = 1.03020741486997,
+      invpareto.shape = 26.0279618888736
     )
   )
 })
@@ -258,4 +258,40 @@ test_that("ssd_pinvpareto is clamped to [0, 1] outside the support", {
   expect_identical(ssd_pinvpareto(10, shape = 3, scale = 5), 1)
   expect_identical(ssd_pinvpareto(c(6, 10), shape = 1, scale = 5), c(1, 1))
   expect_identical(ssd_pinvpareto(-1, shape = 3, scale = 5), 0)
+})
+
+test_that("sinvpareto scale correction is the bounded (n * shape + 1) / (n * shape) factor", {
+  right <- c(1, 2, 3, 4, 5, 10)
+  start <- sinvpareto(data.frame(right = right))
+  n <- length(right)
+  shape_max <- 1 / mean(log(max(right) / right))
+  scale <- max(right) * (n * shape_max + 1) / (n * shape_max)
+  expect_equal(exp(start$log_scale), scale)
+  expect_equal(exp(start$log_shape), 1 / mean(log(scale / right)))
+})
+
+test_that("invpareto scale stays within a factor of two of the largest observation", {
+  # n * shape_hat is close to 1 for a small, highly dispersed sample, where the
+  # previous n * shape / (n * shape - 1) correction was unbounded and gave a
+  # scale six times the maximum
+  data <- data.frame(Conc = c(1, 1, 1, 1, 1, 400))
+  fit <- ssd_fit_dists(data, dists = "invpareto")
+  scale <- estimates(fit)$invpareto.scale
+  expect_gt(scale, 400)
+  expect_lt(scale, 800)
+})
+
+test_that("invpareto refuses right-censored data with a clear message", {
+  data <- data.frame(Conc = c(1, 2, 3, 4, 5, 6), Right = c(1, 2, 3, 4, 5, Inf))
+  expect_error(
+    sinvpareto(data.frame(right = data$Right)),
+    "right-censored"
+  )
+  expect_error(
+    expect_warning(
+      ssd_fit_dists(data, left = "Conc", right = "Right", dists = "invpareto"),
+      "right-censored"
+    ),
+    "All distributions failed to fit"
+  )
 })

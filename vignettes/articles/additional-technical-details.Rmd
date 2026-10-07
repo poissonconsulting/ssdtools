@@ -199,12 +199,24 @@ For completeness, the MLEs of this distribution have closed-form expressions and
 
 \[
 \begin{array}{l}
-\hat \lambda  = \left[ \ln \left( \frac{{g_X}}{{\hat b}} \right) \right]^{-1} \\
-\hat b = \frac{1}{{\max \{ X_i \}}}
+\hat b = \frac{1}{{\max \{ X_i \}}} \\
+\hat \lambda  = \left[ \ln \left( \frac{\max \{ X_i \}}{{g_X}} \right) \right]^{-1} = \left[ \ln \left( \frac{1}{\hat b \, {g_X}} \right) \right]^{-1}
 \end{array}
 \]
 
-and $\rm{g_X}$ is the *geometric mean* of the data.
+where $\rm{g_X}$ is the *geometric mean* of the data.
+The MLE of the upper limit $1/\hat b$ is the largest observation, which lies on the boundary of the parameter space and is therefore biased downwards, and the MLE of $\lambda$ is biased upwards, with $\mathrm{E}[\hat \lambda] = n\lambda/(n-2)$ [@quandt_1966; @malik_1970].
+These are the classical results for the Pareto distribution, which carry over to the inverse Pareto by the transformation $X = 1/Y$ [@baxter_1980; @johnson_kotz_balakrishnan_1994; @arnold_2015].
+
+#### Estimation in ssdtools
+
+Because the MLE of the upper limit is the largest observation, `ssdtools` does not estimate the `scale` (that is, $1/b$) of the inverse Pareto distribution by maximum likelihood.
+Instead the `scale` is fixed at the largest observation inflated by the factor $(n\hat \lambda + 1)/(n\hat \lambda)$, where $\hat \lambda$ is the conditional MLE of the shape at the largest observation.
+The expected value of the largest of $n$ observations is $\theta \, n\lambda/(n\lambda + 1)$ where $\theta = 1/b$ is the upper limit, so this is the exact unbiasing correction for known shape [@johnson_kotz_balakrishnan_1994], and it is bounded above by a factor of two.
+The `shape` is then the conditional MLE at the corrected `scale`, that is $\left[ \ln \left( \tilde \theta / g_X \right) \right]^{-1}$ where $\tilde \theta$ is the corrected `scale`.
+Simulation indicates that the corrected `scale` is close to unbiased for six or more observations, but that the `shape` remains biased upwards by about 28% at $n = 6$ and 13% at $n = 10$, so that the estimated *HC5* is biased upwards (less protective) by about 12% (median) at $n = 6$.
+Because the `scale` is not a maximum likelihood estimate, the log-likelihood of the inverse Pareto distribution is not comparable with those of the other distributions, which is why it cannot be included in a model-averaged set.
+The inverse Pareto distribution cannot be fitted to right-censored data, since the largest concentration is then unknown.
 
 ### Inverse Weibull distribution
 
