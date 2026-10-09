@@ -134,6 +134,53 @@ rename_data <- function(data, left, right, weight) {
   data
 }
 
+# heavily tied extremes suggest censored values entered as exact values
+# which is invalid and can cause convergence failure or degenerate fits
+warn_tied_extremes <- function(
+  data,
+  left,
+  right,
+  min_ties = 3L,
+  min_prop_ties = 0.25
+) {
+  x <- data$left[data$left == data$right & is.finite(data$left)]
+  n <- length(x)
+  if (!n) {
+    return(invisible(FALSE))
+  }
+  extremes <- list(
+    minimum = list(
+      value = min(x),
+      censor = paste0("left-censored (`", left, "` of 0 or NA)")
+    ),
+    maximum = list(
+      value = max(x),
+      censor = paste0("right-censored (`", right, "` of Inf or NA)")
+    )
+  )
+  tied <- FALSE
+  for (extreme in names(extremes)) {
+    value <- extremes[[extreme]]$value
+    ties <- sum(x == value)
+    if (ties >= min_ties && ties / n >= min_prop_ties) {
+      wrn(
+        ties,
+        " of the ",
+        n,
+        " uncensored values are tied at the ",
+        extreme,
+        " (",
+        value,
+        "). If these are censored values they should be entered as ",
+        extremes[[extreme]]$censor,
+        "."
+      )
+      tied <- TRUE
+    }
+  }
+  invisible(tied)
+}
+
 is_at_boundary <- function(
   fit,
   data,

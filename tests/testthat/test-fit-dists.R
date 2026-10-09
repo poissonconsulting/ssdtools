@@ -290,7 +290,10 @@ test_that("ssd_fit_dists works with odds data", {
   data <- ssddata::ccme_boron
   data$Conc <- plogis(data$Conc)
 
-  fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds")
+  expect_warning(
+    fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds"),
+    "tied at the maximum"
+  )
 
   tidy <- tidy(fits)
 
@@ -468,4 +471,53 @@ test_that("ssd_fit_dists min_pmix 0", {
   )
   tidy <- tidy(fit)
   expect_snapshot_data(tidy, "tidy_pmix0")
+})
+
+test_that("ssd_fit_dists warns on heavily tied minimum values", {
+  data <- data.frame(
+    Conc = c(
+      399650,
+      1e+05,
+      3589986.07239638,
+      1e+05,
+      1e+05,
+      1e+05,
+      1850000,
+      5800000,
+      6422032.3885823,
+      1e+05,
+      1e+06,
+      1289765.53208085,
+      1650000,
+      7940000
+    )
+  )
+  expect_warning(
+    ssd_fit_dists(data, dists = "lnorm"),
+    "^5 of the 14 uncensored values are tied at the minimum \\(1e\\+05\\)\\. If these are censored values they should be entered as left-censored \\(`Conc` of 0 or NA\\)\\.$"
+  )
+  expect_silent(ssd_fit_dists(data, dists = "lnorm", silent = TRUE))
+})
+
+test_that("ssd_fit_dists warns on heavily tied maximum values", {
+  data <- data.frame(Conc = c(1:9, rep(10, 3)))
+  expect_warning(
+    ssd_fit_dists(data, dists = "lnorm"),
+    "^3 of the 12 uncensored values are tied at the maximum \\(10\\)\\. If these are censored values they should be entered as right-censored \\(`Conc` of Inf or NA\\)\\.$"
+  )
+})
+
+test_that("ssd_fit_dists does not warn on tied extremes once censored", {
+  data <- data.frame(Conc = c(1:9, rep(10, 3)))
+  data$Right <- data$Conc
+  data$Right[data$Conc == 10] <- Inf
+  expect_no_warning(ssd_fit_dists(data, right = "Right", dists = "lnorm"))
+})
+
+test_that("ssd_fit_dists does not warn on lightly tied extremes", {
+  expect_no_warning(ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm"))
+  expect_no_warning(ssd_fit_dists(
+    ssddata::anzg_simazine_fresh,
+    dists = "lnorm"
+  ))
 })

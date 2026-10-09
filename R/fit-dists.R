@@ -324,6 +324,9 @@ ssd_fit_dists <- function(
 
   org_data <- as_tibble(data)
   data <- process_data(data, left, right, weight)
+  if (!silent) {
+    warn_tied_extremes(data, left, right)
+  }
   attrs <- adjust_data(
     data,
     rescale = rescale,
