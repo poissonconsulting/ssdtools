@@ -270,7 +270,10 @@ test_that("ssd_hc fitdists works odds", {
   data <- ssddata::ccme_boron
   data$Conc <- plogis(data$Conc) * 0.9
   withr::local_seed(99)
-  fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds")
+  expect_warning(
+    fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds"),
+    "tied at the maximum"
+  )
   withr::local_seed(99)
   hc <- ssd_hc(
     fits,
@@ -286,7 +289,15 @@ test_that("ssd_hc fitdists works odds 0.8", {
   data <- ssddata::ccme_boron
   data$Conc <- plogis(data$Conc) * 0.9
   withr::local_seed(99)
-  fits <- ssd_fit_dists(data, dists = "lnorm", rescale = "odds", odds_max = 0.8)
+  expect_warning(
+    fits <- ssd_fit_dists(
+      data,
+      dists = "lnorm",
+      rescale = "odds",
+      odds_max = 0.8
+    ),
+    "tied at the maximum"
+  )
   withr::local_seed(99)
   hc <- ssd_hc(
     fits,
