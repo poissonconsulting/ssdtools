@@ -156,6 +156,20 @@ is_at_boundary <- function(
   any(pars == lower | pars == upper)
 }
 
+# the likelihood is unbounded as a log-scale scale parameter tends to zero
+# on tied values so a negligible scale indicates a collapsed not a fitted model
+is_degenerate <- function(fit, data, min_rel_scale = 1e-03) {
+  x <- mean_weighted_values(data, weight = FALSE)
+  x <- x[is.finite(x) & x > 0]
+  sd_log <- stats::sd(log(x))
+  if (length(x) < 2 || !is.finite(sd_log) || sd_log == 0) {
+    return(FALSE)
+  }
+  ests <- unlist(estimates(fit))
+  scales <- ests[grepl("^(sdlog|scalelog)\\d*$", names(ests))]
+  any(scales < min_rel_scale * sd_log)
+}
+
 geomid <- function(x) {
   x <- x[is.finite(x)]
   x <- x[x > 0]
