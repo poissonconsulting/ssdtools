@@ -81,6 +81,21 @@ nullify_nonfit <- function(
     }
     return(NULL)
   }
+
+  if (is_degenerate(fit, data)) {
+    if (!silent) {
+      wrn(
+        "Distribution '",
+        dist,
+        "' failed to fit",
+        rescale,
+        ": one or more scale parameters collapsed onto tied values",
+        " (check for censored values entered as exact values)."
+      )
+    }
+    return(NULL)
+  }
+
   fit$flags$computable <- !any(is.na(tidy(fit)$se))
   if (computable && !fit$flags$computable) {
     if (!silent) {
