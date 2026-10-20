@@ -18,6 +18,8 @@
   ci_method = "weighted_samples",
   parametric = TRUE,
   delta = 9.21,
+  samples = FALSE,
+  save_to = NULL,
   control = NULL
 )
 }
@@ -72,6 +74,10 @@ calculate the confidence limits (and SE) from the single set of samples.}
 
 \item{delta}{A non-negative number specifying the maximum absolute AIC difference cutoff.
 Distributions with an absolute AIC difference greater than delta are excluded from the calculations.}
+
+\item{samples}{A flag specfying whether to include a numeric vector of the bootstrap samples as a list column in the output.}
+
+\item{save_to}{NULL or a string specifying a directory to save where the bootstrap datasets and parameter estimates (when successfully converged) to.}
 
 \item{control}{A list of control parameters passed to \code{\link[stats:optim]{stats::optim()}}.}
 }

@@ -28,5 +28,5 @@ ensure order is the same for the various components.
 ssd_sort_data(ssddata::ccme_boron)
 }
 \seealso{
-\code{\link[=ssd_ecd_data]{ssd_ecd_data()}} and \code{\link[=ssd_data]{ssd_data()}}
+\code{\link[=ssd_ecdf_data]{ssd_ecdf_data()}} and \code{\link[=ssd_data]{ssd_data()}}
 }

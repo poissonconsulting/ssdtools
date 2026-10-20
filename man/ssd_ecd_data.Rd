@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{ssd_ecd_data}
 \alias{ssd_ecd_data}
-\title{Empirical Cumulative Density for Species Sensitivity Data}
+\title{Empirical Cumulative Density for Species Sensitivity Data
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 ssd_ecd_data(
   data,
@@ -26,15 +27,18 @@ uncensored missing (0 and Inf) data in terms of the orders of magnitude
 relative to the extremes for non-missing values.}
 }
 \value{
-A numeric vector of the empirical cumulative density for the rows
-in data.
+A numeric vector of the empirical cumulative distribution function
+for the rows in data.
 }
 \description{
-Empirical Cumulative Density for Species Sensitivity Data
+Deprecated for \code{\link[=ssd_ecdf_data]{ssd_ecdf_data()}}.
 }
 \examples{
+\dontrun{
 ssd_ecd_data(ssddata::ccme_boron)
 }
-\seealso{
-\code{\link[=ssd_ecd]{ssd_ecd()}} and \code{\link[=ssd_data]{ssd_data()}}
 }
+\seealso{
+\code{\link[=ssd_ecdf_data]{ssd_ecdf_data()}} and \code{\link[=ssd_data]{ssd_data()}}
+}
+\keyword{internal}

@@ -172,7 +172,8 @@ qlogis_logis_ssd <- function(p, location1, scale1, location2, scale2, pmix) {
   f <- function(x, p) {
     plogis_logis_ssd(x, location1, scale1, location2, scale2, pmix) - p
   }
-  root(p, f)
+  # a mixture of two logistic distributions is unbounded on the log scale
+  endpoints(p, f, lower = -Inf, upper = Inf)
 }
 
 rlogis_logis_ssd <- function(n, location1, scale1, location2, scale2, pmix) {
