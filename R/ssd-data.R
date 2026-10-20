@@ -22,7 +22,7 @@
 #' @inheritParams params
 #'
 #' @return A tibble of the original data.
-#' @seealso [`augment.fitdists()`],  [`ssd_ecd_data()`] and [`ssd_sort_data()`]
+#' @seealso [`augment.fitdists()`],  [`ssd_ecdf_data()`] and [`ssd_sort_data()`]
 #' @export
 #'
 #' @examples

@@ -20,5 +20,5 @@ fits <- ssd_fit_dists(ssddata::ccme_boron)
 ssd_data(fits)
 }
 \seealso{
-\code{\link[=augment.fitdists]{augment.fitdists()}},  \code{\link[=ssd_ecd_data]{ssd_ecd_data()}} and \code{\link[=ssd_sort_data]{ssd_sort_data()}}
+\code{\link[=augment.fitdists]{augment.fitdists()}},  \code{\link[=ssd_ecdf_data]{ssd_ecdf_data()}} and \code{\link[=ssd_sort_data]{ssd_sort_data()}}
 }

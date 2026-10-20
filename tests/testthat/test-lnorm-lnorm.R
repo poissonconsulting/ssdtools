@@ -75,3 +75,17 @@ test_that("lnorm_lnorm positive q with extreme large distribution", {
     style = "deparse"
   )
 })
+
+test_that("qlnorm_lnorm_ssd returns infinite upper endpoint rather than saturating", {
+  # `root()` extends the uniroot bracket rather than diverging, so it returned
+  # a finite saturated value at p = 1 (poissonconsulting/ssdtools#195).
+  args <- list(
+    meanlog1 = 0,
+    sdlog1 = 1,
+    meanlog2 = 1,
+    sdlog2 = 1,
+    pmix = 0.5
+  )
+  expect_identical(do.call(qlnorm_lnorm_ssd, c(list(p = 0), args)), 0)
+  expect_identical(do.call(qlnorm_lnorm_ssd, c(list(p = 1), args)), Inf)
+})

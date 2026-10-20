@@ -72,7 +72,21 @@ ep <- function(text) {
   invisible(eval(parse(text = text)))
 }
 
-test_dist <- function(dist, qroottolerance = 1.490116e-08, multi = FALSE) {
+# `lower` and `upper` are the support endpoints on the concentration scale,
+# which are finite for the distributions with bounded support. They are
+# interpolated into the evaluated expressions with 17 significant digits so
+# that a value such as exp(-3) round trips exactly.
+test_dist <- function(
+  dist,
+  qroottolerance = 1.490116e-08,
+  multi = FALSE,
+  lower = 0,
+  upper = Inf
+) {
+  num <- function(x) sprintf("%.17g", x)
+  # a concentration strictly inside the support at which the CDF is increasing
+  mid <- if (is.finite(upper)) upper / 2 else 1
+
   if (!multi) {
     ep(glue::glue("expect_identical(ssd_p{dist}(numeric(0)), numeric(0))"))
     ep(glue::glue("expect_identical(ssd_p{dist}(NA), NA_real_)"))
@@ -80,7 +94,9 @@ test_dist <- function(dist, qroottolerance = 1.490116e-08, multi = FALSE) {
     ep(glue::glue("expect_identical(ssd_p{dist}(0), 0)"))
     ep(glue::glue("expect_identical(ssd_p{dist}(-Inf), 0)"))
     ep(glue::glue("expect_identical(ssd_p{dist}(Inf), 1)"))
-    ep(glue::glue("expect_gt(ssd_p{dist}(1.000001), ssd_p{dist}(1))"))
+    ep(glue::glue(
+      "expect_gt(ssd_p{dist}({num(mid * (1 + 1e-6))}), ssd_p{dist}({num(mid)}))"
+    ))
 
     ep(glue::glue(
       "expect_equal(ssd_p{dist}(1, log.p = TRUE), log(ssd_p{dist}(1)))"
@@ -129,18 +145,23 @@ test_dist <- function(dist, qroottolerance = 1.490116e-08, multi = FALSE) {
     ))
   }
 
+  # `ssd_qmulti()` requires a positive weight before it can return a quantile.
+  # Only the assertions that reach the distribution function need it; those
+  # with invalid p are rejected by `qdist()` before dispatch.
+  wt <- if (multi) ", lnorm.weight = 1" else ""
+
   ep(glue::glue("expect_identical(ssd_q{dist}(numeric(0)), numeric(0))"))
   ep(glue::glue("expect_identical(ssd_q{dist}(NA), NA_real_)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(NaN), NaN)"))
-  ep(glue::glue("expect_identical(ssd_q{dist}(0), 0)"))
-  ep(glue::glue("expect_identical(ssd_q{dist}(1), Inf)"))
+  ep(glue::glue("expect_identical(ssd_q{dist}(0{wt}), {num(lower)})"))
+  ep(glue::glue("expect_identical(ssd_q{dist}(1{wt}), {num(upper)})"))
   ep(glue::glue("expect_identical(ssd_q{dist}(-1), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(2), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(-Inf), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(Inf), NaN)"))
   ep(glue::glue("expect_identical(ssd_q{dist}(0.75, log.p = TRUE), NaN)"))
   ep(glue::glue(
-    "expect_identical(ssd_q{dist}(c(NA, NaN, 0, Inf, -Inf)), c(NA, NaN, 0, NaN, NaN))"
+    "expect_identical(ssd_q{dist}(c(NA, NaN, 0, Inf, -Inf){wt}), c(NA, NaN, {num(lower)}, NaN, NaN))"
   ))
 
   if (!multi) {
@@ -151,7 +172,7 @@ test_dist <- function(dist, qroottolerance = 1.490116e-08, multi = FALSE) {
       "expect_identical(ssd_q{dist}(c(0.25, 0.75), c(1,NA), 3:4), c(ssd_q{dist}(0.25, 1, 3), NA_real_))"
     ))
     ep(glue::glue(
-      "expect_equal(ssd_q{dist}(ssd_p{dist}(c(0, 0.1, 0.5, 0.9, 0.99))), c(0, 0.1, 0.5, 0.9, 0.99), tolerance = {qroottolerance})"
+      "expect_equal(ssd_q{dist}(ssd_p{dist}(c({num(lower)}, 0.1, 0.5, 0.9, 0.99))), c({num(lower)}, 0.1, 0.5, 0.9, 0.99), tolerance = {qroottolerance})"
     ))
     ep(glue::glue("expect_identical(ssd_r{dist}(1, NA), NA_real_)"))
     ep(glue::glue("expect_identical(ssd_r{dist}(2, NA), c(NA, NA_real_))"))

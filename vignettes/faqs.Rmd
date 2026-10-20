@@ -39,6 +39,20 @@ ssd_plot(ssddata::ccme_boron, ssdtools::boron_pred, label = "Species", shape = "
   ggplot2::scale_x_continuous(latex2exp::TeX("Boron $(\\mu g$/L)$"), breaks = c(1, 10, 100, 1000, 10000))
 ```
 
+### How can I select a subset of the fitted distributions?
+
+Use the `[` operator with the distribution names (or their positions) to get a `fitdists` object with just those distributions.
+
+```{r}
+library(ssdtools)
+
+dists <- ssd_fit_dists(ssddata::ccme_boron)
+names(dists)
+
+subset <- dists[c("gamma", "lnorm")]
+names(subset)
+```
+
 <div id="refs"></div>
 
 ```{r, results = "asis", echo = FALSE}
