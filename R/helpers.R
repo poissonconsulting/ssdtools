@@ -179,7 +179,7 @@ warn_tied_extremes <- function(
         censor = paste0(
           "with `",
           left,
-          "` set to 0 or NA and the value in `",
+          "` set to 0 and the value in `",
           right,
           "`"
         )
@@ -187,7 +187,7 @@ warn_tied_extremes <- function(
       maximum = list(
         value = max(x),
         censoring = "right",
-        censor = paste0("with `", right, "` set to Inf or NA")
+        censor = paste0("with `", right, "` set to Inf")
       )
     )
     see <- NULL

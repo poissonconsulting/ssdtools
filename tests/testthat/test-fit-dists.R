@@ -513,9 +513,9 @@ test_that("ssd_fit_dists warns on heavily tied values with right column", {
   expect_warning(
     expect_warning(
       ssd_fit_dists(data, right = "Right", dists = "lnorm"),
-      "^4 of the 14 uncensored values are tied at the minimum \\(1\\)\\. If these are left-censored values they should be entered with `Conc` set to 0 or NA and the value in `Right`\\.$"
+      "^4 of the 14 uncensored values are tied at the minimum \\(1\\)\\. If these are left-censored values they should be entered with `Conc` set to 0 and the value in `Right`\\.$"
     ),
-    "^4 of the 14 uncensored values are tied at the maximum \\(10\\)\\. If these are right-censored values they should be entered with `Right` set to Inf or NA\\.$"
+    "^4 of the 14 uncensored values are tied at the maximum \\(10\\)\\. If these are right-censored values they should be entered with `Right` set to Inf\\.$"
   )
 })
 
