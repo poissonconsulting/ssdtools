@@ -148,16 +148,46 @@ warn_tied_extremes <- function(
   if (!n) {
     return(invisible(FALSE))
   }
-  extremes <- list(
-    minimum = list(
-      value = min(x),
-      censor = paste0("left-censored (`", left, "` of 0 or NA)")
-    ),
-    maximum = list(
-      value = max(x),
-      censor = paste0("right-censored (`", right, "` of Inf or NA)")
+  # censoring requires separate left and right columns
+  if (left == right) {
+    extremes <- list(
+      minimum = list(
+        value = min(x),
+        censor = paste0(
+          "left-censored, with `",
+          left,
+          "` set to 0 and the value in a separate right column"
+        )
+      ),
+      maximum = list(
+        value = max(x),
+        censor = paste0(
+          "right-censored, with `",
+          left,
+          "` keeping the value and Inf in a separate right column"
+        )
+      )
     )
-  )
+    see <- " (see the `right` argument of `ssd_fit_dists()`)"
+  } else {
+    extremes <- list(
+      minimum = list(
+        value = min(x),
+        censor = paste0(
+          "left-censored, with `",
+          left,
+          "` set to 0 or NA and the value in `",
+          right,
+          "`"
+        )
+      ),
+      maximum = list(
+        value = max(x),
+        censor = paste0("right-censored, with `", right, "` set to Inf or NA")
+      )
+    )
+    see <- NULL
+  }
   tied <- FALSE
   for (extreme in names(extremes)) {
     value <- extremes[[extreme]]$value
@@ -173,6 +203,7 @@ warn_tied_extremes <- function(
         value,
         "). If these are censored values they should be entered as ",
         extremes[[extreme]]$censor,
+        see,
         "."
       )
       tied <- TRUE

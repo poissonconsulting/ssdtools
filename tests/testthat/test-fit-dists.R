@@ -494,7 +494,7 @@ test_that("ssd_fit_dists warns on heavily tied minimum values", {
   )
   expect_warning(
     ssd_fit_dists(data, dists = "lnorm"),
-    "^5 of the 14 uncensored values are tied at the minimum \\(1e\\+05\\)\\. If these are censored values they should be entered as left-censored \\(`Conc` of 0 or NA\\)\\.$"
+    "^5 of the 14 uncensored values are tied at the minimum \\(1e\\+05\\)\\. If these are censored values they should be entered as left-censored, with `Conc` set to 0 and the value in a separate right column \\(see the `right` argument of `ssd_fit_dists\\(\\)`\\)\\.$"
   )
   expect_silent(ssd_fit_dists(data, dists = "lnorm", silent = TRUE))
 })
@@ -503,7 +503,19 @@ test_that("ssd_fit_dists warns on heavily tied maximum values", {
   data <- data.frame(Conc = c(1:9, rep(10, 3)))
   expect_warning(
     ssd_fit_dists(data, dists = "lnorm"),
-    "^3 of the 12 uncensored values are tied at the maximum \\(10\\)\\. If these are censored values they should be entered as right-censored \\(`Conc` of Inf or NA\\)\\.$"
+    "^3 of the 12 uncensored values are tied at the maximum \\(10\\)\\. If these are censored values they should be entered as right-censored, with `Conc` keeping the value and Inf in a separate right column \\(see the `right` argument of `ssd_fit_dists\\(\\)`\\)\\.$"
+  )
+})
+
+test_that("ssd_fit_dists warns on heavily tied values with right column", {
+  data <- data.frame(Conc = c(rep(1, 4), 2:7, rep(10, 4)))
+  data$Right <- data$Conc
+  expect_warning(
+    expect_warning(
+      ssd_fit_dists(data, right = "Right", dists = "lnorm"),
+      "^4 of the 14 uncensored values are tied at the minimum \\(1\\)\\. If these are censored values they should be entered as left-censored, with `Conc` set to 0 or NA and the value in `Right`\\.$"
+    ),
+    "^4 of the 14 uncensored values are tied at the maximum \\(10\\)\\. If these are censored values they should be entered as right-censored, with `Right` set to Inf or NA\\.$"
   )
 })
 
