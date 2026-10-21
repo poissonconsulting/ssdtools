@@ -88,7 +88,6 @@ nullify_nonfit <- function(
         "Distribution '",
         dist,
         "' failed to fit",
-        rescale,
         ": one or more scale parameters collapsed onto tied values",
         " (check for censored values entered as exact values)."
       )
