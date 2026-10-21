@@ -153,16 +153,18 @@ warn_tied_extremes <- function(
     extremes <- list(
       minimum = list(
         value = min(x),
+        censoring = "left",
         censor = paste0(
-          "left-censored, with `",
+          "with `",
           left,
           "` set to 0 and the value in a separate right column"
         )
       ),
       maximum = list(
         value = max(x),
+        censoring = "right",
         censor = paste0(
-          "right-censored, with `",
+          "with `",
           left,
           "` keeping the value and Inf in a separate right column"
         )
@@ -173,8 +175,9 @@ warn_tied_extremes <- function(
     extremes <- list(
       minimum = list(
         value = min(x),
+        censoring = "left",
         censor = paste0(
-          "left-censored, with `",
+          "with `",
           left,
           "` set to 0 or NA and the value in `",
           right,
@@ -183,7 +186,8 @@ warn_tied_extremes <- function(
       ),
       maximum = list(
         value = max(x),
-        censor = paste0("right-censored, with `", right, "` set to Inf or NA")
+        censoring = "right",
+        censor = paste0("with `", right, "` set to Inf or NA")
       )
     )
     see <- NULL
@@ -201,7 +205,9 @@ warn_tied_extremes <- function(
         extreme,
         " (",
         value,
-        "). If these are censored values they should be entered as ",
+        "). If these are ",
+        extremes[[extreme]]$censoring,
+        "-censored values they should be entered ",
         extremes[[extreme]]$censor,
         see,
         "."
