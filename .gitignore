@@ -26,3 +26,5 @@ revdep/library.noindex
 data.sqlite
 /.quarto/
 **/*.quarto_ipynb
+
+Rplots.pdf

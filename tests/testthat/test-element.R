@@ -22,6 +22,7 @@ test_that("ssd_element_text_hc inherits from element_text", {
 })
 
 test_that("ssd_element_text_hc bolds multi-line labels only", {
+  withr::local_pdf(NULL)
   grob <- ggplot2::element_grob(
     ssd_element_text_hc(),
     label = c("1", "\n1.26", "10"),
