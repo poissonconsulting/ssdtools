@@ -24,6 +24,7 @@
 #include "ll_gamma.hpp"
 #include "ll_gompertz.hpp"
 #include "ll_invpareto.hpp"
+#include "ll_invpareto_eur.hpp"
 #include "ll_lgumbel.hpp"
 #include "ll_llogis.hpp"
 #include "ll_llogis_llogis.hpp"
@@ -44,6 +45,8 @@ Type objective_function<Type>::operator() () {
     return ll_lgumbel(this);
   } else if (model == "ll_invpareto") {
     return ll_invpareto(this);
+  } else if (model == "ll_invpareto_eur") {
+    return ll_invpareto_eur(this);
   }  else if (model == "ll_llogis") {
     return ll_llogis(this);
   } else if (model == "ll_llogis_llogis") {

@@ -15,7 +15,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-#' @describeIn ssd_p Cumulative Distribution Function for Inverse Pareto Distribution
+#' @describeIn ssd_p Cumulative Distribution Function for North American Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
@@ -37,7 +37,7 @@ ssd_pinvpareto <- function(
   )
 }
 
-#' @describeIn ssd_q Quantile Function for Inverse Pareto Distribution
+#' @describeIn ssd_q Quantile Function for North American Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
@@ -59,7 +59,7 @@ ssd_qinvpareto <- function(
   )
 }
 
-#' @describeIn ssd_r Random Generation for Inverse Pareto Distribution
+#' @describeIn ssd_r Random Generation for North American Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
@@ -71,7 +71,7 @@ ssd_rinvpareto <- function(n, shape = 3, scale = 1, chk = TRUE) {
   rdist("invpareto", n = n, shape = shape, scale = scale, chk = chk)
 }
 
-#' @describeIn ssd_e Default Parameter Values for Inverse Pareto Distribution
+#' @describeIn ssd_e Default Parameter Values for North American Inverse Pareto Distribution
 #' @export
 #' @examples
 #'
