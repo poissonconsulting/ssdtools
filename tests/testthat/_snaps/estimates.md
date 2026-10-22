@@ -159,6 +159,15 @@
     $lnorm_lnorm.sdlog2
     [1] 0.7688617
     
+    $ltriangle.weight
+    [1] 0
+    
+    $ltriangle.locationlog
+    [1] 0
+    
+    $ltriangle.scalelog
+    [1] 3
+    
     $weibull.weight
     [1] 0.3574716
     

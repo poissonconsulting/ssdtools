@@ -32,8 +32,12 @@
      meanlog1    sdlog1  meanlog2    sdlog2      pmix 
     0.2077798 1.0783014 1.1693798 1.0027238 0.1202752 
     
+    $ltriangle
+    locationlog    scalelog 
+       1.006641    2.535937 
+    
     $weibull
        shape    scale 
-    1.263672 4.325391 
+    1.352319 4.502075 
     
 
