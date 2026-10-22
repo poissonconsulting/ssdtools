@@ -134,6 +134,90 @@ rename_data <- function(data, left, right, weight) {
   data
 }
 
+# heavily tied extremes suggest censored values entered as exact values
+# which is invalid and can cause convergence failure or degenerate fits
+warn_tied_extremes <- function(
+  data,
+  left,
+  right,
+  min_ties = 3L,
+  min_prop_ties = 0.25
+) {
+  x <- data$left[data$left == data$right & is.finite(data$left)]
+  n <- length(x)
+  if (!n) {
+    return(invisible(FALSE))
+  }
+  # censoring requires separate left and right columns
+  if (left == right) {
+    extremes <- list(
+      minimum = list(
+        value = min(x),
+        censoring = "left",
+        censor = paste0(
+          "with `",
+          left,
+          "` set to 0 and the value in a separate right column"
+        )
+      ),
+      maximum = list(
+        value = max(x),
+        censoring = "right",
+        censor = paste0(
+          "with `",
+          left,
+          "` keeping the value and Inf in a separate right column"
+        )
+      )
+    )
+    see <- " (see the `right` argument of `ssd_fit_dists()`)"
+  } else {
+    extremes <- list(
+      minimum = list(
+        value = min(x),
+        censoring = "left",
+        censor = paste0(
+          "with `",
+          left,
+          "` set to 0 and the value in `",
+          right,
+          "`"
+        )
+      ),
+      maximum = list(
+        value = max(x),
+        censoring = "right",
+        censor = paste0("with `", right, "` set to Inf")
+      )
+    )
+    see <- NULL
+  }
+  tied <- FALSE
+  for (extreme in names(extremes)) {
+    value <- extremes[[extreme]]$value
+    ties <- sum(x == value)
+    if (ties >= min_ties && ties / n >= min_prop_ties) {
+      wrn(
+        ties,
+        " of the ",
+        n,
+        " uncensored values are tied at the ",
+        extreme,
+        " (",
+        value,
+        "). If these are ",
+        extremes[[extreme]]$censoring,
+        "-censored values they should be entered ",
+        extremes[[extreme]]$censor,
+        see,
+        "."
+      )
+      tied <- TRUE
+    }
+  }
+  invisible(tied)
+}
+
 is_at_boundary <- function(
   fit,
   data,
