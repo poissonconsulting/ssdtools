@@ -54,12 +54,44 @@ NULL
   do.call(fun, args = args)
 }
 
+# When every distribution parameter is a single value the distribution function
+# is called once over the whole vector, with the same NA, NaN and invalid
+# parameter semantics as the elementwise `.pd()`/`.qd()`. Parameter vectors, as
+# passed by the bootstrap, still dispatch elementwise so that they recycle
+# against the probabilities or concentrations.
+.vectorised <- function(x, args, fun) {
+  out <- rep(NA_real_, length(x))
+  out[is.nan(x)] <- NaN
+  if (any(is.na(unlist(args)))) {
+    return(out)
+  }
+  ok <- !is.na(x)
+  if (!any(ok)) {
+    return(out)
+  }
+  res <- do.call(fun, c(list(x[ok]), args))
+  if (length(res) == 1L) {
+    # invalid parameters return a single NaN
+    res <- rep(res, sum(ok))
+  }
+  out[ok] <- res
+  out
+}
+
+.scalar_pars <- function(args) {
+  all(lengths(args) == 1L)
+}
+
 .pdist <- function(dist, q, ..., lower.tail, log.p) {
   inf <- !is.na(q) & is.infinite(q)
   pos <- is.na(q) | q > 0
   q[inf] <- NA_real_
   fun <- ns_fun(paste0("p", dist, "_ssd"))
-  p <- mapply(.pd, q, ..., MoreArgs = list(fun = fun))
+  p <- if (.scalar_pars(list(...))) {
+    .vectorised(q, list(...), fun)
+  } else {
+    mapply(.pd, q, ..., MoreArgs = list(fun = fun))
+  }
   p[inf & pos] <- 1
   p[inf & !pos] <- 0
   if (!lower.tail) {
@@ -118,6 +150,9 @@ pdist <- function(
 
 .qdist <- function(dist, p, ...) {
   fun <- ns_fun(paste0("q", dist, "_ssd"))
+  if (.scalar_pars(list(...))) {
+    return(.vectorised(p, list(...), fun))
+  }
   mapply(.qd, p, ..., MoreArgs = list(fun = fun))
 }
 
