@@ -12,7 +12,8 @@ ssd_hp_bcanz(
   ci = FALSE,
   nboot = 10000,
   min_pboot = 0.8,
-  proportion = FALSE
+  proportion = FALSE,
+  round = TRUE
 )
 }
 \arguments{
@@ -32,7 +33,31 @@ ssd_hp_bcanz(
 proportion of bootstrap samples that must successfully fit (return a likelihood)
 to report the confidence intervals.}
 
-\item{proportion}{A numeric vector of proportion values to estimate hazard concentrations for.}
+\item{proportion}{A flag specifying whether to return hazard proportions
+(\code{proportion = TRUE}) or hazard percentages (\code{proportion = FALSE}).
+To not break existing code the default value is \code{FALSE} but
+will be switching the default to \code{TRUE} in a future version.
+The user is recommended to manually set to \code{TRUE} now to avoid
+unexpected changes in future versions.}
+
+\item{round}{A flag specifying whether to round the estimates and
+confidence limits for reporting.
+The rule is the same as for \code{\link[=ssd_hc]{ssd_hc()}} except that significant figures
+are counted from the distance to the nearest bound
+(0 and 1 for proportions or 0 and 100 for percentages)
+so that, for example, 0.99987 is not rounded to 1.00.
+The estimate (\code{est}) is rounded to the place of the first significant figure
+of its standard error (SE), or to one significant figure of its distance to
+the nearest bound if the SE is greater than that distance, or to three
+significant figures of its distance to the nearest bound if the SE is missing
+(as when \code{ci = FALSE}).
+Ties are rounded to the nearest even digit (see \code{\link[=ssd_round]{ssd_round()}}).
+The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the same
+decimal place as the estimate but to at least one significant figure of their
+distance to the nearest bound.
+The SE is rounded by the \code{\link[=ssd_hc]{ssd_hc()}} rule using its own approximate standard
+error \code{se / sqrt(2 * (nboot - 1))}.
+Rounding should only be performed when reporting.}
 }
 \value{
 A tibble of corresponding hazard concentrations.

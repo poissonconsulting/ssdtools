@@ -30,12 +30,33 @@
 #' will be switching the default to `TRUE` in a future version.
 #' The user is recommended to manually set to `TRUE` now to avoid
 #' unexpected changes in future versions.
+#' @param round A flag specifying whether to round the estimates and
+#' confidence limits for reporting.
+#' The rule is the same as for [ssd_hc()] except that significant figures
+#' are counted from the distance to the nearest bound
+#' (0 and 1 for proportions or 0 and 100 for percentages)
+#' so that, for example, 0.99987 is not rounded to 1.00.
+#' The estimate (`est`) is rounded to the place of the first significant figure
+#' of its standard error (SE), or to one significant figure of its distance to
+#' the nearest bound if the SE is greater than that distance, or to three
+#' significant figures of its distance to the nearest bound if the SE is missing
+#' (as when `ci = FALSE`).
+#' Ties are rounded to the nearest even digit (see [ssd_round()]).
+#' The lower (`lcl`) and upper (`ucl`) confidence limits are rounded to the same
+#' decimal place as the estimate but to at least one significant figure of their
+#' distance to the nearest bound.
+#' The SE is rounded by the [ssd_hc()] rule using its own approximate standard
+#' error `se / sqrt(2 * (nboot - 1))`.
+#' Rounding should only be performed when reporting.
 #' @return A tibble of corresponding hazard proportions.
 #' @seealso [`ssd_hc()`]
 #' @export
 #' @examples
 #' fits <- ssd_fit_dists(ssddata::ccme_boron)
 #' ssd_hp(fits, conc = 1)
+#'
+#' fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+#' ssd_hp(fit, conc = 1, ci = TRUE, nboot = 100, proportion = TRUE, round = TRUE)
 ssd_hp <- function(x, ...) {
   UseMethod("ssd_hp")
 }
@@ -59,7 +80,8 @@ ssd_hp.fitdists <- function(
   proportion = FALSE,
   samples = FALSE,
   save_to = NULL,
-  control = NULL
+  control = NULL,
+  round = FALSE
 ) {
   chk_vector(conc)
   chk_numeric(conc)
@@ -98,6 +120,7 @@ ssd_hp.fitdists <- function(
     )
   }
   chk_flag(proportion)
+  chk_flag(round)
 
   hcp <- hcp(
     x = x,
@@ -120,6 +143,9 @@ ssd_hp.fitdists <- function(
   if (!proportion) {
     hcp <- hcp_unscale(hcp, 100)
   }
+  if (round) {
+    hcp <- round_hcp(hcp, bound = if (proportion) 1 else 100)
+  }
   hcp
 }
 
@@ -141,7 +167,8 @@ ssd_hp.fitburrlioz <- function(
   parametric = FALSE,
   proportion = FALSE,
   samples = FALSE,
-  save_to = NULL
+  save_to = NULL,
+  round = FALSE
 ) {
   chk_length(x, upper = 1L)
   chk_named(x)
@@ -161,6 +188,7 @@ ssd_hp.fitburrlioz <- function(
     )
   }
   chk_flag(proportion)
+  chk_flag(round)
 
   fun <- if (names(x) == "burrIII3") fit_burrlioz else fit_tmb
 
@@ -186,6 +214,9 @@ ssd_hp.fitburrlioz <- function(
   hcp <- dplyr::rename(hcp, conc = "value")
   if (!proportion) {
     hcp <- hcp_unscale(hcp, 100)
+  }
+  if (round) {
+    hcp <- round_hcp(hcp, bound = if (proportion) 1 else 100)
   }
   hcp
 }

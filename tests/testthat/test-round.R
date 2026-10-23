@@ -67,7 +67,7 @@ test_that("ssd_round errors on incompatible se", {
   expect_chk_error(ssd_round(1, se = "1"))
 })
 
-test_that("round_hc rounds est, cls and se", {
+test_that("round_hcp rounds est, cls and se", {
   hc <- data.frame(
     dist = c("a", "b", "c", "d"),
     est = c(1.2649, 1.2649, 1.2649, 1.2649),
@@ -76,7 +76,7 @@ test_that("round_hc rounds est, cls and se", {
     ucl = c(3.3812, 8.62, NA, 3.3812),
     nboot = c(1000, 1000, 0, 10000)
   )
-  rounded <- round_hc(hc)
+  rounded <- round_hcp(hc)
   expect_identical(rounded$dist, hc$dist)
   expect_identical(rounded$nboot, hc$nboot)
   expect_identical(rounded$est, c(1.3, 1, 1.26, 1.3))
@@ -85,7 +85,7 @@ test_that("round_hc rounds est, cls and se", {
   expect_identical(rounded$se, c(0.83, 2.1, NA, 0.825))
 })
 
-test_that("round_hc rounds se to one significant figure with 10 samples", {
+test_that("round_hcp rounds se to one significant figure with 10 samples", {
   hc <- data.frame(
     est = 1.2649,
     se = 0.8254,
@@ -93,7 +93,7 @@ test_that("round_hc rounds se to one significant figure with 10 samples", {
     ucl = 3.3812,
     nboot = 10
   )
-  expect_identical(round_hc(hc)$se, 0.8)
+  expect_identical(round_hcp(hc)$se, 0.8)
 })
 
 test_that("ssd_hc round", {
@@ -121,4 +121,53 @@ test_that("ssd_hc round with ci", {
 test_that("ssd_hc.list round", {
   hc <- ssd_hc(list(lnorm = c(meanlog = 2, sdlog = 2)), round = TRUE)
   expect_identical(hc$est, 0.275)
+})
+
+test_that("round_hcp counts significant figures from nearest bound", {
+  hp <- data.frame(
+    est = c(0.0123, 0.9871, 0.99987, 0.0003, 0.99987, 1, 0),
+    se = c(0.004, 0.004, NA, 0.0005, 0.0005, NA, NA),
+    lcl = c(0.00004, 0.97, NA, 0.00001, 0.9981, NA, NA),
+    ucl = c(0.0312, 0.99962, NA, 0.0021, 0.99999, NA, NA),
+    nboot = c(1000, 1000, 0, 1000, 1000, 0, 0)
+  )
+  rounded <- round_hcp(hp, bound = 1)
+  expect_identical(rounded$est, c(0.012, 0.987, 0.99987, 0.0003, 0.9999, 1, 0))
+  expect_identical(rounded$lcl, c(0.00004, 0.970, NA, 0.00001, 0.9981, NA, NA))
+  expect_identical(rounded$ucl, c(0.031, 0.9996, NA, 0.0021, 0.99999, NA, NA))
+})
+
+test_that("round_hcp gives same digits on percent scale", {
+  hp <- data.frame(
+    est = c(0.0123, 0.99987),
+    se = c(0.004, NA),
+    lcl = c(0.00004, NA),
+    ucl = c(0.0312, NA),
+    nboot = c(1000, 0)
+  )
+  percent <- hp
+  percent[c("est", "se", "lcl", "ucl")] <- percent[c(
+    "est",
+    "se",
+    "lcl",
+    "ucl"
+  )] *
+    100
+  expect_equal(
+    round_hcp(percent, bound = 100)[c("est", "lcl", "ucl")],
+    round_hcp(hp, bound = 1)[c("est", "lcl", "ucl")] * 100
+  )
+})
+
+test_that("ssd_hp round", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  hp <- ssd_hp(fit, conc = c(1, 100), proportion = TRUE)
+  rounded <- ssd_hp(fit, conc = c(1, 100), proportion = TRUE, round = TRUE)
+  expect_identical(colnames(rounded), colnames(hp))
+  expect_identical(rounded$est, round_hcp(hp, bound = 1)$est)
+  expect_identical(
+    ssd_hp(fit, conc = c(1, 100), proportion = FALSE, round = TRUE)$est,
+    round_hcp(hcp_unscale(hp, 100), bound = 100)$est
+  )
+  expect_chk_error(ssd_hp(fit, conc = 1, proportion = TRUE, round = NA))
 })

@@ -137,8 +137,8 @@ ssd_hc_bcanz <- function(
 #' using settings adopted by BC, Canada, Australia and New Zealand for official guidelines.
 #' This function can take several minutes to run with recommended 10,000 iterations.
 #'
-#' @inheritParams params
 #' @inheritParams ssd_hp
+#' @inheritParams params
 #' @return A tibble of corresponding hazard concentrations.
 #' @seealso [`ssd_hp()`].
 #' @family BCANZ
@@ -154,7 +154,8 @@ ssd_hp_bcanz <- function(
   ci = FALSE,
   nboot = 10000,
   min_pboot = 0.8,
-  proportion = FALSE
+  proportion = FALSE,
+  round = TRUE
 ) {
   chk_unused(...)
 
@@ -183,6 +184,7 @@ ssd_hp_bcanz <- function(
     proportion = proportion,
     samples = FALSE,
     save_to = NULL,
-    control = NULL
+    control = NULL,
+    round = round
   )
 }

@@ -64,10 +64,12 @@ ssd_round <- function(x, se = NA_real_) {
 }
 
 # The SE of a bootstrap SE is approximately se / sqrt(2 * (nboot - 1)).
-round_hc <- function(x) {
-  digits <- round_digits(x$est, x$se)
+# For hazard proportions significant figures are counted from the distance
+# to the nearest bound so that 0.99987 is not rounded to 1.00.
+round_hcp <- function(x, bound = Inf) {
+  digits <- round_digits(x$est, x$se, bound)
   for (cl in c("lcl", "ucl")) {
-    cl_digits <- pmax(digits, one_signif_digits(x[[cl]]))
+    cl_digits <- pmax(digits, one_signif_digits(x[[cl]], bound))
     x[[cl]] <- round_half_even(x[[cl]], cl_digits)
   }
   se_se <- rep(NA_real_, nrow(x))
@@ -82,19 +84,25 @@ first_place <- function(x) {
   floor(log10(abs(x)))
 }
 
-one_signif_digits <- function(x) {
+bound_distance <- function(x, bound) {
+  pmin(abs(x), bound - x)
+}
+
+one_signif_digits <- function(x, bound = Inf) {
+  dist <- bound_distance(x, bound)
   digits <- rep(NA_real_, length(x))
-  ok <- is.finite(x) & x != 0
-  digits[ok] <- -first_place(x[ok])
+  ok <- is.finite(dist) & dist > 0
+  digits[ok] <- -first_place(dist[ok])
   digits
 }
 
-round_digits <- function(x, se) {
-  ok <- is.finite(x) & x != 0
+round_digits <- function(x, se, bound = Inf) {
+  dist <- bound_distance(x, bound)
+  ok <- is.finite(dist) & dist > 0
   ok_se <- ok & is.finite(se) & se > 0
   digits <- rep(NA_real_, length(x))
-  digits[ok] <- 2 - first_place(x[ok])
-  digits[ok_se] <- -first_place(pmin(se[ok_se], abs(x[ok_se])))
+  digits[ok] <- 2 - first_place(dist[ok])
+  digits[ok_se] <- -first_place(pmin(se[ok_se], dist[ok_se]))
   digits
 }
 
