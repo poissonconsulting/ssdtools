@@ -42,6 +42,7 @@ reference:
   - ssd_hc_bcanz
   - ssd_hp
   - ssd_hp_bcanz
+  - ssd_round
 - title: Manipulate Data
   desc: Functions that manipulate data
   contents:

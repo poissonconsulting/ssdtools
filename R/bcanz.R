@@ -108,7 +108,8 @@ ssd_hc_bcanz <- function(
   average = TRUE,
   ci = FALSE,
   nboot = 10000,
-  min_pboot = 0.8
+  min_pboot = 0.8,
+  round = TRUE
 ) {
   chk_unused(...)
   ssd_hc(
@@ -125,7 +126,8 @@ ssd_hc_bcanz <- function(
     delta = 9.21,
     samples = FALSE,
     save_to = NULL,
-    control = NULL
+    control = NULL,
+    round = round
   )
 }
 
