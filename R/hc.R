@@ -95,12 +95,14 @@ ssd_hc.list <- function(
   x,
   percent,
   proportion = 0.05,
-  ...
+  ...,
+  round = FALSE
 ) {
   chk_list(x)
   chk_named(x)
   chk_unique(names(x))
   chk_unused(...)
+  chk_flag(round)
 
   proportion <- .hc_proportion(percent, proportion)
 
@@ -116,7 +118,11 @@ ssd_hc.list <- function(
     MoreArgs = list(proportion = proportion),
     SIMPLIFY = FALSE
   )
-  dplyr::bind_rows(hc)
+  hc <- dplyr::bind_rows(hc)
+  if (round) {
+    hc <- round_hc(hc)
+  }
+  hc
 }
 
 #' @describeIn ssd_hc Hazard Concentrations for fitdists Object
@@ -125,6 +131,9 @@ ssd_hc.list <- function(
 #'
 #' fits <- ssd_fit_dists(ssddata::ccme_boron)
 #' ssd_hc(fits)
+#'
+#' fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+#' ssd_hc(fit, ci = TRUE, nboot = 100, round = TRUE)
 ssd_hc.fitdists <- function(
   x,
   percent = deprecated(),
@@ -142,9 +151,11 @@ ssd_hc.fitdists <- function(
   delta = 9.21,
   samples = FALSE,
   save_to = NULL,
-  control = NULL
+  control = NULL,
+  round = FALSE
 ) {
   chk_unused(...)
+  chk_flag(round)
 
   proportion <- .hc_proportion(percent, proportion)
 
@@ -193,6 +204,9 @@ ssd_hc.fitdists <- function(
   )
 
   hcp <- dplyr::rename(hcp, proportion = "value")
+  if (round) {
+    hcp <- round_hc(hcp)
+  }
   hcp
 }
 
@@ -213,12 +227,14 @@ ssd_hc.fitburrlioz <- function(
   min_pboot = 0.8,
   parametric = FALSE,
   samples = FALSE,
-  save_to = NULL
+  save_to = NULL,
+  round = FALSE
 ) {
   chk_length(x, upper = 1L)
   chk_named(x)
   chk_subset(names(x), c("burrIII3", "invpareto", "llogis", "lgumbel"))
   chk_unused(...)
+  chk_flag(round)
 
   proportion <- .hc_proportion(percent, proportion)
 
@@ -244,5 +260,8 @@ ssd_hc.fitburrlioz <- function(
   )
 
   hcp <- dplyr::rename(hcp, proportion = "value")
+  if (round) {
+    hcp <- round_hc(hcp)
+  }
   hcp
 }

@@ -1,5 +1,5 @@
 dist,proportion,est,se,lcl,ucl,wt,level,est_method,ci_method,boot_method,nboot,pboot,dists,samples
-average,0.01,0.267258,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
-average,0.05,1.25678,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
-average,0.1,2.38165,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
-average,0.2,4.81003,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
+average,0.01,0.267,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
+average,0.05,1.26,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
+average,0.1,2.38,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)
+average,0.2,4.81,NA,NA,NA,1,0.95,multi,weighted_samples,parametric,0,1,"c(""gamma"", ""lgumbel"", ""llogis"", ""lnorm"", ""lnorm_lnorm"", ""weibull"")",numeric(0)

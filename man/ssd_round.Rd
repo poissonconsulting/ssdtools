@@ -47,5 +47,5 @@ ssd_round(1.2649)
 ssd_round(c(0.15, 0.25), se = 0.1)
 }
 \seealso{
-\code{\link[=ssd_round_hc]{ssd_round_hc()}} and \code{\link[=ssd_hc]{ssd_hc()}}
+\code{\link[=ssd_hc]{ssd_hc()}}
 }

@@ -9,7 +9,7 @@
 \usage{
 ssd_hc(x, ...)
 
-\method{ssd_hc}{list}(x, percent, proportion = 0.05, ...)
+\method{ssd_hc}{list}(x, percent, proportion = 0.05, ..., round = FALSE)
 
 \method{ssd_hc}{fitdists}(
   x,
@@ -28,7 +28,8 @@ ssd_hc(x, ...)
   delta = 9.21,
   samples = FALSE,
   save_to = NULL,
-  control = NULL
+  control = NULL,
+  round = FALSE
 )
 
 \method{ssd_hc}{fitburrlioz}(
@@ -42,7 +43,8 @@ ssd_hc(x, ...)
   min_pboot = 0.8,
   parametric = FALSE,
   samples = FALSE,
-  save_to = NULL
+  save_to = NULL,
+  round = FALSE
 )
 }
 \arguments{
@@ -53,6 +55,20 @@ ssd_hc(x, ...)
 \item{percent}{A numeric vector of percent values to estimate hazard concentrations for. Deprecated for \code{proportion = 0.05}. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{proportion}{A numeric vector of proportion values to estimate hazard concentrations for.}
+
+\item{round}{A flag specifying whether to round the estimates and
+confidence limits for reporting.
+The estimate (\code{est}) is rounded to the place of the first significant figure
+of its standard error (SE), or to one significant figure if the SE is greater
+than the estimate, or to three significant figures if the SE is missing
+(as when \code{ci = FALSE}), following the rule in the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality.
+Ties are rounded to the nearest even digit (see \code{\link[=ssd_round]{ssd_round()}}).
+The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the same
+decimal place as the estimate but to at least one significant figure.
+The SE is rounded by the same rule using its own approximate standard error
+\code{se / sqrt(2 * (nboot - 1))}, which reflects the number of bootstrap samples.
+Rounding should only be performed when reporting.}
 
 \item{average}{A flag specifying whether to provide model averaged values as opposed to a value for each distribution.}
 
@@ -147,6 +163,9 @@ ssd_hc(ssd_match_moments())
 
 fits <- ssd_fit_dists(ssddata::ccme_boron)
 ssd_hc(fits)
+
+fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+ssd_hc(fit, ci = TRUE, nboot = 100, round = TRUE)
 
 fit <- ssd_fit_burrlioz(ssddata::ccme_boron)
 ssd_hc(fit)

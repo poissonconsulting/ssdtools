@@ -42,7 +42,7 @@
 #' @param se A numeric vector of the standard errors of `x`
 #'   of length 1 or the same length as `x`.
 #' @return A numeric vector of the rounded values.
-#' @seealso [ssd_round_hc()] and [ssd_hc()]
+#' @seealso [ssd_hc()]
 #' @export
 #' @examples
 #' ssd_round(1.2649, se = 0.825)
@@ -63,51 +63,17 @@ ssd_round <- function(x, se = NA_real_) {
   round_half_even(x, round_digits(x, se))
 }
 
-#' Round Hazard Concentrations Data Frame
-#'
-#' Rounds the `est`, `lcl`, and `ucl` columns of a data frame of hazard
-#' concentrations for reporting.
-#' The estimate (`est`) is rounded by [ssd_round()] using the standard error
-#' (`se`) according to the rule in the Australian and New Zealand Guidelines
-#' for Fresh and Marine Water Quality (ANZG):
-#'
-#' - The significant figure to which a value is reported corresponds to the
-#'   place of the first significant figure in its standard error (SE).
-#' - Where the SE is greater than the value, the value is reported to one
-#'   significant figure.
-#' - Where the SE is missing, zero, or not finite (for example when
-#'   `ssd_hc()` is called with `ci = FALSE`), the value is reported to three
-#'   significant figures.
-#' - A value whose dropped digits are exactly 5 (with no non-zero digits to
-#'   the right) is rounded to the nearest even digit
-#'   (Australian Standard AS 2706-2003).
-#'
-#' The lower (`lcl`) and upper (`ucl`) compatibility limits are rounded to the
-#' same decimal place as the estimate unless that would leave fewer than one
-#' significant figure in which case they are rounded to one significant figure.
-#' All other columns, including `se`, are returned unchanged.
-#'
-#' @param x A data frame of hazard concentrations from [ssd_hc()] with
-#'   numeric columns `est` and `se` and optionally `lcl` and `ucl`.
-#' @return A copy of `x` with the `est`, `lcl`, and `ucl` columns rounded.
-#' @seealso [ssd_round()] and [ssd_hc()]
-#' @export
-#' @examples
-#' fit <- ssd_fit_dists(ssddata::ccme_boron)
-#' hc <- ssd_hc(fit, ci = TRUE, nboot = 100, min_pboot = 0)
-#' ssd_round_hc(hc)
-ssd_round_hc <- function(x) {
-  chk_data(x)
-  check_names(x, c("est", "se"))
-  chk_numeric(x$est)
-  chk_numeric(x$se)
-
+# The SE of a bootstrap SE is approximately se / sqrt(2 * (nboot - 1)).
+round_hc <- function(x) {
   digits <- round_digits(x$est, x$se)
-  for (cl in intersect(c("lcl", "ucl"), names(x))) {
-    chk_numeric(x[[cl]])
+  for (cl in c("lcl", "ucl")) {
     cl_digits <- pmax(digits, one_signif_digits(x[[cl]]))
     x[[cl]] <- round_half_even(x[[cl]], cl_digits)
   }
+  se_se <- rep(NA_real_, nrow(x))
+  boot <- !is.na(x$nboot) & x$nboot > 1
+  se_se[boot] <- x$se[boot] / sqrt(2 * (x$nboot[boot] - 1))
+  x$se <- round_half_even(x$se, round_digits(x$se, se_se))
   x$est <- round_half_even(x$est, digits)
   x
 }

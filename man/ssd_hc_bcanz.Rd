@@ -11,7 +11,8 @@ ssd_hc_bcanz(
   average = TRUE,
   ci = FALSE,
   nboot = 10000,
-  min_pboot = 0.8
+  min_pboot = 0.8,
+  round = TRUE
 )
 }
 \arguments{
@@ -30,6 +31,20 @@ ssd_hc_bcanz(
 \item{min_pboot}{A number between 0 and 1 of the minimum
 proportion of bootstrap samples that must successfully fit (return a likelihood)
 to report the confidence intervals.}
+
+\item{round}{A flag specifying whether to round the estimates and
+confidence limits for reporting.
+The estimate (\code{est}) is rounded to the place of the first significant figure
+of its standard error (SE), or to one significant figure if the SE is greater
+than the estimate, or to three significant figures if the SE is missing
+(as when \code{ci = FALSE}), following the rule in the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality.
+Ties are rounded to the nearest even digit (see \code{\link[=ssd_round]{ssd_round()}}).
+The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the same
+decimal place as the estimate but to at least one significant figure.
+The SE is rounded by the same rule using its own approximate standard error
+\code{se / sqrt(2 * (nboot - 1))}, which reflects the number of bootstrap samples.
+Rounding should only be performed when reporting.}
 }
 \value{
 A tibble of corresponding hazard concentrations.

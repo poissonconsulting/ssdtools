@@ -67,36 +67,58 @@ test_that("ssd_round errors on incompatible se", {
   expect_chk_error(ssd_round(1, se = "1"))
 })
 
-test_that("ssd_round_hc rounds est and cls", {
+test_that("round_hc rounds est, cls and se", {
   hc <- data.frame(
-    dist = c("a", "b", "c"),
-    est = c(1.2649, 1.2649, 1.2649),
-    se = c(0.825, 2.1, NA),
-    lcl = c(0.2987, 0.0372, NA),
-    ucl = c(3.3812, 8.62, NA)
+    dist = c("a", "b", "c", "d"),
+    est = c(1.2649, 1.2649, 1.2649, 1.2649),
+    se = c(0.8254, 2.1, NA, 0.8254),
+    lcl = c(0.2987, 0.0372, NA, 0.2987),
+    ucl = c(3.3812, 8.62, NA, 3.3812),
+    nboot = c(1000, 1000, 0, 10000)
   )
-  rounded <- ssd_round_hc(hc)
+  rounded <- round_hc(hc)
   expect_identical(rounded$dist, hc$dist)
-  expect_identical(rounded$se, hc$se)
-  expect_identical(rounded$est, c(1.3, 1, 1.26))
-  expect_identical(rounded$lcl, c(0.3, 0.04, NA))
-  expect_identical(rounded$ucl, c(3.4, 9, NA))
+  expect_identical(rounded$nboot, hc$nboot)
+  expect_identical(rounded$est, c(1.3, 1, 1.26, 1.3))
+  expect_identical(rounded$lcl, c(0.3, 0.04, NA, 0.3))
+  expect_identical(rounded$ucl, c(3.4, 9, NA, 3.4))
+  expect_identical(rounded$se, c(0.83, 2.1, NA, 0.825))
 })
 
-test_that("ssd_round_hc does not require cls", {
-  hc <- data.frame(est = 1.2649, se = 0.825)
-  expect_identical(ssd_round_hc(hc), data.frame(est = 1.3, se = 0.825))
+test_that("round_hc rounds se to one significant figure with 10 samples", {
+  hc <- data.frame(
+    est = 1.2649,
+    se = 0.8254,
+    lcl = 0.2987,
+    ucl = 3.3812,
+    nboot = 10
+  )
+  expect_identical(round_hc(hc)$se, 0.8)
 })
 
-test_that("ssd_round_hc errors without est and se", {
-  expect_chk_error(ssd_round_hc(data.frame(est = 1)))
-  expect_chk_error(ssd_round_hc(1))
-})
-
-test_that("ssd_round_hc works on ssd_hc output", {
+test_that("ssd_hc round", {
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
-  hc <- ssd_hc(fit)
-  rounded <- ssd_round_hc(hc)
+  hc <- ssd_hc(fit, proportion = c(0.05, 0.2))
+  rounded <- ssd_hc(fit, proportion = c(0.05, 0.2), round = TRUE)
   expect_identical(colnames(rounded), colnames(hc))
-  expect_identical(rounded$est, signif(hc$est, 3))
+  expect_identical(rounded$est, c(1.68, 4.56))
+  expect_equal(hc$est, rounded$est, tolerance = 0.01)
+  expect_chk_error(ssd_hc(fit, round = NA))
+})
+
+test_that("ssd_hc round with ci", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  withr::with_seed(10, {
+    hc <- ssd_hc(fit, ci = TRUE, nboot = 100)
+  })
+  withr::with_seed(10, {
+    rounded <- ssd_hc(fit, ci = TRUE, nboot = 100, round = TRUE)
+  })
+  expect_identical(rounded$est, ssd_round(hc$est, hc$se))
+  expect_identical(rounded$se, signif(hc$se, 2))
+})
+
+test_that("ssd_hc.list round", {
+  hc <- ssd_hc(list(lnorm = c(meanlog = 2, sdlog = 2)), round = TRUE)
+  expect_identical(hc$est, 0.275)
 })

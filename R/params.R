@@ -123,6 +123,19 @@
 #' @param ribbon A flag indicating whether to plot the confidence interval as a grey ribbon as opposed to green solid lines.
 #' @param right A string of the column in data with the right concentration values.
 #' @param save_to NULL or a string specifying a directory to save where the bootstrap datasets and parameter estimates (when successfully converged) to.
+#' @param round A flag specifying whether to round the estimates and
+#' confidence limits for reporting.
+#' The estimate (`est`) is rounded to the place of the first significant figure
+#' of its standard error (SE), or to one significant figure if the SE is greater
+#' than the estimate, or to three significant figures if the SE is missing
+#' (as when `ci = FALSE`), following the rule in the
+#' Australian and New Zealand Guidelines for Fresh and Marine Water Quality.
+#' Ties are rounded to the nearest even digit (see [ssd_round()]).
+#' The lower (`lcl`) and upper (`ucl`) confidence limits are rounded to the same
+#' decimal place as the estimate but to at least one significant figure.
+#' The SE is rounded by the same rule using its own approximate standard error
+#' `se / sqrt(2 * (nboot - 1))`, which reflects the number of bootstrap samples.
+#' Rounding should only be performed when reporting.
 #' @param samples A flag specfying whether to include a numeric vector of the bootstrap samples as a list column in the output.
 #' @param scale scale parameter.
 #' @param scalelog1 scalelog1 parameter.
