@@ -13,7 +13,7 @@ ssd_hp_bcanz(
   nboot = 10000,
   min_pboot = 0.8,
   proportion = FALSE,
-  round = TRUE
+  round = ci
 )
 }
 \arguments{
@@ -40,24 +40,26 @@ will be switching the default to \code{TRUE} in a future version.
 The user is recommended to manually set to \code{TRUE} now to avoid
 unexpected changes in future versions.}
 
-\item{round}{A flag specifying whether to round the estimates and
-confidence limits for reporting.
-The rule is the same as for \code{\link[=ssd_hc]{ssd_hc()}} except that significant figures
-are counted from the distance to the nearest bound
-(0 and 1 for proportions or 0 and 100 for percentages)
-so that, for example, 0.99987 is not rounded to 1.00.
-The estimate (\code{est}) is rounded to the place of the first significant figure
-of its standard error (SE), or to one significant figure of its distance to
-the nearest bound if the SE is greater than that distance, or to three
-significant figures of its distance to the nearest bound if the SE is missing
-(as when \code{ci = FALSE}).
-Ties are rounded to the nearest even digit (see \code{\link[=ssd_round]{ssd_round()}}).
-The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the same
-decimal place as the estimate but to at least one significant figure of their
-distance to the nearest bound.
-The SE is rounded by the \code{\link[=ssd_hc]{ssd_hc()}} rule using its own approximate standard
-error \code{se / sqrt(2 * (nboot - 1))}.
-Rounding should only be performed when reporting.}
+\item{round}{A flag specifying whether to round the estimates, standard
+errors and confidence limits for reporting.
+It must be \code{FALSE} when \code{ci = FALSE} because the rounding is based on the
+standard error (SE).
+The rule is adapted from the rule for \code{\link[=ssd_hc]{ssd_hc()}}, which follows the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality,
+by counting significant figures from the distance to the nearest bound
+(0 and 1 for proportions or 0 and 100 for percentages).
+The estimate (\code{est}) is rounded to the decimal place of the first
+significant figure of its SE, or to one significant figure of its distance
+to the nearest bound where the SE is greater than that distance.
+For example, 0.99987 with an SE of 0.03 is rounded to 0.9999,
+as 0.00013 with the same SE is rounded to 0.0001.
+The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the
+same decimal place as the estimate but to at least one significant figure
+of their distance to the nearest bound, and the SE is rounded to one
+significant figure.
+Estimates without an SE (as when the proportion of bootstrap samples that
+converged is less than \code{min_pboot}) are not rounded and a warning is given.
+Calculations should be performed on the unrounded values.}
 }
 \value{
 A tibble of corresponding hazard concentrations.
@@ -70,6 +72,7 @@ This function can take several minutes to run with recommended 10,000 iterations
 \examples{
 fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 ssd_hp_bcanz(fits, nboot = 100)
+ssd_hp_bcanz(fits, ci = TRUE, nboot = 100)
 }
 \seealso{
 \code{\link[=ssd_hp]{ssd_hp()}}.

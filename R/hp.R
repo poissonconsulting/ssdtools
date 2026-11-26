@@ -30,24 +30,26 @@
 #' will be switching the default to `TRUE` in a future version.
 #' The user is recommended to manually set to `TRUE` now to avoid
 #' unexpected changes in future versions.
-#' @param round A flag specifying whether to round the estimates and
-#' confidence limits for reporting.
-#' The rule is the same as for [ssd_hc()] except that significant figures
-#' are counted from the distance to the nearest bound
-#' (0 and 1 for proportions or 0 and 100 for percentages)
-#' so that, for example, 0.99987 is not rounded to 1.00.
-#' The estimate (`est`) is rounded to the place of the first significant figure
-#' of its standard error (SE), or to one significant figure of its distance to
-#' the nearest bound if the SE is greater than that distance, or to three
-#' significant figures of its distance to the nearest bound if the SE is missing
-#' (as when `ci = FALSE`).
-#' Ties are rounded to the nearest even digit (see [ssd_round()]).
-#' The lower (`lcl`) and upper (`ucl`) confidence limits are rounded to the same
-#' decimal place as the estimate but to at least one significant figure of their
-#' distance to the nearest bound.
-#' The SE is rounded by the [ssd_hc()] rule using its own approximate standard
-#' error `se / sqrt(2 * (nboot - 1))`.
-#' Rounding should only be performed when reporting.
+#' @param round A flag specifying whether to round the estimates, standard
+#' errors and confidence limits for reporting.
+#' It must be `FALSE` when `ci = FALSE` because the rounding is based on the
+#' standard error (SE).
+#' The rule is adapted from the rule for [ssd_hc()], which follows the
+#' Australian and New Zealand Guidelines for Fresh and Marine Water Quality,
+#' by counting significant figures from the distance to the nearest bound
+#' (0 and 1 for proportions or 0 and 100 for percentages).
+#' The estimate (`est`) is rounded to the decimal place of the first
+#' significant figure of its SE, or to one significant figure of its distance
+#' to the nearest bound where the SE is greater than that distance.
+#' For example, 0.99987 with an SE of 0.03 is rounded to 0.9999,
+#' as 0.00013 with the same SE is rounded to 0.0001.
+#' The lower (`lcl`) and upper (`ucl`) confidence limits are rounded to the
+#' same decimal place as the estimate but to at least one significant figure
+#' of their distance to the nearest bound, and the SE is rounded to one
+#' significant figure.
+#' Estimates without an SE (as when the proportion of bootstrap samples that
+#' converged is less than `min_pboot`) are not rounded and a warning is given.
+#' Calculations should be performed on the unrounded values.
 #' @return A tibble of corresponding hazard proportions.
 #' @seealso [`ssd_hc()`]
 #' @export
@@ -120,7 +122,7 @@ ssd_hp.fitdists <- function(
     )
   }
   chk_flag(proportion)
-  chk_flag(round)
+  chk_round(round, ci)
 
   hcp <- hcp(
     x = x,
@@ -188,7 +190,7 @@ ssd_hp.fitburrlioz <- function(
     )
   }
   chk_flag(proportion)
-  chk_flag(round)
+  chk_round(round, ci)
 
   fun <- if (names(x) == "burrIII3") fit_burrlioz else fit_tmb
 
