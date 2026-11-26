@@ -4,7 +4,7 @@
 \alias{ssd_round}
 \title{Round Hazard Concentrations}
 \usage{
-ssd_round(x, se = NA_real_)
+ssd_round(x, se)
 }
 \arguments{
 \item{x}{A numeric vector of values to round.}
@@ -16,35 +16,32 @@ of length 1 or the same length as \code{x}.}
 A numeric vector of the rounded values.
 }
 \description{
-Rounds hazard concentrations for reporting according to the rule
-in the Australian and New Zealand Guidelines for Fresh and Marine Water
-Quality (ANZG):
+Rounds values for reporting using the rule in the Australian and New Zealand
+Guidelines for Fresh and Marine Water Quality (ANZG) page
+"Toxicant default guideline values for water quality in aquatic ecosystems"
+(section "Significant figures and rounding"):
 }
 \details{
 \itemize{
-\item The significant figure to which a value is reported corresponds to the
-place of the first significant figure in its standard error (SE).
+\item A value is reported to the decimal place of the first significant figure
+of its standard error (SE).
 \item Where the SE is greater than the value, the value is reported to one
 significant figure.
-\item Where the SE is missing, zero, or not finite (for example when
-\code{ssd_hc()} is called with \code{ci = FALSE}), the value is reported to three
-significant figures.
-\item A value whose dropped digits are exactly 5 (with no non-zero digits to
-the right) is rounded to the nearest even digit
-(Australian Standard AS 2706-2003).
+\item A value whose dropped digits are exactly 5 is rounded to the nearest even
+digit (Australian Standard AS 2706-2003).
 The rule is applied to the decimal representation of the value
 so that, for example, 0.15 rounds to 0.2 and 0.25 rounds to 0.2.
 }
 
-Rounding should only be performed when reporting.
+Values whose SE is missing, zero, or not finite are not rounded and a
+warning is given.
 Calculations should be performed on the unrounded values.
 The returned values are numeric and so do not retain trailing zeros.
 }
 \examples{
-ssd_round(1.2649, se = 0.825)
-ssd_round(1.2649, se = 2.1)
-ssd_round(1.2649)
-ssd_round(c(0.15, 0.25), se = 0.1)
+ssd_round(5.6738, se = 0.4536)
+ssd_round(1713, se = 1200)
+ssd_round(c(7.45, 7.55), se = 0.1)
 }
 \seealso{
 \code{\link[=ssd_hc]{ssd_hc()}}

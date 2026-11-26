@@ -17,24 +17,22 @@
 
 #' Round Hazard Concentrations
 #'
-#' Rounds hazard concentrations for reporting according to the rule
-#' in the Australian and New Zealand Guidelines for Fresh and Marine Water
-#' Quality (ANZG):
+#' Rounds values for reporting using the rule in the Australian and New Zealand
+#' Guidelines for Fresh and Marine Water Quality (ANZG) page
+#' "Toxicant default guideline values for water quality in aquatic ecosystems"
+#' (section "Significant figures and rounding"):
 #'
-#' - The significant figure to which a value is reported corresponds to the
-#'   place of the first significant figure in its standard error (SE).
+#' - A value is reported to the decimal place of the first significant figure
+#'   of its standard error (SE).
 #' - Where the SE is greater than the value, the value is reported to one
 #'   significant figure.
-#' - Where the SE is missing, zero, or not finite (for example when
-#'   `ssd_hc()` is called with `ci = FALSE`), the value is reported to three
-#'   significant figures.
-#' - A value whose dropped digits are exactly 5 (with no non-zero digits to
-#'   the right) is rounded to the nearest even digit
-#'   (Australian Standard AS 2706-2003).
+#' - A value whose dropped digits are exactly 5 is rounded to the nearest even
+#'   digit (Australian Standard AS 2706-2003).
 #'   The rule is applied to the decimal representation of the value
 #'   so that, for example, 0.15 rounds to 0.2 and 0.25 rounds to 0.2.
 #'
-#' Rounding should only be performed when reporting.
+#' Values whose SE is missing, zero, or not finite are not rounded and a
+#' warning is given.
 #' Calculations should be performed on the unrounded values.
 #' The returned values are numeric and so do not retain trailing zeros.
 #'
@@ -45,37 +43,59 @@
 #' @seealso [ssd_hc()]
 #' @export
 #' @examples
-#' ssd_round(1.2649, se = 0.825)
-#' ssd_round(1.2649, se = 2.1)
-#' ssd_round(1.2649)
-#' ssd_round(c(0.15, 0.25), se = 0.1)
-ssd_round <- function(x, se = NA_real_) {
+#' ssd_round(5.6738, se = 0.4536)
+#' ssd_round(1713, se = 1200)
+#' ssd_round(c(7.45, 7.55), se = 0.1)
+ssd_round <- function(x, se) {
   chk_numeric(x)
   chk_numeric(se)
   if (!length(se) %in% c(1L, length(x))) {
-    chk::abort_chk(
+    abort_chk(
       "`se` must be length 1 or the same length as `x` (",
       length(x),
       ")."
     )
   }
   se <- rep_len(se, length(x))
-  round_half_even(x, round_digits(x, se))
+  digits <- round_digits(x, se)
+  warn_unrounded(x, digits)
+  round_half_even(x, digits)
 }
 
-# The SE of a bootstrap SE is approximately se / sqrt(2 * (nboot - 1)).
+chk_round <- function(round, ci) {
+  chk_flag(round)
+  chk_flag(ci)
+  if (round && !ci) {
+    abort_chk(
+      "`round` must be FALSE when `ci` is FALSE ",
+      "because the rounding is based on the standard error."
+    )
+  }
+}
+
 round_hc <- function(x) {
   digits <- round_digits(x$est, x$se)
+  warn_unrounded(x$est, digits)
   for (cl in c("lcl", "ucl")) {
-    cl_digits <- pmax(digits, one_signif_digits(x[[cl]]))
+    cl_digits <- pmax(digits, one_signif_digits(x[[cl]]), na.rm = TRUE)
     x[[cl]] <- round_half_even(x[[cl]], cl_digits)
   }
-  se_se <- rep(NA_real_, nrow(x))
-  boot <- !is.na(x$nboot) & x$nboot > 1
-  se_se[boot] <- x$se[boot] / sqrt(2 * (x$nboot[boot] - 1))
-  x$se <- round_half_even(x$se, round_digits(x$se, se_se))
+  x$se <- round_half_even(x$se, one_signif_digits(x$se))
   x$est <- round_half_even(x$est, digits)
   x
+}
+
+warn_unrounded <- function(x, digits) {
+  n <- sum(is.finite(x) & x != 0 & is.na(digits))
+  if (n) {
+    wrn(
+      n,
+      " value",
+      if (n > 1) "s were" else " was",
+      " not rounded because the standard error is missing, zero, or not finite."
+    )
+  }
+  invisible(n)
 }
 
 first_place <- function(x) {
@@ -90,11 +110,9 @@ one_signif_digits <- function(x) {
 }
 
 round_digits <- function(x, se) {
-  ok <- is.finite(x) & x != 0
-  ok_se <- ok & is.finite(se) & se > 0
+  ok <- is.finite(x) & x != 0 & is.finite(se) & se > 0
   digits <- rep(NA_real_, length(x))
-  digits[ok] <- 2 - first_place(x[ok])
-  digits[ok_se] <- -first_place(pmin(se[ok_se], abs(x[ok_se])))
+  digits[ok] <- -first_place(pmin(se[ok], abs(x[ok])))
   digits
 }
 

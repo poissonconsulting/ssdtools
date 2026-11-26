@@ -12,7 +12,7 @@ ssd_hc_bcanz(
   ci = FALSE,
   nboot = 10000,
   min_pboot = 0.8,
-  round = TRUE
+  round = ci
 )
 }
 \arguments{
@@ -32,19 +32,20 @@ ssd_hc_bcanz(
 proportion of bootstrap samples that must successfully fit (return a likelihood)
 to report the confidence intervals.}
 
-\item{round}{A flag specifying whether to round the estimates and
-confidence limits for reporting.
-The estimate (\code{est}) is rounded to the place of the first significant figure
-of its standard error (SE), or to one significant figure if the SE is greater
-than the estimate, or to three significant figures if the SE is missing
-(as when \code{ci = FALSE}), following the rule in the
-Australian and New Zealand Guidelines for Fresh and Marine Water Quality.
-Ties are rounded to the nearest even digit (see \code{\link[=ssd_round]{ssd_round()}}).
-The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the same
-decimal place as the estimate but to at least one significant figure.
-The SE is rounded by the same rule using its own approximate standard error
-\code{se / sqrt(2 * (nboot - 1))}, which reflects the number of bootstrap samples.
-Rounding should only be performed when reporting.}
+\item{round}{A flag specifying whether to round the estimates, standard
+errors and confidence limits for reporting.
+It must be \code{FALSE} when \code{ci = FALSE} because the rounding is based on the
+standard error (SE).
+The estimate (\code{est}) is rounded to the decimal place of the first
+significant figure of its SE, or to one significant figure where the SE is
+greater than the estimate, following the Australian and New Zealand
+Guidelines for Fresh and Marine Water Quality (see \code{\link[=ssd_round]{ssd_round()}}).
+In addition, the lower (\code{lcl}) and upper (\code{ucl}) confidence limits are
+rounded to the same decimal place as the estimate but to at least one
+significant figure, and the SE is rounded to one significant figure.
+Estimates without an SE (as when the proportion of bootstrap samples that
+converged is less than \code{min_pboot}) are not rounded and a warning is given.
+Calculations should be performed on the unrounded values.}
 }
 \value{
 A tibble of corresponding hazard concentrations.
@@ -58,6 +59,7 @@ This function can take several minutes to run with recommended 10,000 iterations
 \examples{
 fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 ssd_hc_bcanz(fits, nboot = 100)
+ssd_hc_bcanz(fits, ci = TRUE, nboot = 100)
 }
 \seealso{
 \code{\link[=ssd_hc]{ssd_hc()}}.

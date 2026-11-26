@@ -95,14 +95,12 @@ ssd_hc.list <- function(
   x,
   percent,
   proportion = 0.05,
-  ...,
-  round = FALSE
+  ...
 ) {
   chk_list(x)
   chk_named(x)
   chk_unique(names(x))
   chk_unused(...)
-  chk_flag(round)
 
   proportion <- .hc_proportion(percent, proportion)
 
@@ -118,11 +116,7 @@ ssd_hc.list <- function(
     MoreArgs = list(proportion = proportion),
     SIMPLIFY = FALSE
   )
-  hc <- dplyr::bind_rows(hc)
-  if (round) {
-    hc <- round_hc(hc)
-  }
-  hc
+  dplyr::bind_rows(hc)
 }
 
 #' @describeIn ssd_hc Hazard Concentrations for fitdists Object
@@ -155,7 +149,7 @@ ssd_hc.fitdists <- function(
   round = FALSE
 ) {
   chk_unused(...)
-  chk_flag(round)
+  chk_round(round, ci)
 
   proportion <- .hc_proportion(percent, proportion)
 
@@ -234,7 +228,7 @@ ssd_hc.fitburrlioz <- function(
   chk_named(x)
   chk_subset(names(x), c("burrIII3", "invpareto", "llogis", "lgumbel"))
   chk_unused(...)
-  chk_flag(round)
+  chk_round(round, ci)
 
   proportion <- .hc_proportion(percent, proportion)
 
