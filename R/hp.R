@@ -47,7 +47,9 @@
 #' The lower (`lcl`) and upper (`ucl`) confidence limits are rounded to the
 #' same decimal place as the estimate but to at least one significant figure
 #' of their distance to the nearest bound.
-#' Estimates on a bound are not rounded, nor are their confidence limits.
+#' Estimates on a bound are not rounded, but their confidence limits are
+#' rounded to the decimal place of the rounded SE, or to at least one
+#' significant figure of their distance to the bound.
 #' Estimates without an SE (as when the proportion of bootstrap samples that
 #' converged is less than `min_pboot`) are not rounded, nor are their
 #' confidence limits, and a warning is given.

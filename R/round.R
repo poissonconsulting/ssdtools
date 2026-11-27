@@ -80,9 +80,18 @@ chk_round <- function(round, ci) {
 round_hcp <- function(x, bound = Inf) {
   digits <- round_digits(x$est, x$se, bound)
   warn_unrounded(x$est, digits, bound)
+  # An estimate on a bound is exact but its limits are rounded from the SE.
+  se_digits <- -first_place(round_half_even(x$se, one_signif_digits(x$se)))
+  on_bound <- bound_distance(x$est, bound) == 0 & is.finite(x$se) & x$se > 0
+  limit_digits <- digits
+  limit_digits[on_bound %in% TRUE] <- se_digits[on_bound %in% TRUE]
   for (cl in c("lcl", "ucl")) {
-    cl_digits <- pmax(digits, one_signif_digits(x[[cl]], bound), na.rm = TRUE)
-    cl_digits[is.na(digits)] <- NA
+    cl_digits <- pmax(
+      limit_digits,
+      one_signif_digits(x[[cl]], bound),
+      na.rm = TRUE
+    )
+    cl_digits[is.na(limit_digits)] <- NA
     x[[cl]] <- round_half_even(x[[cl]], cl_digits)
   }
   x$se <- round_half_even(x$se, one_signif_digits(x$se))

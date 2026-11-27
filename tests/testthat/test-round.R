@@ -222,12 +222,18 @@ test_that("round_hcp counts significant figures from nearest bound", {
   expect_identical(rounded$se, c(0.004, 0.004, 0.03, 0.03, 0.0005, 0.0005))
 })
 
-test_that("round_hcp does not round cls when est is on a bound", {
-  hp <- data.frame(est = 1, se = 0.01, lcl = 0.99312, ucl = 1, nboot = 1000)
+test_that("round_hcp rounds cls from the se when est is on a bound", {
+  hp <- data.frame(
+    est = c(1, 1, 0, 1),
+    se = c(0.01, 0.01, 0.0096, NA),
+    lcl = c(0.99312, 0.5234, 0, 0.99312),
+    ucl = c(1, 1, 0.01234, 1),
+    nboot = 1000
+  )
   rounded <- round_hcp(hp, bound = 1)
-  expect_identical(rounded$est, 1)
-  expect_identical(rounded$lcl, 0.99312)
-  expect_identical(rounded$ucl, 1)
+  expect_identical(rounded$est, c(1, 1, 0, 1))
+  expect_identical(rounded$lcl, c(0.993, 0.52, 0, 0.99312))
+  expect_identical(rounded$ucl, c(1, 1, 0.01, 1))
 })
 
 test_that("round_hcp gives same digits on percent scale", {
