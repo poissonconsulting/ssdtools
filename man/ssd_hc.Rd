@@ -28,7 +28,8 @@ ssd_hc(x, ...)
   delta = 9.21,
   samples = FALSE,
   save_to = NULL,
-  control = NULL
+  control = NULL,
+  round = FALSE
 )
 
 \method{ssd_hc}{fitburrlioz}(
@@ -42,7 +43,8 @@ ssd_hc(x, ...)
   min_pboot = 0.8,
   parametric = FALSE,
   samples = FALSE,
-  save_to = NULL
+  save_to = NULL,
+  round = FALSE
 )
 }
 \arguments{
@@ -108,6 +110,23 @@ Distributions with an absolute AIC difference greater than delta are excluded fr
 \item{save_to}{NULL or a string specifying a directory to save where the bootstrap datasets and parameter estimates (when successfully converged) to.}
 
 \item{control}{A list of control parameters passed to \code{\link[stats:optim]{stats::optim()}}.}
+
+\item{round}{A flag specifying whether to round the estimates, standard
+errors and confidence limits for reporting.
+It must be \code{FALSE} when \code{ci = FALSE} because the rounding is based on the
+standard error (SE).
+The SE is rounded to one significant figure and the estimate (\code{est}) is
+rounded to the decimal place of the rounded SE, or to one significant
+figure where the rounded SE is greater than the estimate, following the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality
+(see \code{\link[=ssd_round]{ssd_round()}}).
+In addition, the lower (\code{lcl}) and upper (\code{ucl}) confidence limits are
+rounded to the same decimal place as the estimate but to at least one
+significant figure.
+Estimates without an SE (as when the proportion of bootstrap samples that
+converged is less than \code{min_pboot}) are not rounded, nor are their
+confidence limits, and a warning is given.
+Calculations should be performed on the unrounded values.}
 }
 \value{
 A tibble of corresponding hazard concentrations.
@@ -147,6 +166,9 @@ ssd_hc(ssd_match_moments())
 
 fits <- ssd_fit_dists(ssddata::ccme_boron)
 ssd_hc(fits)
+
+fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+ssd_hc(fit, ci = TRUE, nboot = 100, round = TRUE)
 
 fit <- ssd_fit_burrlioz(ssddata::ccme_boron)
 ssd_hc(fit)

@@ -188,6 +188,23 @@ remove them with a warning.}
 
 \item{save_to}{NULL or a string specifying a directory to save where the bootstrap datasets and parameter estimates (when successfully converged) to.}
 
+\item{round}{A flag specifying whether to round the estimates, standard
+errors and confidence limits for reporting.
+It must be \code{FALSE} when \code{ci = FALSE} because the rounding is based on the
+standard error (SE).
+The SE is rounded to one significant figure and the estimate (\code{est}) is
+rounded to the decimal place of the rounded SE, or to one significant
+figure where the rounded SE is greater than the estimate, following the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality
+(see \code{\link[=ssd_round]{ssd_round()}}).
+In addition, the lower (\code{lcl}) and upper (\code{ucl}) confidence limits are
+rounded to the same decimal place as the estimate but to at least one
+significant figure.
+Estimates without an SE (as when the proportion of bootstrap samples that
+converged is less than \code{min_pboot}) are not rounded, nor are their
+confidence limits, and a warning is given.
+Calculations should be performed on the unrounded values.}
+
 \item{samples}{A flag specfying whether to include a numeric vector of the bootstrap samples as a list column in the output.}
 
 \item{scale}{scale parameter.}

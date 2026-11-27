@@ -101,6 +101,7 @@ ssd_fit_bcanz <- function(
 #' @examples
 #' fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 #' ssd_hc_bcanz(fits, nboot = 100)
+#' ssd_hc_bcanz(fits, ci = TRUE, nboot = 100)
 ssd_hc_bcanz <- function(
   x,
   proportion = c(0.01, 0.05, 0.1, 0.2),
@@ -108,7 +109,8 @@ ssd_hc_bcanz <- function(
   average = TRUE,
   ci = FALSE,
   nboot = 10000,
-  min_pboot = 0.8
+  min_pboot = 0.8,
+  round = ci
 ) {
   chk_unused(...)
   ssd_hc(
@@ -125,7 +127,8 @@ ssd_hc_bcanz <- function(
     delta = 9.21,
     samples = FALSE,
     save_to = NULL,
-    control = NULL
+    control = NULL,
+    round = round
   )
 }
 
