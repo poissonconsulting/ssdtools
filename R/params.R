@@ -127,13 +127,14 @@
 #' errors and confidence limits for reporting.
 #' It must be `FALSE` when `ci = FALSE` because the rounding is based on the
 #' standard error (SE).
-#' The estimate (`est`) is rounded to the decimal place of the first
-#' significant figure of its SE, or to one significant figure where the SE is
-#' greater than the estimate, following the Australian and New Zealand
-#' Guidelines for Fresh and Marine Water Quality (see [ssd_round()]).
+#' The SE is rounded to one significant figure and the estimate (`est`) is
+#' rounded to the decimal place of the rounded SE, or to one significant
+#' figure where the rounded SE is greater than the estimate, following the
+#' Australian and New Zealand Guidelines for Fresh and Marine Water Quality
+#' (see [ssd_round()]).
 #' In addition, the lower (`lcl`) and upper (`ucl`) confidence limits are
 #' rounded to the same decimal place as the estimate but to at least one
-#' significant figure, and the SE is rounded to one significant figure.
+#' significant figure.
 #' Estimates without an SE (as when the proportion of bootstrap samples that
 #' converged is less than `min_pboot`) are not rounded and a warning is given.
 #' Calculations should be performed on the unrounded values.
