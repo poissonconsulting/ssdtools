@@ -47,8 +47,10 @@
 #' The lower (`lcl`) and upper (`ucl`) confidence limits are rounded to the
 #' same decimal place as the estimate but to at least one significant figure
 #' of their distance to the nearest bound.
+#' Estimates on a bound are not rounded, nor are their confidence limits.
 #' Estimates without an SE (as when the proportion of bootstrap samples that
-#' converged is less than `min_pboot`) are not rounded and a warning is given.
+#' converged is less than `min_pboot`) are not rounded, nor are their
+#' confidence limits, and a warning is given.
 #' Calculations should be performed on the unrounded values.
 #' @return A tibble of corresponding hazard proportions.
 #' @seealso [`ssd_hc()`]

@@ -201,7 +201,8 @@ In addition, the lower (\code{lcl}) and upper (\code{ucl}) confidence limits are
 rounded to the same decimal place as the estimate but to at least one
 significant figure.
 Estimates without an SE (as when the proportion of bootstrap samples that
-converged is less than \code{min_pboot}) are not rounded and a warning is given.
+converged is less than \code{min_pboot}) are not rounded, nor are their
+confidence limits, and a warning is given.
 Calculations should be performed on the unrounded values.}
 
 \item{samples}{A flag specfying whether to include a numeric vector of the bootstrap samples as a list column in the output.}

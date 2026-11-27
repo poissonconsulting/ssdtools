@@ -82,6 +82,7 @@ round_hcp <- function(x, bound = Inf) {
   warn_unrounded(x$est, digits, bound)
   for (cl in c("lcl", "ucl")) {
     cl_digits <- pmax(digits, one_signif_digits(x[[cl]], bound), na.rm = TRUE)
+    cl_digits[is.na(digits)] <- NA
     x[[cl]] <- round_half_even(x[[cl]], cl_digits)
   }
   x$se <- round_half_even(x$se, one_signif_digits(x$se))

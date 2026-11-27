@@ -139,6 +139,20 @@ test_that("round_hcp warns and does not round est without se", {
   expect_identical(rounded$lcl, c(0.3, NA))
 })
 
+test_that("round_hcp does not round cls when est not rounded", {
+  hc <- data.frame(
+    est = c(5.6738, 1.2649),
+    se = c(0, 0.8254),
+    lcl = c(5.6738, 0.2987),
+    ucl = c(5.6738, 3.3812),
+    nboot = c(1000, 1000)
+  )
+  expect_warning(rounded <- round_hcp(hc), "^1 value was not rounded")
+  expect_identical(rounded$est, c(5.6738, 1.3))
+  expect_identical(rounded$lcl, c(5.6738, 0.3))
+  expect_identical(rounded$ucl, c(5.6738, 3.4))
+})
+
 test_that("ssd_hc round errors when ci is FALSE", {
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
   expect_chk_error(
@@ -208,11 +222,11 @@ test_that("round_hcp counts significant figures from nearest bound", {
   expect_identical(rounded$se, c(0.004, 0.004, 0.03, 0.03, 0.0005, 0.0005))
 })
 
-test_that("round_hcp rounds cls when est is on a bound", {
+test_that("round_hcp does not round cls when est is on a bound", {
   hp <- data.frame(est = 1, se = 0.01, lcl = 0.99312, ucl = 1, nboot = 1000)
   rounded <- round_hcp(hp, bound = 1)
   expect_identical(rounded$est, 1)
-  expect_identical(rounded$lcl, 0.993)
+  expect_identical(rounded$lcl, 0.99312)
   expect_identical(rounded$ucl, 1)
 })
 
