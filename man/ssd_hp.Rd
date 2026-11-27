@@ -25,7 +25,8 @@ ssd_hp(x, ...)
   proportion = FALSE,
   samples = FALSE,
   save_to = NULL,
-  control = NULL
+  control = NULL,
+  round = FALSE
 )
 
 \method{ssd_hp}{fitburrlioz}(
@@ -39,7 +40,8 @@ ssd_hp(x, ...)
   parametric = FALSE,
   proportion = FALSE,
   samples = FALSE,
-  save_to = NULL
+  save_to = NULL,
+  round = FALSE
 )
 }
 \arguments{
@@ -110,6 +112,31 @@ unexpected changes in future versions.}
 \item{save_to}{NULL or a string specifying a directory to save where the bootstrap datasets and parameter estimates (when successfully converged) to.}
 
 \item{control}{A list of control parameters passed to \code{\link[stats:optim]{stats::optim()}}.}
+
+\item{round}{A flag specifying whether to round the estimates, standard
+errors and confidence limits for reporting.
+It must be \code{FALSE} when \code{ci = FALSE} because the rounding is based on the
+standard error (SE).
+The rule is adapted from the rule for \code{\link[=ssd_hc]{ssd_hc()}}, which follows the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality,
+by counting significant figures from the distance to the nearest bound
+(0 and 1 for proportions or 0 and 100 for percentages).
+The SE is rounded to one significant figure and the estimate (\code{est}) is
+rounded to the decimal place of the rounded SE, or to one significant
+figure of its distance to the nearest bound where the rounded SE is greater
+than that distance.
+For example, 0.99987 with an SE of 0.03 is rounded to 0.9999,
+as 0.00013 with the same SE is rounded to 0.0001.
+The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the
+same decimal place as the estimate but to at least one significant figure
+of their distance to the nearest bound.
+Estimates on a bound are not rounded, but their confidence limits are
+rounded to the decimal place of the rounded SE, or to at least one
+significant figure of their distance to the bound.
+Estimates without an SE (as when the proportion of bootstrap samples that
+converged is less than \code{min_pboot}) are not rounded, nor are their
+confidence limits, and a warning is given.
+Calculations should be performed on the unrounded values.}
 }
 \value{
 A tibble of corresponding hazard proportions.
@@ -131,6 +158,9 @@ For more information see the inverse function \code{\link[=ssd_hc]{ssd_hc()}}.
 \examples{
 fits <- ssd_fit_dists(ssddata::ccme_boron)
 ssd_hp(fits, conc = 1)
+
+fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+ssd_hp(fit, conc = 1, ci = TRUE, nboot = 100, proportion = TRUE, round = TRUE)
 
 fit <- ssd_fit_burrlioz(ssddata::ccme_boron)
 ssd_hp(fit)

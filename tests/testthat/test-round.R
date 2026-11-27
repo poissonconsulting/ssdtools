@@ -107,7 +107,7 @@ test_that("ssd_round errors on incompatible se", {
   expect_chk_error(ssd_round(1, se = "1"))
 })
 
-test_that("round_hc rounds est, cls and se", {
+test_that("round_hcp rounds est, cls and se", {
   hc <- data.frame(
     dist = c("a", "b", "c"),
     est = c(1.2649, 1.2649, 0.0123),
@@ -116,7 +116,7 @@ test_that("round_hc rounds est, cls and se", {
     ucl = c(3.3812, 8.62, 12345.678),
     nboot = c(1000, 1000, 1000)
   )
-  rounded <- round_hc(hc)
+  rounded <- round_hcp(hc)
   expect_identical(rounded$dist, hc$dist)
   expect_identical(rounded$nboot, hc$nboot)
   expect_identical(rounded$est, c(1.3, 1, 0.01))
@@ -125,7 +125,7 @@ test_that("round_hc rounds est, cls and se", {
   expect_identical(rounded$se, c(0.8, 2, 0.01))
 })
 
-test_that("round_hc warns and does not round est without se", {
+test_that("round_hcp warns and does not round est without se", {
   hc <- data.frame(
     est = c(1.2649, 1.2649),
     se = c(0.8254, NA),
@@ -133,13 +133,13 @@ test_that("round_hc warns and does not round est without se", {
     ucl = c(3.3812, NA),
     nboot = c(1000, 1000)
   )
-  expect_warning(rounded <- round_hc(hc), "^1 value was not rounded")
+  expect_warning(rounded <- round_hcp(hc), "^1 value was not rounded")
   expect_identical(rounded$est, c(1.3, 1.2649))
   expect_identical(rounded$se, c(0.8, NA))
   expect_identical(rounded$lcl, c(0.3, NA))
 })
 
-test_that("round_hc does not round cls when est not rounded", {
+test_that("round_hcp does not round cls when est not rounded", {
   hc <- data.frame(
     est = c(5.6738, 1.2649),
     se = c(0, 0.8254),
@@ -147,7 +147,7 @@ test_that("round_hc does not round cls when est not rounded", {
     ucl = c(5.6738, 3.3812),
     nboot = c(1000, 1000)
   )
-  expect_warning(rounded <- round_hc(hc), "^1 value was not rounded")
+  expect_warning(rounded <- round_hcp(hc), "^1 value was not rounded")
   expect_identical(rounded$est, c(5.6738, 1.3))
   expect_identical(rounded$lcl, c(5.6738, 0.3))
   expect_identical(rounded$ucl, c(5.6738, 3.4))
@@ -196,4 +196,101 @@ test_that("ssd_hc_bcanz round defaults to ci", {
     rounded <- ssd_hc_bcanz(fit, ci = TRUE, nboot = 100)
   })
   expect_identical(rounded$est, ssd_round(hc$est, hc$se))
+})
+
+test_that("round_hcp counts significant figures from nearest bound", {
+  hp <- data.frame(
+    est = c(0.0123, 0.9871, 0.00013, 0.99987, 0.0003, 0.99987),
+    se = c(0.004, 0.004, 0.03, 0.03, 0.0005, 0.0005),
+    lcl = c(0.00004, 0.97, 0, 0.9, 0.00001, 0.9981),
+    ucl = c(0.0312, 0.99962, 0.1, 1, 0.0021, 0.99999),
+    nboot = 1000
+  )
+  rounded <- round_hcp(hp, bound = 1)
+  expect_identical(
+    rounded$est,
+    c(0.012, 0.987, 0.0001, 0.9999, 0.0003, 0.9999)
+  )
+  expect_identical(
+    rounded$lcl,
+    c(0.00004, 0.970, 0, 0.9, 0.00001, 0.9981)
+  )
+  expect_identical(
+    rounded$ucl,
+    c(0.031, 0.9996, 0.1, 1, 0.0021, 0.99999)
+  )
+  expect_identical(rounded$se, c(0.004, 0.004, 0.03, 0.03, 0.0005, 0.0005))
+})
+
+test_that("round_hcp rounds cls from the se when est is on a bound", {
+  hp <- data.frame(
+    est = c(1, 1, 0, 1),
+    se = c(0.01, 0.01, 0.0096, NA),
+    lcl = c(0.99312, 0.5234, 0, 0.99312),
+    ucl = c(1, 1, 0.01234, 1),
+    nboot = 1000
+  )
+  rounded <- round_hcp(hp, bound = 1)
+  expect_identical(rounded$est, c(1, 1, 0, 1))
+  expect_identical(rounded$lcl, c(0.993, 0.52, 0, 0.99312))
+  expect_identical(rounded$ucl, c(1, 1, 0.01, 1))
+})
+
+test_that("round_hcp gives same digits on percent scale", {
+  hp <- data.frame(
+    est = c(0.0123, 0.99987),
+    se = c(0.004, 0.0005),
+    lcl = c(0.00004, 0.9981),
+    ucl = c(0.0312, 0.99999),
+    nboot = 1000
+  )
+  percent <- hp
+  cols <- c("est", "se", "lcl", "ucl")
+  percent[cols] <- percent[cols] * 100
+  expect_equal(
+    round_hcp(percent, bound = 100)[cols],
+    round_hcp(hp, bound = 1)[cols] * 100
+  )
+})
+
+test_that("ssd_hp round errors when ci is FALSE", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  expect_chk_error(
+    ssd_hp(fit, conc = 1, proportion = TRUE, round = TRUE),
+    "`round` must be FALSE when `ci` is FALSE"
+  )
+  expect_chk_error(ssd_hp(fit, conc = 1, proportion = TRUE, round = NA))
+})
+
+test_that("ssd_hp round with ci", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  hp <- function(proportion, round) {
+    withr::with_seed(10, {
+      ssd_hp(
+        fit,
+        conc = c(1, 100),
+        ci = TRUE,
+        nboot = 100,
+        proportion = proportion,
+        round = round
+      )
+    })
+  }
+  unrounded <- hp(TRUE, FALSE)
+  rounded <- hp(TRUE, TRUE)
+  expect_identical(colnames(rounded), colnames(unrounded))
+  expect_identical(rounded, round_hcp(unrounded, bound = 1))
+  expect_identical(
+    hp(FALSE, TRUE),
+    round_hcp(hp(FALSE, FALSE), bound = 100)
+  )
+})
+
+test_that("ssd_hp_bcanz round defaults to ci", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  expect_identical(
+    ssd_hp_bcanz(fit, proportion = TRUE),
+    ssd_hp_bcanz(fit, proportion = TRUE, round = FALSE)
+  )
+  expect_chk_error(ssd_hp_bcanz(fit, proportion = TRUE, round = TRUE))
 })

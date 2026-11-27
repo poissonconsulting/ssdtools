@@ -199,7 +199,7 @@ ssd_hc.fitdists <- function(
 
   hcp <- dplyr::rename(hcp, proportion = "value")
   if (round) {
-    hcp <- round_hc(hcp)
+    hcp <- round_hcp(hcp)
   }
   hcp
 }
@@ -255,7 +255,7 @@ ssd_hc.fitburrlioz <- function(
 
   hcp <- dplyr::rename(hcp, proportion = "value")
   if (round) {
-    hcp <- round_hc(hcp)
+    hcp <- round_hcp(hcp)
   }
   hcp
 }

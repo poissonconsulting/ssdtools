@@ -138,8 +138,8 @@ ssd_hc_bcanz <- function(
 #' using settings adopted by BC, Canada, Australia and New Zealand for official guidelines.
 #' This function can take several minutes to run with recommended 10,000 iterations.
 #'
-#' @inheritParams params
 #' @inheritParams ssd_hp
+#' @inheritParams params
 #' @return A tibble of corresponding hazard concentrations.
 #' @seealso [`ssd_hp()`].
 #' @family BCANZ
@@ -147,6 +147,7 @@ ssd_hc_bcanz <- function(
 #' @examples
 #' fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 #' ssd_hp_bcanz(fits, nboot = 100)
+#' ssd_hp_bcanz(fits, ci = TRUE, nboot = 100)
 ssd_hp_bcanz <- function(
   x,
   conc = 1,
@@ -155,7 +156,8 @@ ssd_hp_bcanz <- function(
   ci = FALSE,
   nboot = 10000,
   min_pboot = 0.8,
-  proportion = FALSE
+  proportion = FALSE,
+  round = ci
 ) {
   chk_unused(...)
 
@@ -184,6 +186,7 @@ ssd_hp_bcanz <- function(
     proportion = proportion,
     samples = FALSE,
     save_to = NULL,
-    control = NULL
+    control = NULL,
+    round = round
   )
 }

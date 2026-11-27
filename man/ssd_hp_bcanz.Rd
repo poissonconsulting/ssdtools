@@ -12,7 +12,8 @@ ssd_hp_bcanz(
   ci = FALSE,
   nboot = 10000,
   min_pboot = 0.8,
-  proportion = FALSE
+  proportion = FALSE,
+  round = ci
 )
 }
 \arguments{
@@ -32,7 +33,37 @@ ssd_hp_bcanz(
 proportion of bootstrap samples that must successfully fit (return a likelihood)
 to report the confidence intervals.}
 
-\item{proportion}{A numeric vector of proportion values to estimate hazard concentrations for.}
+\item{proportion}{A flag specifying whether to return hazard proportions
+(\code{proportion = TRUE}) or hazard percentages (\code{proportion = FALSE}).
+To not break existing code the default value is \code{FALSE} but
+will be switching the default to \code{TRUE} in a future version.
+The user is recommended to manually set to \code{TRUE} now to avoid
+unexpected changes in future versions.}
+
+\item{round}{A flag specifying whether to round the estimates, standard
+errors and confidence limits for reporting.
+It must be \code{FALSE} when \code{ci = FALSE} because the rounding is based on the
+standard error (SE).
+The rule is adapted from the rule for \code{\link[=ssd_hc]{ssd_hc()}}, which follows the
+Australian and New Zealand Guidelines for Fresh and Marine Water Quality,
+by counting significant figures from the distance to the nearest bound
+(0 and 1 for proportions or 0 and 100 for percentages).
+The SE is rounded to one significant figure and the estimate (\code{est}) is
+rounded to the decimal place of the rounded SE, or to one significant
+figure of its distance to the nearest bound where the rounded SE is greater
+than that distance.
+For example, 0.99987 with an SE of 0.03 is rounded to 0.9999,
+as 0.00013 with the same SE is rounded to 0.0001.
+The lower (\code{lcl}) and upper (\code{ucl}) confidence limits are rounded to the
+same decimal place as the estimate but to at least one significant figure
+of their distance to the nearest bound.
+Estimates on a bound are not rounded, but their confidence limits are
+rounded to the decimal place of the rounded SE, or to at least one
+significant figure of their distance to the bound.
+Estimates without an SE (as when the proportion of bootstrap samples that
+converged is less than \code{min_pboot}) are not rounded, nor are their
+confidence limits, and a warning is given.
+Calculations should be performed on the unrounded values.}
 }
 \value{
 A tibble of corresponding hazard concentrations.
@@ -45,6 +76,7 @@ This function can take several minutes to run with recommended 10,000 iterations
 \examples{
 fits <- ssd_fit_bcanz(ssddata::ccme_boron)
 ssd_hp_bcanz(fits, nboot = 100)
+ssd_hp_bcanz(fits, ci = TRUE, nboot = 100)
 }
 \seealso{
 \code{\link[=ssd_hp]{ssd_hp()}}.

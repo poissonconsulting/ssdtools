@@ -75,12 +75,23 @@ chk_round <- function(round, ci) {
   }
 }
 
-round_hc <- function(x) {
-  digits <- round_digits(x$est, x$se)
-  warn_unrounded(x$est, digits)
+# For hazard proportions significant figures are counted from the distance
+# to the nearest bound so that 0.99987 is not rounded to 1.00.
+round_hcp <- function(x, bound = Inf) {
+  digits <- round_digits(x$est, x$se, bound)
+  warn_unrounded(x$est, digits, bound)
+  # An estimate on a bound is exact but its limits are rounded from the SE.
+  se_digits <- -first_place(round_half_even(x$se, one_signif_digits(x$se)))
+  on_bound <- bound_distance(x$est, bound) == 0 & is.finite(x$se) & x$se > 0
+  limit_digits <- digits
+  limit_digits[on_bound %in% TRUE] <- se_digits[on_bound %in% TRUE]
   for (cl in c("lcl", "ucl")) {
-    cl_digits <- pmax(digits, one_signif_digits(x[[cl]]), na.rm = TRUE)
-    cl_digits[is.na(digits)] <- NA
+    cl_digits <- pmax(
+      limit_digits,
+      one_signif_digits(x[[cl]], bound),
+      na.rm = TRUE
+    )
+    cl_digits[is.na(limit_digits)] <- NA
     x[[cl]] <- round_half_even(x[[cl]], cl_digits)
   }
   x$se <- round_half_even(x$se, one_signif_digits(x$se))
@@ -88,8 +99,9 @@ round_hc <- function(x) {
   x
 }
 
-warn_unrounded <- function(x, digits) {
-  n <- sum(is.finite(x) & x != 0 & is.na(digits))
+warn_unrounded <- function(x, digits, bound = Inf) {
+  dist <- bound_distance(x, bound)
+  n <- sum(is.finite(dist) & dist > 0 & is.na(digits))
   if (n) {
     wrn(
       n,
@@ -105,18 +117,24 @@ first_place <- function(x) {
   floor(log10(abs(x)))
 }
 
-one_signif_digits <- function(x) {
+bound_distance <- function(x, bound) {
+  pmin(abs(x), bound - x)
+}
+
+one_signif_digits <- function(x, bound = Inf) {
+  dist <- bound_distance(x, bound)
   digits <- rep(NA_real_, length(x))
-  ok <- is.finite(x) & x != 0
-  digits[ok] <- -first_place(x[ok])
+  ok <- is.finite(dist) & dist > 0
+  digits[ok] <- -first_place(dist[ok])
   digits
 }
 
-round_digits <- function(x, se) {
-  ok <- is.finite(x) & x != 0 & is.finite(se) & se > 0
+round_digits <- function(x, se, bound = Inf) {
+  dist <- bound_distance(x, bound)
+  ok <- is.finite(dist) & dist > 0 & is.finite(se) & se > 0
   se <- round_half_even(se, one_signif_digits(se))
   digits <- rep(NA_real_, length(x))
-  digits[ok] <- -first_place(pmin(se[ok], abs(x[ok])))
+  digits[ok] <- -first_place(pmin(se[ok], dist[ok]))
   digits
 }
 
