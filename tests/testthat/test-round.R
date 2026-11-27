@@ -139,6 +139,20 @@ test_that("round_hc warns and does not round est without se", {
   expect_identical(rounded$lcl, c(0.3, NA))
 })
 
+test_that("round_hc does not round cls when est not rounded", {
+  hc <- data.frame(
+    est = c(5.6738, 1.2649),
+    se = c(0, 0.8254),
+    lcl = c(5.6738, 0.2987),
+    ucl = c(5.6738, 3.3812),
+    nboot = c(1000, 1000)
+  )
+  expect_warning(rounded <- round_hc(hc), "^1 value was not rounded")
+  expect_identical(rounded$est, c(5.6738, 1.3))
+  expect_identical(rounded$lcl, c(5.6738, 0.3))
+  expect_identical(rounded$ucl, c(5.6738, 3.4))
+})
+
 test_that("ssd_hc round errors when ci is FALSE", {
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
   expect_chk_error(
