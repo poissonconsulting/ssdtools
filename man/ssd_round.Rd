@@ -9,7 +9,7 @@ ssd_round(x, se)
 \arguments{
 \item{x}{A numeric vector of values to round.}
 
-\item{se}{A numeric vector of the standard errors of \code{x}
+\item{se}{A non-negative numeric vector of the standard errors of \code{x}
 of length 1 or the same length as \code{x}.}
 }
 \value{
