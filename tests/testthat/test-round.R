@@ -39,6 +39,12 @@ test_that("ssd_round rounds to first significant figure of se", {
   )
 })
 
+test_that("ssd_round sets the decimal place from the rounded se", {
+  expect_identical(ssd_round(0.0123, se = 0.00961), 0.01)
+  expect_identical(ssd_round(0.0123, se = 0.00949), 0.012)
+  expect_identical(ssd_round(1.2649, se = 0.96), 1)
+})
+
 test_that("ssd_round uses one significant figure when se greater than x", {
   expect_identical(ssd_round(1.2649, se = 2.1), 1)
   expect_identical(ssd_round(0.0372, se = 0.05), 0.04)
@@ -100,9 +106,9 @@ test_that("round_hcp rounds est, cls and se", {
   rounded <- round_hcp(hc)
   expect_identical(rounded$dist, hc$dist)
   expect_identical(rounded$nboot, hc$nboot)
-  expect_identical(rounded$est, c(1.3, 1, 0.012))
+  expect_identical(rounded$est, c(1.3, 1, 0.01))
   expect_identical(rounded$lcl, c(0.3, 0.04, 0.00004))
-  expect_identical(rounded$ucl, c(3.4, 9, 12345.678))
+  expect_identical(rounded$ucl, c(3.4, 9, 12345.68))
   expect_identical(rounded$se, c(0.8, 2, 0.01))
 })
 

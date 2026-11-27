@@ -24,9 +24,10 @@ Guidelines for Fresh and Marine Water Quality (ANZG) page
 \details{
 \itemize{
 \item A value is reported to the decimal place of the first significant figure
-of its standard error (SE).
-\item Where the SE is greater than the value, the value is reported to one
-significant figure.
+of its standard error (SE) as reported, that is, after the SE is rounded
+to one significant figure.
+\item Where the reported SE is greater than the value, the value is reported to
+one significant figure.
 \item A value whose dropped digits are exactly 5 is rounded to the nearest even
 digit (Australian Standard AS 2706-2003).
 The rule is applied to the decimal representation of the value

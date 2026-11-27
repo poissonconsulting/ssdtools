@@ -23,9 +23,10 @@
 #' (section "Significant figures and rounding"):
 #'
 #' - A value is reported to the decimal place of the first significant figure
-#'   of its standard error (SE).
-#' - Where the SE is greater than the value, the value is reported to one
-#'   significant figure.
+#'   of its standard error (SE) as reported, that is, after the SE is rounded
+#'   to one significant figure.
+#' - Where the reported SE is greater than the value, the value is reported to
+#'   one significant figure.
 #' - A value whose dropped digits are exactly 5 is rounded to the nearest even
 #'   digit (Australian Standard AS 2706-2003).
 #'   The rule is applied to the decimal representation of the value
@@ -120,6 +121,7 @@ one_signif_digits <- function(x, bound = Inf) {
 round_digits <- function(x, se, bound = Inf) {
   dist <- bound_distance(x, bound)
   ok <- is.finite(dist) & dist > 0 & is.finite(se) & se > 0
+  se <- round_half_even(se, one_signif_digits(se))
   digits <- rep(NA_real_, length(x))
   digits[ok] <- -first_place(pmin(se[ok], dist[ok]))
   digits
