@@ -38,7 +38,7 @@
 #' The returned values are numeric and so do not retain trailing zeros.
 #'
 #' @param x A numeric vector of values to round.
-#' @param se A numeric vector of the standard errors of `x`
+#' @param se A non-negative numeric vector of the standard errors of `x`
 #'   of length 1 or the same length as `x`.
 #' @return A numeric vector of the rounded values.
 #' @seealso [ssd_hc()]
@@ -50,6 +50,7 @@
 ssd_round <- function(x, se) {
   chk_numeric(x)
   chk_numeric(se)
+  chk_gte(se, 0)
   if (!length(se) %in% c(1L, length(x))) {
     abort_chk(
       "`se` must be length 1 or the same length as `x` (",
@@ -64,8 +65,8 @@ ssd_round <- function(x, se) {
 }
 
 chk_round <- function(round, ci) {
-  chk_flag(round)
   chk_flag(ci)
+  chk_flag(round)
   if (round && !ci) {
     abort_chk(
       "`round` must be FALSE when `ci` is FALSE ",

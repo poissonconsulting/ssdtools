@@ -67,6 +67,19 @@ test_that("ssd_round warns and does not round when se missing", {
   )
 })
 
+test_that("ssd_round errors when se negative", {
+  expect_chk_error(
+    ssd_round(1.2649, se = -0.825),
+    "^`se` must"
+  )
+  expect_chk_error(ssd_round(c(1.2649, 1.2649), se = c(NA, -0.825)))
+})
+
+test_that("ssd_hc_bcanz checks ci before round", {
+  fit <- ssd_fit_dists(ssddata::ccme_boron, dists = "lnorm")
+  expect_chk_error(ssd_hc_bcanz(fit, ci = 1), "^`ci` must be a flag")
+})
+
 test_that("ssd_round rounds half to even on decimal value", {
   expect_identical(ssd_round(0.15, se = 0.1), 0.2)
   expect_identical(ssd_round(0.25, se = 0.1), 0.2)
